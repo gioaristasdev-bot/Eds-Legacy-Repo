@@ -1,0 +1,43 @@
+# Unity generated
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Visual Studio
+.vs/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+ExternalAttributes.*.csproj
+Assembly-CSharp*.csproj
+
+# OS
+.DS_Store
+Thumbs.db
+
+# JetBrains
+.idea/
+*.iml
+
+# Asset meta files should be tracked
+# *.meta
+
+# Uncomment if using Addressables
+# [Aa]ddressables/
+
+# Unity3D generated meta files
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Large source files from purchased assets (not needed for the project)
+*.psb
+**/SourceFiles/*.zip
+**/SourceFiles/

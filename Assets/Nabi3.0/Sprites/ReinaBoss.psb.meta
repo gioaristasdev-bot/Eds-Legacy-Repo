@@ -1,0 +1,1852 @@
+fileFormatVersion: 2
+guid: c32f77cdf578d1843b5177a072370eca
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: b2a9591990af98743ba3ff7cf1000886, type: 3}
+  textureImporterSettings:
+    alphaSource: 1
+    mipMapMode: 0
+    enableMipMap: 1
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+    convertToNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+    swizzle: 50462976
+    isReadable: 0
+    streamingMipmaps: 1
+    streamingMipmapsPriority: 0
+    vTOnly: 0
+    ignoreMipmapLimit: 0
+    nPOTScale: 1
+    sRGBTexture: 1
+    spriteMode: 2
+    spriteExtrude: 1
+    spriteMeshType: 1
+    alignment: 0
+    spritePivot: {x: 0.5, y: 0.5}
+    spritePixelsToUnits: 256
+    spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+    spriteGenerateFallbackPhysicsShape: 0
+    generateCubemap: 6
+    cubemapConvolution: 0
+    seamlessCubemap: 0
+    alphaIsTransparency: 1
+    spriteTessellationDetail: -1
+    textureType: 8
+    textureShape: 1
+    singleChannelComponent: 0
+    flipbookRows: 0
+    flipbookColumns: 0
+    ignorePngGamma: 0
+    cookieMode: 0
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 0
+    wrapV: 0
+    wrapW: 0
+    normalMap: 0
+    textureFormat: 0
+    maxTextureSize: 0
+    lightmap: 0
+    compressionQuality: 0
+    linearTexture: 0
+    grayScaleToAlpha: 0
+    rGBM: 0
+    cubemapConvolutionSteps: 0
+    cubemapConvolutionExponent: 0
+    maxTextureSizeSet: 0
+    compressionQualitySet: 0
+    textureFormatSet: 0
+    applyGammaDecoding: 0
+  spriteImportData:
+  - name: 
+    originalName: 
+    pivot: {x: 0, y: 0}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 0
+      y: 0
+      width: 0
+      height: 0
+    spriteID: 
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 0, y: 0}
+    spritePosition: {x: 0, y: 0}
+  mosaicSpriteImportData: []
+  rigSpriteImportData:
+  - name: Lent
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2244
+      y: 7975
+      width: 326
+      height: 210
+    spriteID: c4f1e875b77d10a4e9a2c593d6bdbe75
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 332, y: 4787}
+    spritePosition: {x: 1912, y: 3188}
+  - name: Head
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 4
+      width: 1071
+      height: 861
+    spriteID: 342c463e41ab6c644ae7fa24129fcd06
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1081, y: -2890}
+    spritePosition: {x: 1537, y: 2894}
+  - name: Chest_L_Side
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 2994
+      width: 606
+      height: 926
+    spriteID: 58108d7f1a26b0742b1fa6f0f1ca105b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -1026, y: 544}
+    spritePosition: {x: 2075, y: 2450}
+  - name: Chest_R_Side
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 3928
+      width: 606
+      height: 926
+    spriteID: efae249537a62194aae6e402c52acd86
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -417, y: 1478}
+    spritePosition: {x: 1466, y: 2450}
+  - name: NeckGuard
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 1882
+      width: 680
+      height: 451
+    spriteID: b6a366badd03e684ba593b888588da71
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1962, y: -846}
+    spritePosition: {x: 1735, y: 2728}
+  - name: AbdomenGuard
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 7359
+      width: 1050
+      height: 653
+    spriteID: 8026304ddc0ecb3468278d9b834a8fd9
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1067, y: 5369}
+    spritePosition: {x: 1551, y: 1990}
+  - name: Hip
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 4403
+      width: 981
+      height: 772
+    spriteID: 18a40d496c2519e428ff296be3679a18
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1033, y: 2969}
+    spritePosition: {x: 1585, y: 1434}
+  - name: Abdomen
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 1192
+      width: 646
+      height: 682
+    spriteID: 726a6548a58a05249a9e321716f9fca2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1944, y: -620}
+    spritePosition: {x: 1753, y: 1812}
+  - name: Capsule
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 5676
+      width: 535
+      height: 1303
+    spriteID: f95bae7ddc4dd274f994bf26326e823e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -117, y: 4025}
+    spritePosition: {x: 1806, y: 1651}
+  - name: Circuits
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 1605
+      width: 470
+      height: 1381
+    spriteID: e0a18f913352fc447839327f97f3737b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -793, y: -323}
+    spritePosition: {x: 1842, y: 1928}
+  - name: Core_circuit
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 6987
+      width: 649
+      height: 980
+    spriteID: dac9f5488210c0d43b6bf1299d1f1904
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -60, y: 4710}
+    spritePosition: {x: 1749, y: 2277}
+  - name: L_CoreHydraulicSystem
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2232
+      y: 6252
+      width: 265
+      height: 667
+    spriteID: 30e9f9823450fa44e900dcd6b6a9871b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -33, y: 4203}
+    spritePosition: {x: 2265, y: 2049}
+  - name: R_CoreHydraulicSystem
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 644
+      y: 5164
+      width: 265
+      height: 667
+    spriteID: 1b801fe42f0d67a4a99075a936a3b379
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -978, y: 3115}
+    spritePosition: {x: 1622, y: 2049}
+  - name: L_Shoulder
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 2721
+      width: 1050
+      height: 833
+    spriteID: 19f3e34b97aff154a9554ac6218dcf92
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 190, y: 139}
+    spritePosition: {x: 2428, y: 2582}
+  - name: R_Shoulder
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 3562
+      width: 1050
+      height: 833
+    spriteID: 74eb7f05d1196354aa7722443aa8aac2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1967, y: 988}
+    spritePosition: {x: 651, y: 2574}
+  - name: RightFingerL
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 4862
+      width: 443
+      height: 1255
+    spriteID: e60747886fed64b41bf07de04165e542
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -1395, y: 4000}
+    spritePosition: {x: 2444, y: 862}
+  - name: LeftFingerL
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 873
+      width: 958
+      height: 916
+    spriteID: c1ebff14192a1294eb981ab14c2b48a0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -92, y: 156}
+    spritePosition: {x: 2710, y: 717}
+  - name: MiddleFingerL
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 1084
+      width: 772
+      height: 1210
+    spriteID: 5b6e30b5edd3a6b4d8c6647346b4ef64
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -875, y: 326}
+    spritePosition: {x: 2564, y: 758}
+  - name: LeftFingerR
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 6125
+      width: 443
+      height: 1255
+    spriteID: 2246c63e293d0e94697d14c8209d88f5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -164, y: 5269}
+    spritePosition: {x: 1213, y: 856}
+  - name: RightFingerR
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 1797
+      width: 958
+      height: 916
+    spriteID: 128d161e84f5cd44b94c1709c01163d2
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2161, y: 1073}
+    spritePosition: {x: 457, y: 724}
+  - name: MiddleFingerR
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 2302
+      width: 772
+      height: 1210
+    spriteID: 2ebd890d060d28547aa58b94e9b48b62
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 902, y: 1548}
+    spritePosition: {x: 787, y: 754}
+  - name: LeftForeArm
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 2602
+      width: 905
+      height: 1273
+    spriteID: d8b1fb35213e5d84c9534bb764835749
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2893, y: 1134}
+    spritePosition: {x: 2897, y: 1468}
+  - name: RightForeArm
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 3883
+      width: 905
+      height: 1273
+    spriteID: 604b5f599892dfb489b32c0392b72318
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -311, y: 2419}
+    spritePosition: {x: 315, y: 1464}
+  - name: HidraulicFinger
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 841
+      y: 7845
+      width: 129
+      height: 317
+    spriteID: cc40873cb7e3bd64ab3d31b3f11c18af
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2335, y: 6594}
+    spritePosition: {x: 3176, y: 1251}
+  - name: HidraulicFinger
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 530
+      y: 7845
+      width: 303
+      height: 182
+    spriteID: d652ef3cc33b757499d2e01a283c6a00
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2178, y: 6293}
+    spritePosition: {x: 2708, y: 1552}
+  - name: HidraulicFinger
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3279
+      y: 5817
+      width: 303
+      height: 182
+    spriteID: 2ca9fb64282ae6c47aac65cd85032a38
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2187, y: 4272}
+    spritePosition: {x: 1092, y: 1545}
+  - name: HidraulicFinger
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4250
+      y: 2923
+      width: 129
+      height: 317
+    spriteID: 67372f88b356fee46993790fac737d44
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 3431, y: 1666}
+    spritePosition: {x: 819, y: 1257}
+  - name: LeftArm
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 6765
+      width: 921
+      height: 1072
+    spriteID: 33f788218a051824da2e7326816eb16c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2570, y: 4801}
+    spritePosition: {x: 2574, y: 1964}
+  - name: RightArm
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 4
+      width: 921
+      height: 1072
+    spriteID: f2bece52b0561c64d9eeaff1eccfcb2c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1062, y: -1964}
+    spritePosition: {x: 627, y: 1968}
+  - name: HidraulicLeftArmSystem2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 2923
+      width: 545
+      height: 364
+    spriteID: 6643b00f50867a949b0c0d1b506fba3c
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1359, y: 488}
+    spritePosition: {x: 2338, y: 2435}
+  - name: HidraulicLeftArmSystem1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4155
+      y: 2341
+      width: 317
+      height: 568
+    spriteID: 5a15c3a3297855b4a9475992f4467d0f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1317, y: 266}
+    spritePosition: {x: 2838, y: 2075}
+  - name: HidraulicRightArmSystem2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 3295
+      width: 545
+      height: 364
+    spriteID: 0886b030217583b468bb945d2c5de4b4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2457, y: 862}
+    spritePosition: {x: 1240, y: 2433}
+  - name: HidraulicRightArmSystem1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2232
+      y: 5676
+      width: 317
+      height: 568
+    spriteID: 6b74308af622f9c4caf3016dc186764d
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1270, y: 3601}
+    spritePosition: {x: 962, y: 2075}
+  - name: F_LeftLegPart1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 5164
+      width: 632
+      height: 1593
+    spriteID: 5a3399d563aed8f45b3b0a7a35589c31
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -3172, y: 5116}
+    spritePosition: {x: 3176, y: 48}
+  - name: F_LeftLegPart2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 3520
+      width: 659
+      height: 1070
+    spriteID: a3289c0bc5e4d994f92bd146e0d67fa7
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -1074, y: 2506}
+    spritePosition: {x: 2763, y: 1014}
+  - name: F_LeftLegPart3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 4
+      width: 807
+      height: 586
+    spriteID: 78a4d9d00e274254fb43e4c4c509358a
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1489, y: -1479}
+    spritePosition: {x: 2208, y: 1483}
+  - name: F_RightLegPart1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 4
+      width: 632
+      height: 1593
+    spriteID: 01c023700472e5141b37a33a755f7819
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 731, y: -49}
+    spritePosition: {x: 318, y: 53}
+  - name: F_RightLegPart2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 4598
+      width: 659
+      height: 1070
+    spriteID: 656178a55b5d61241afed4a85bf784d5
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 985, y: 3581}
+    spritePosition: {x: 704, y: 1017}
+  - name: F_RightLegPart3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 598
+      width: 807
+      height: 586
+    spriteID: 622286cbf3c6feb46bfa002424e54519
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2588, y: -885}
+    spritePosition: {x: 1109, y: 1483}
+  - name: F_L_HidraulicLegSystem1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3279
+      y: 5183
+      width: 362
+      height: 626
+    spriteID: cc4fa6641f3eb0341b75abd6690cc717
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 135, y: 4046}
+    spritePosition: {x: 3144, y: 1137}
+  - name: F_L_HidraulicLegSystem2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 7845
+      width: 518
+      height: 247
+    spriteID: 1af341b9e38e8d944be0bf3a049ead69
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2561, y: 6149}
+    spritePosition: {x: 2565, y: 1696}
+  - name: F_R_HidraulicLegSystem2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 3667
+      width: 518
+      height: 247
+    spriteID: f70fb51501031ad42a311d8cf7a8af71
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2658, y: 1969}
+    spritePosition: {x: 1039, y: 1698}
+  - name: F_R_HidraulicLegSystem1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3279
+      y: 6271
+      width: 362
+      height: 626
+    spriteID: 9bf42775ab6511d45b0cf43e5b405874
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2659, y: 5128}
+    spritePosition: {x: 620, y: 1143}
+  - name: B_LeftLegPart1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 4
+      width: 1037
+      height: 1291
+    spriteID: f878197809c9f5741a7ad8e37c1f749f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2860, y: -622}
+    spritePosition: {x: 2864, y: 626}
+  - name: B_LeftLegPart2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 5183
+      width: 653
+      height: 1080
+    spriteID: d5771cc57d386a54aa27491cf9b2c17b
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -165, y: 3660}
+    spritePosition: {x: 2783, y: 1523}
+  - name: B_LeftLegPart3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4512
+      y: 4
+      width: 840
+      height: 534
+    spriteID: 7f9c8177b4b736a479615fc40e9c5172
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 2316, y: -1823}
+    spritePosition: {x: 2196, y: 1827}
+  - name: B_RightLegPart1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4
+      y: 1303
+      width: 1037
+      height: 1291
+    spriteID: 4ae01c93d933a254dbc8ef7d8766317f
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -221, y: 680}
+    spritePosition: {x: 225, y: 623}
+  - name: B_RightLegPart2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 2618
+      y: 6271
+      width: 653
+      height: 1080
+    spriteID: 3d3c2a408fee6b54a8a407a7896e5cf4
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 1928, y: 4748}
+    spritePosition: {x: 690, y: 1523}
+  - name: B_RightLegPart3
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 4512
+      y: 546
+      width: 840
+      height: 534
+    spriteID: 13640884de1c98f44a8214753cf15c39
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 3422, y: -1282}
+    spritePosition: {x: 1090, y: 1828}
+  - name: B_L_HidraulicLegSystem2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 7970
+      width: 547
+      height: 142
+    spriteID: 150beec15480ab644884981e8167abd0
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -1512, y: 5765}
+    spritePosition: {x: 2561, y: 2205}
+  - name: B_L_HidraulicLegSystem1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1049
+      y: 7388
+      width: 450
+      height: 574
+    spriteID: 9eb0ccc14f0cc8b44b84a497037e2685
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: -2146, y: 5834}
+    spritePosition: {x: 3195, y: 1554}
+  - name: B_R_HidraulicLegSystem2
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 1689
+      y: 7975
+      width: 547
+      height: 142
+    spriteID: adbfb3cb4b7c91743b0c6297af44301e
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 673, y: 5769}
+    spritePosition: {x: 1016, y: 2206}
+  - name: B_R_HidraulicLegSystem1
+    originalName: 
+    pivot: {x: 0.5, y: 0.5}
+    alignment: 0
+    border: {x: 0, y: 0, z: 0, w: 0}
+    rect:
+      serializedVersion: 2
+      x: 3697
+      y: 2341
+      width: 450
+      height: 574
+    spriteID: 8c891c3bb1698154ba3ab3d88a6e3021
+    spriteBone: []
+    spriteOutline: []
+    vertices: []
+    spritePhysicsOutline: []
+    indices: 
+    edges: []
+    tessellationDetail: 0
+    uvTransform: {x: 3211, y: 792}
+    spritePosition: {x: 486, y: 1549}
+  characterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  sharedRigSpriteImportData: []
+  sharedRigCharacterData:
+    bones: []
+    parts: []
+    dimension: {x: 0, y: 0}
+    characterGroups: []
+    pivot: {x: 0, y: 0}
+    boneReadOnly: 0
+  platformSettings:
+  - name: DefaultTexturePlatform
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Standalone
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  - name: Android
+    overridden: 0
+    ignorePlatformSupport: 0
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    androidETC2FallbackOverride: 0
+  mosaicLayers: 1
+  characterMode: 1
+  documentPivot: {x: 0, y: 0}
+  documentAlignment: 7
+  importHiddenLayers: 0
+  layerMappingOption: 2
+  generatePhysicsShape: 0
+  paperDollMode: 0
+  keepDupilcateSpriteName: 1
+  skeletonAssetReferenceID: 
+  pipeline: {instanceID: 0}
+  pipelineVersion: 
+  padding: 4
+  spriteSizeExpand: 0
+  spriteCategoryList:
+    categories: []
+  spritePackingTag: 
+  resliceFromLayer: 0
+  mosaicPSDLayers: []
+  rigPSDLayers:
+  - name: ReinaCore
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 48815254da2140c4282701cd5afd4e24
+    layerID: 49
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: Lent
+    spriteName: Lent
+    isGroup: 0
+    parentIndex: 0
+    spriteID: c4f1e875b77d10a4e9a2c593d6bdbe75
+    layerID: 48
+    mosaicPosition: {x: 2244, y: 7975}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Head
+    spriteName: Head
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 342c463e41ab6c644ae7fa24129fcd06
+    layerID: 47
+    mosaicPosition: {x: 2618, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Chest_L_Side
+    spriteName: Chest_L_Side
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 58108d7f1a26b0742b1fa6f0f1ca105b
+    layerID: 46
+    mosaicPosition: {x: 1049, y: 2994}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Chest_R_Side
+    spriteName: Chest_R_Side
+    isGroup: 0
+    parentIndex: 0
+    spriteID: efae249537a62194aae6e402c52acd86
+    layerID: 45
+    mosaicPosition: {x: 1049, y: 3928}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: NeckGuard
+    spriteName: NeckGuard
+    isGroup: 0
+    parentIndex: 0
+    spriteID: b6a366badd03e684ba593b888588da71
+    layerID: 44
+    mosaicPosition: {x: 3697, y: 1882}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: AbdomenGuard
+    spriteName: AbdomenGuard
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 8026304ddc0ecb3468278d9b834a8fd9
+    layerID: 43
+    mosaicPosition: {x: 2618, y: 7359}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Hip
+    spriteName: Hip
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 18a40d496c2519e428ff296be3679a18
+    layerID: 42
+    mosaicPosition: {x: 2618, y: 4403}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Abdomen
+    spriteName: Abdomen
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 726a6548a58a05249a9e321716f9fca2
+    layerID: 41
+    mosaicPosition: {x: 3697, y: 1192}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Capsule
+    spriteName: Capsule
+    isGroup: 0
+    parentIndex: 0
+    spriteID: f95bae7ddc4dd274f994bf26326e823e
+    layerID: 40
+    mosaicPosition: {x: 1689, y: 5676}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Circuits
+    spriteName: Circuits
+    isGroup: 0
+    parentIndex: 0
+    spriteID: e0a18f913352fc447839327f97f3737b
+    layerID: 39
+    mosaicPosition: {x: 1049, y: 1605}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: Core_circuit
+    spriteName: Core_circuit
+    isGroup: 0
+    parentIndex: 0
+    spriteID: dac9f5488210c0d43b6bf1299d1f1904
+    layerID: 38
+    mosaicPosition: {x: 1689, y: 6987}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: L_CoreHydraulicSystem
+    spriteName: L_CoreHydraulicSystem
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 30e9f9823450fa44e900dcd6b6a9871b
+    layerID: 37
+    mosaicPosition: {x: 2232, y: 6252}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: R_CoreHydraulicSystem
+    spriteName: R_CoreHydraulicSystem
+    isGroup: 0
+    parentIndex: 0
+    spriteID: 1b801fe42f0d67a4a99075a936a3b379
+    layerID: 36
+    mosaicPosition: {x: 644, y: 5164}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: BossArms
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 7b59c13e747936c499cfdfa595499cc2
+    layerID: 23
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: L_Shoulder
+    spriteName: L_Shoulder
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 19f3e34b97aff154a9554ac6218dcf92
+    layerID: 21
+    mosaicPosition: {x: 2618, y: 2721}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: R_Shoulder
+    spriteName: R_Shoulder
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 74eb7f05d1196354aa7722443aa8aac2
+    layerID: 20
+    mosaicPosition: {x: 2618, y: 3562}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: RightFingerL
+    spriteName: RightFingerL
+    isGroup: 0
+    parentIndex: 14
+    spriteID: e60747886fed64b41bf07de04165e542
+    layerID: 19
+    mosaicPosition: {x: 1049, y: 4862}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: LeftFingerL
+    spriteName: LeftFingerL
+    isGroup: 0
+    parentIndex: 14
+    spriteID: c1ebff14192a1294eb981ab14c2b48a0
+    layerID: 18
+    mosaicPosition: {x: 2618, y: 873}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: MiddleFingerL
+    spriteName: MiddleFingerL
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 5b6e30b5edd3a6b4d8c6647346b4ef64
+    layerID: 17
+    mosaicPosition: {x: 1689, y: 1084}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: LeftFingerR
+    spriteName: LeftFingerR
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 2246c63e293d0e94697d14c8209d88f5
+    layerID: 16
+    mosaicPosition: {x: 1049, y: 6125}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: RightFingerR
+    spriteName: RightFingerR
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 128d161e84f5cd44b94c1709c01163d2
+    layerID: 15
+    mosaicPosition: {x: 2618, y: 1797}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: MiddleFingerR
+    spriteName: MiddleFingerR
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 2ebd890d060d28547aa58b94e9b48b62
+    layerID: 14
+    mosaicPosition: {x: 1689, y: 2302}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: LeftForeArm
+    spriteName: LeftForeArm
+    isGroup: 0
+    parentIndex: 14
+    spriteID: d8b1fb35213e5d84c9534bb764835749
+    layerID: 13
+    mosaicPosition: {x: 4, y: 2602}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: RightForeArm
+    spriteName: RightForeArm
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 604b5f599892dfb489b32c0392b72318
+    layerID: 12
+    mosaicPosition: {x: 4, y: 3883}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicFinger
+    spriteName: HidraulicFinger
+    isGroup: 0
+    parentIndex: 14
+    spriteID: cc40873cb7e3bd64ab3d31b3f11c18af
+    layerID: 11
+    mosaicPosition: {x: 841, y: 7845}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicFinger
+    spriteName: HidraulicFinger
+    isGroup: 0
+    parentIndex: 14
+    spriteID: d652ef3cc33b757499d2e01a283c6a00
+    layerID: 10
+    mosaicPosition: {x: 530, y: 7845}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicFinger
+    spriteName: HidraulicFinger
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 2ca9fb64282ae6c47aac65cd85032a38
+    layerID: 9
+    mosaicPosition: {x: 3279, y: 5817}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicFinger
+    spriteName: HidraulicFinger
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 67372f88b356fee46993790fac737d44
+    layerID: 8
+    mosaicPosition: {x: 4250, y: 2923}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: LeftArm
+    spriteName: LeftArm
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 33f788218a051824da2e7326816eb16c
+    layerID: 7
+    mosaicPosition: {x: 4, y: 6765}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: RightArm
+    spriteName: RightArm
+    isGroup: 0
+    parentIndex: 14
+    spriteID: f2bece52b0561c64d9eeaff1eccfcb2c
+    layerID: 6
+    mosaicPosition: {x: 1689, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicLeftArmSystem2
+    spriteName: HidraulicLeftArmSystem2
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 6643b00f50867a949b0c0d1b506fba3c
+    layerID: 5
+    mosaicPosition: {x: 3697, y: 2923}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicLeftArmSystem1
+    spriteName: HidraulicLeftArmSystem1
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 5a15c3a3297855b4a9475992f4467d0f
+    layerID: 4
+    mosaicPosition: {x: 4155, y: 2341}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicRightArmSystem2
+    spriteName: HidraulicRightArmSystem2
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 0886b030217583b468bb945d2c5de4b4
+    layerID: 3
+    mosaicPosition: {x: 3697, y: 3295}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: HidraulicRightArmSystem1
+    spriteName: HidraulicRightArmSystem1
+    isGroup: 0
+    parentIndex: 14
+    spriteID: 6b74308af622f9c4caf3016dc186764d
+    layerID: 2
+    mosaicPosition: {x: 2232, y: 5676}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: ReinaLegs
+    spriteName: 
+    isGroup: 1
+    parentIndex: -1
+    spriteID: 26ee4160ffa37a045a39cba0cf0b23f1
+    layerID: 71
+    mosaicPosition: {x: 0, y: 0}
+    flatten: 0
+    isImported: 0
+    isVisible: 1
+  - name: F_LeftLegPart1
+    spriteName: F_LeftLegPart1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 5a3399d563aed8f45b3b0a7a35589c31
+    layerID: 70
+    mosaicPosition: {x: 4, y: 5164}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_LeftLegPart2
+    spriteName: F_LeftLegPart2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: a3289c0bc5e4d994f92bd146e0d67fa7
+    layerID: 69
+    mosaicPosition: {x: 1689, y: 3520}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_LeftLegPart3
+    spriteName: F_LeftLegPart3
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 78a4d9d00e274254fb43e4c4c509358a
+    layerID: 68
+    mosaicPosition: {x: 3697, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_RightLegPart1
+    spriteName: F_RightLegPart1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 01c023700472e5141b37a33a755f7819
+    layerID: 67
+    mosaicPosition: {x: 1049, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_RightLegPart2
+    spriteName: F_RightLegPart2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 656178a55b5d61241afed4a85bf784d5
+    layerID: 66
+    mosaicPosition: {x: 1689, y: 4598}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_RightLegPart3
+    spriteName: F_RightLegPart3
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 622286cbf3c6feb46bfa002424e54519
+    layerID: 65
+    mosaicPosition: {x: 3697, y: 598}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_L_HidraulicLegSystem1
+    spriteName: F_L_HidraulicLegSystem1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: cc4fa6641f3eb0341b75abd6690cc717
+    layerID: 64
+    mosaicPosition: {x: 3279, y: 5183}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_L_HidraulicLegSystem2
+    spriteName: F_L_HidraulicLegSystem2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 1af341b9e38e8d944be0bf3a049ead69
+    layerID: 63
+    mosaicPosition: {x: 4, y: 7845}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_R_HidraulicLegSystem2
+    spriteName: F_R_HidraulicLegSystem2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: f70fb51501031ad42a311d8cf7a8af71
+    layerID: 62
+    mosaicPosition: {x: 3697, y: 3667}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: F_R_HidraulicLegSystem1
+    spriteName: F_R_HidraulicLegSystem1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 9bf42775ab6511d45b0cf43e5b405874
+    layerID: 61
+    mosaicPosition: {x: 3279, y: 6271}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_LeftLegPart1
+    spriteName: B_LeftLegPart1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: f878197809c9f5741a7ad8e37c1f749f
+    layerID: 60
+    mosaicPosition: {x: 4, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_LeftLegPart2
+    spriteName: B_LeftLegPart2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: d5771cc57d386a54aa27491cf9b2c17b
+    layerID: 59
+    mosaicPosition: {x: 2618, y: 5183}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_LeftLegPart3
+    spriteName: B_LeftLegPart3
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 7f9c8177b4b736a479615fc40e9c5172
+    layerID: 58
+    mosaicPosition: {x: 4512, y: 4}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_RightLegPart1
+    spriteName: B_RightLegPart1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 4ae01c93d933a254dbc8ef7d8766317f
+    layerID: 57
+    mosaicPosition: {x: 4, y: 1303}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_RightLegPart2
+    spriteName: B_RightLegPart2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 3d3c2a408fee6b54a8a407a7896e5cf4
+    layerID: 56
+    mosaicPosition: {x: 2618, y: 6271}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_RightLegPart3
+    spriteName: B_RightLegPart3
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 13640884de1c98f44a8214753cf15c39
+    layerID: 55
+    mosaicPosition: {x: 4512, y: 546}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_L_HidraulicLegSystem2
+    spriteName: B_L_HidraulicLegSystem2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 150beec15480ab644884981e8167abd0
+    layerID: 54
+    mosaicPosition: {x: 1049, y: 7970}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_L_HidraulicLegSystem1
+    spriteName: B_L_HidraulicLegSystem1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 9eb0ccc14f0cc8b44b84a497037e2685
+    layerID: 53
+    mosaicPosition: {x: 1049, y: 7388}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_R_HidraulicLegSystem2
+    spriteName: B_R_HidraulicLegSystem2
+    isGroup: 0
+    parentIndex: 35
+    spriteID: adbfb3cb4b7c91743b0c6297af44301e
+    layerID: 52
+    mosaicPosition: {x: 1689, y: 7975}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  - name: B_R_HidraulicLegSystem1
+    spriteName: B_R_HidraulicLegSystem1
+    isGroup: 0
+    parentIndex: 35
+    spriteID: 8c891c3bb1698154ba3ab3d88a6e3021
+    layerID: 51
+    mosaicPosition: {x: 3697, y: 2341}
+    flatten: 0
+    isImported: 1
+    isVisible: 1
+  sharedRigPSDLayers: []
+  pSDLayerImportSetting: []
+  importFileNodeState: 1
+  platformSettingsDirtyTick: 0
+  spriteSizeExpandChanged: 0
+  generateGOHierarchy: 0
+  textureAssetName: 
+  prefabAssetName: 
+  spriteLibAssetName: 
+  skeletonAssetName: 
+  secondarySpriteTextures: []
