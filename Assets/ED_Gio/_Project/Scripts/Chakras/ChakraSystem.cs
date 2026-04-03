@@ -13,49 +13,20 @@ namespace NABHI.Chakras
     /// </summary>
     public class ChakraSystem : MonoBehaviour
     {
-        public void ActivateChakra(int id)
-        {
-            Debug.Log("Activando Chakra: " + id);
-
-            switch (id)
-            {
-                case 0:
-                    Debug.Log("Poder 1 activado");
-                    break;
-
-                case 1:
-                    Debug.Log("Poder 2 activado");
-                    break;
-
-                case 2:
-                    Debug.Log("Poder 3 activado");
-                    break;
-
-                case 3:
-                    Debug.Log("Poder 4 activado");
-                    break;
-            }
-        }
-
-
         [Header("Referencias")]
         [SerializeField] private EnergySystem energySystem;
 
-        [Header("Input")]
-        // Botón SELECT del gamepad (abrir menú)
-        [SerializeField] private KeyCode gamepadSelectButton = KeyCode.JoystickButton6;
-
-        // Botón A (activar chakra)
-        [SerializeField] private KeyCode gamepadActivateButton = KeyCode.JoystickButton0;
-
-        // Botón B (cerrar menú)
-        [SerializeField] private KeyCode gamepadCancelButton = KeyCode.JoystickButton1;
+        [Header("Input - Teclado")]
         [Tooltip("Tecla para activar/desactivar chakra (press)")]
         [SerializeField] private KeyCode activateKey = KeyCode.E;
         [Tooltip("Tecla para abrir rueda de seleccion (hold)")]
         [SerializeField] private KeyCode wheelKey = KeyCode.Tab;
         [Tooltip("Tecla para cambio rapido de chakra")]
         [SerializeField] private KeyCode quickSwitchKey = KeyCode.LeftAlt;
+
+        [Header("Input - Mando")]
+        [Tooltip("Boton de mando para activar/desactivar chakra (B = JoystickButton1)")]
+        [SerializeField] private KeyCode activateKeyGamepad = KeyCode.JoystickButton1;
         [Tooltip("Tiempo minimo de hold para abrir rueda (evita conflicto con press)")]
         [SerializeField] private float wheelHoldTime = 0.2f;
 
@@ -80,6 +51,12 @@ namespace NABHI.Chakras
         private bool isWheelOpen;
         private float originalTimeScale;
 
+        // Bloqueo externo de input (ej: ChakraMenuUI abierto)
+        private bool isExternalMenuOpen = false;
+        // Frames a ignorar el input de activacion tras cerrar el menu
+        // (evita que B active el chakra en el mismo frame en que cierra el menu)
+        private int skipActivateInputFrames = 0;
+
         // Eventos
         public event Action<ChakraType> OnChakraSelected;
         public event Action<ChakraType> OnChakraActivated;
@@ -95,8 +72,6 @@ namespace NABHI.Chakras
         public IReadOnlyList<ChakraType> UnlockedChakras => unlockedChakraOrder;
         public EnergySystem Energy => energySystem;
 
-
-
         private void Awake()
         {
             if (energySystem == null)
@@ -106,22 +81,9 @@ namespace NABHI.Chakras
             RegisterChakras();
         }
 
-        void Start()
-        {
-            ActivateAllChakras();
-        }
-
-        void ActivateAllChakras()
-        {
-            foreach (var chakra in chakras)
-            {
-                chakra.Value.unlocked = true;
-            }
-        }
         private void Update()
         {
             HandleInput();
-
         }
 
         private void RegisterChakras()
@@ -182,17 +144,6 @@ namespace NABHI.Chakras
                 wheelKeyWasHeld = false;
             }
 
-            // Abrir rueda con SELECT del gamepad
-            if (Input.GetKeyDown(gamepadSelectButton))
-            {
-                OpenWheel();
-            }
-
-            if (Input.GetKeyUp(gamepadSelectButton))
-            {
-                CloseWheel();
-            }
-
             // Mientras la rueda esta abierta, manejar seleccion
             if (isWheelOpen)
             {
@@ -200,8 +151,15 @@ namespace NABHI.Chakras
                 return; // No procesar activacion mientras la rueda esta abierta
             }
 
-            // === ACTIVAR/DESACTIVAR CHAKRA (Press activateKey) ===
-            if (Input.GetKeyDown(activateKey) || Input.GetKeyDown(gamepadActivateButton))
+            // === ACTIVAR/DESACTIVAR CHAKRA (Press activateKey / boton B mando) ===
+            // Ignorar si el menu externo esta abierto, o si acaba de cerrarse este frame
+            // (evita que B cierre el menu Y active el chakra en el mismo frame)
+            if (skipActivateInputFrames > 0)
+            {
+                skipActivateInputFrames--;
+            }
+            else if (!isExternalMenuOpen &&
+                (Input.GetKeyDown(activateKey) || Input.GetKeyDown(activateKeyGamepad)))
             {
                 ToggleOrActivateChakra();
             }
@@ -210,11 +168,6 @@ namespace NABHI.Chakras
             if (Input.GetKeyDown(quickSwitchKey))
             {
                 QuickSwitchToNextChakra();
-            }
-
-            if (isWheelOpen && Input.GetKeyDown(gamepadCancelButton))
-            {
-                CloseWheel();
             }
         }
 
@@ -331,7 +284,7 @@ namespace NABHI.Chakras
         {
             if (type == ChakraType.None) return;
             if (!chakras.ContainsKey(type)) return;
-            if (!chakras[type].IsUnlocked) return;
+            if (!chakras[type].IsAvailable) return;
 
             selectedChakra = type;
             OnChakraSelected?.Invoke(type);
@@ -468,6 +421,68 @@ namespace NABHI.Chakras
             if (!chakras.ContainsKey(type)) return;
 
             chakras[type].Unlock();
+        }
+
+        /// <summary>
+        /// Llamado por ChakraZone al entrar: habilita los chakras de la zona.
+        /// </summary>
+        public void EnableZoneChakras(ChakraType[] types)
+        {
+            foreach (var type in types)
+            {
+                if (!chakras.ContainsKey(type)) continue;
+
+                var chakra = chakras[type];
+                chakra.SetZoneEnabled(true);
+
+                if (!unlockedChakraOrder.Contains(type))
+                {
+                    unlockedChakraOrder.Add(type);
+                    unlockedChakraOrder.Sort((a, b) => ((int)a).CompareTo((int)b));
+                }
+
+                if (selectedChakra == ChakraType.None)
+                    SelectChakra(type);
+
+                OnChakraUnlocked?.Invoke(type);
+
+                if (debugMode)
+                    Debug.Log($"[ChakraSystem] Zona habilitó: {type}");
+            }
+        }
+
+        /// <summary>
+        /// Llamado por ChakraZone al salir: deshabilita los chakras de la zona.
+        /// </summary>
+        public void DisableZoneChakras(ChakraType[] types)
+        {
+            foreach (var type in types)
+            {
+                if (!chakras.ContainsKey(type)) continue;
+
+                var chakra = chakras[type];
+                chakra.SetZoneEnabled(false);
+
+                // Desactivar si está en uso
+                if (activeChakra == type)
+                    DeactivateCurrentChakra();
+
+                // Quitar de la rueda solo si no está desbloqueado permanentemente
+                if (!chakra.IsUnlocked)
+                {
+                    unlockedChakraOrder.Remove(type);
+
+                    if (selectedChakra == type)
+                    {
+                        selectedChakra = ChakraType.None;
+                        if (unlockedChakraOrder.Count > 0)
+                            SelectChakra(unlockedChakraOrder[0]);
+                    }
+                }
+
+                if (debugMode)
+                    Debug.Log($"[ChakraSystem] Zona deshabilitó: {type}");
+            }
         }
 
         private void HandleChakraUnlocked(ChakraBase chakra)
@@ -609,20 +624,9 @@ namespace NABHI.Chakras
         /// <summary>
         /// Activa el chakra seleccionado desde la UI
         /// </summary>
-        /// <summary>
-        /// Activa el chakra seleccionado desde la UI
-        /// </summary>
         public void ActivateFromUI()
         {
             ToggleOrActivateChakra();
-        }
-
-        /// <summary>
-        /// Activa el chakra seleccionado desde menus externos
-        /// </summary>
-        public void ActivateSelectedChakra()
-        {
-            TryActivateSelectedChakra();
         }
 
         /// <summary>
@@ -639,6 +643,19 @@ namespace NABHI.Chakras
         public void CloseWheelFromUI()
         {
             CloseWheel();
+        }
+
+        /// <summary>
+        /// Llamado por ChakraMenuUI al abrir/cerrar el menu.
+        /// Bloquea el input de activacion de chakra mientras el menu esta abierto,
+        /// evitando que B cierre el menu Y active/desactive el chakra al mismo tiempo.
+        /// </summary>
+        public void SetExternalMenuOpen(bool open)
+        {
+            isExternalMenuOpen = open;
+            // Al cerrar el menu, bloquear B por 1 frame para que no active el chakra
+            // en el mismo frame en que cerro el menu
+            if (!open) skipActivateInputFrames = 1;
         }
 
         #endregion
@@ -674,5 +691,4 @@ namespace NABHI.Chakras
 
         #endregion
     }
-
 }

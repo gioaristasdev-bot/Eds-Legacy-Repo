@@ -50,6 +50,9 @@ namespace NABHI.Chakras
         [Header("Estado")]
         [SerializeField] protected bool isUnlocked = false;
 
+        // Habilitado temporalmente por una ChakraZone (no es desbloqueo permanente)
+        protected bool isZoneEnabled = false;
+
         // Referencias
         protected EnergySystem energySystem;
         protected ChakraSystem chakraSystem;
@@ -66,14 +69,12 @@ namespace NABHI.Chakras
 
         // Propiedades publicas
         public ChakraType Type => chakraType;
-
-        // Indica si el jugador tiene desbloqueado el poder
-        public bool unlocked = true;
-
         public string Name => chakraName;
         public Color Color => chakraColor;
         public ChakraActivationMode ActivationMode => activationMode;
         public bool IsUnlocked => isUnlocked;
+        public bool IsZoneEnabled => isZoneEnabled;
+        public bool IsAvailable => isUnlocked || isZoneEnabled;
         public bool IsActive => isActive;
         public bool IsOnCooldown => cooldownTimer > 0;
         public float CooldownRemaining => cooldownTimer;
@@ -118,9 +119,17 @@ namespace NABHI.Chakras
         /// <summary>
         /// Verifica si el Chakra puede activarse
         /// </summary>
+        /// <summary>
+        /// Llamado por ChakraSystem cuando el jugador entra/sale de una ChakraZone.
+        /// </summary>
+        public void SetZoneEnabled(bool enabled)
+        {
+            isZoneEnabled = enabled;
+        }
+
         public virtual bool CanActivate()
         {
-            if (!isUnlocked)
+            if (!isUnlocked && !isZoneEnabled)
                 return false;
 
             if (IsOnCooldown)

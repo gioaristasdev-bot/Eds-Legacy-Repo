@@ -33,8 +33,12 @@ namespace NABHI.Chakras.DebugTools
 
         [Header("Estado Actual (Solo Lectura)")]
         [SerializeField] private ChakraType currentlyActive = ChakraType.None;
-        [SerializeField] public float currentEnergy = 0f;
-        [SerializeField] public float maxEnergy = 100f;
+        [SerializeField] private float currentEnergy = 0f;
+        [SerializeField] private float maxEnergy = 100f;
+
+        // Propiedades públicas para acceso externo (ej: EnergyBarUI)
+        public float CurrentEnergy => currentEnergy;
+        public float MaxEnergy => maxEnergy;
 
         // Cache para detectar cambios
         private ChakraType lastSelectedChakra = ChakraType.None;

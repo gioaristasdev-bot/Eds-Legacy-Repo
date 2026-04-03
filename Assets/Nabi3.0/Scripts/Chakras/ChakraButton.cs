@@ -8,6 +8,6 @@ public class ChakraButton : MonoBehaviour
 
     public void Activate()
     {
-        chakraSystem.ActivateChakra(chakraID);
+        chakraSystem.TryActivateChakra((ChakraType)chakraID);
     }
 }

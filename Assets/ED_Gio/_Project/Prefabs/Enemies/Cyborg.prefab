@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1516315890799504839}
   - component: {fileID: 6774341685435350228}
   - component: {fileID: 4535910799402308762}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: HurtBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cyborg
       objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.25
@@ -140,6 +144,114 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7288726940329534092, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -7162696689594910546, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -5825812684605704139, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -5769193397652943880, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -5267961316067255303, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4988582546750671679, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -4688627467887156517, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -3215020776706030308, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -2693927920469122083, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1815028755888138106, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1697835299415567751, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -1053743003483106323, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -721753946514977911, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: -654144465770038059, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 363169815711433451, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 368540796185468956, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1852361031373940347, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1921145645652776261, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1958760560476766075, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2075555403606761898, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2308335230997180423, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454622554369155318, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3551940272406826641, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4686781366121752554, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5574411616313347198, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5943260302857054993, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6808946740545417743, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -153,6 +265,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1295285692581150004}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3606713989029819479}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 58cf063e68557f04c85661c3a422892f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8224610624313885961}
@@ -229,6 +344,51 @@ CapsuleCollider2D:
   m_Offset: {x: -1.9213943, y: 7.9570713}
   m_Size: {x: 6.347702, y: 16.914143}
   m_Direction: 0
+--- !u!61 &3606713989029819479
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090854264293973769}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.9590378, y: 7.7137327}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.387375, y: 16.427465}
+  m_EdgeRadius: 0
 --- !u!114 &8224610624313885961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +413,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   requireLineOfSight: 1
-  eyeHeight: 0.4
+  eyeOffset: {x: 0.03, y: 3.8}
   invisibleLayerName: InvisiblePlayer
   patrolSpeed: 2
   patrolDistance: 4
@@ -264,6 +424,8 @@ MonoBehaviour:
   hackDisableDuration: 3
   animator: {fileID: 0}
   hitStateDuration: 0.25
+  spriteDefaultFacesLeft: 0
+  visualRoot: {fileID: 2886169179061815146}
   spriteRenderer: {fileID: 0}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   chaseColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -272,6 +434,8 @@ MonoBehaviour:
   stunColor: {r: 0.5, g: 0.5, b: 1, a: 1}
   hackedColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
   hurtColor: {r: 1, g: 1, b: 1, a: 1}
+  deathVFXPrefab: {fileID: 0}
+  deathFadeDuration: 0.8
   showDebugGizmos: 1
   contactDamage: 10
   contactCooldown: 0.8

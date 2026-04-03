@@ -39,6 +39,8 @@ namespace NABHI.Enemies
         [SerializeField] private Transform turretPivot;
         [SerializeField] private float rotationSpeed = 180f;
         [SerializeField] private float maxRotationAngle = 90f;
+        [Tooltip("Offset en grados del cañón respecto al eje +X del pivot.\n0 = cañón mira a la derecha\n90 = cañón mira hacia arriba\n-90 = cañón mira hacia abajo")]
+        [SerializeField] private float barrelAngleOffset = 0f;
 
         [Header("Turret - Comportamiento")]
         [SerializeField] private float returnToIdleDelay = 2f;
@@ -93,6 +95,8 @@ namespace NABHI.Enemies
                     break;
 
                 case EnemyState.Attack:
+                    if (playerTarget != null && IsPlayerStillDetected())
+                        isAlertedByDamage = false; // detección normal tomó el control
                     OnAttack();
                     break;
 
@@ -172,6 +176,33 @@ namespace NABHI.Enemies
 
         #endregion
 
+        #region STUN
+
+        protected override void EndStun()
+        {
+            isStunned = false;
+            stunTimer = 0f;
+            ChangeState(EnemyState.Idle);
+        }
+
+        #endregion
+
+        #region ALERTA POR DAÑO
+
+        protected override EnemyState GetStateAfterHit()
+        {
+            // La torreta no persigue: si recibe daño y tiene target, va a Attack
+            if (alertOnDamage
+                && playerTarget != null
+                && stateBeforeHit == EnemyState.Idle)
+            {
+                return EnemyState.Attack;
+            }
+            return stateBeforeHit;
+        }
+
+        #endregion
+
         #region HOOKS DE ANIMACIÓN
 
         protected override void OnAnimStateChanged(EnemyState newState)
@@ -219,7 +250,8 @@ namespace NABHI.Enemies
             if (playerTarget == null) return;
 
             Vector2 dir = DirectionToPlayer();
-            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            // Restamos el offset para que sea el cañón (no el +X) el que apunte al jugador
+            float targetAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - barrelAngleOffset;
 
             float angleDiff = Mathf.DeltaAngle(baseRotation, targetAngle);
             angleDiff   = Mathf.Clamp(angleDiff, -maxRotationAngle, maxRotationAngle);
@@ -252,7 +284,11 @@ namespace NABHI.Enemies
             }
 
             Vector2 spawnPos = firePoint != null ? firePoint.position : (Vector2)turretPivot.position;
-            Vector2 dir      = turretPivot.right;
+            // Dirección real del cañón: eje +X del pivot rotado por el offset del barrel
+            float barrelWorldAngle = turretPivot.eulerAngles.z + barrelAngleOffset;
+            Vector2 dir = new Vector2(
+                Mathf.Cos(barrelWorldAngle * Mathf.Deg2Rad),
+                Mathf.Sin(barrelWorldAngle * Mathf.Deg2Rad));
 
             GameObject projObj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
             EnemyProjectile proj = projObj.GetComponent<EnemyProjectile>();

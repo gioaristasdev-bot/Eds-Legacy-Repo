@@ -27,8 +27,6 @@ namespace NABHI.Character
         private ChakraFloat chakraFloat; // Referencia al chakra Float para deshabilitar salto
         private ChakraTremor chakraTremor; // Referencia al chakra Tremor para bloquear input
 
-        public static bool inputBlocked = false;
-
         #endregion
 
         #region PARÁMETROS DE MOVIMIENTO
@@ -78,6 +76,15 @@ namespace NABHI.Character
         [SerializeField] private int maxAirJumps = 1;
 
         #endregion
+
+        [Header("Input - Mando")]
+        [Tooltip("Boton de salto en mando (A = JoystickButton0)")]
+        [SerializeField] private KeyCode jumpKeyGamepad = KeyCode.JoystickButton0;
+
+        // Bloqueo de input por menu UI abierto
+        private bool isInputBlocked = false;
+        // Frames adicionales de bloqueo al cerrar el menu (cubre el frame del boton de cierre)
+        private int skipInputFrames = 0;
 
         #region PARÁMETROS DE DASH
 
@@ -235,8 +242,36 @@ namespace NABHI.Character
 
         #region INPUT
 
+        /// <summary>
+        /// Bloquea o desbloquea todo el input del personaje.
+        /// Llamado por ChakraMenuUI al abrir/cerrar el menu.
+        /// </summary>
+        public void SetInputBlocked(bool blocked)
+        {
+            isInputBlocked = blocked;
+        }
+
+        public void SkipInputForFrames(int frames)
+        {
+            skipInputFrames = Mathf.Max(skipInputFrames, frames);
+        }
+
         private void ProcessInput()
         {
+            // Bloqueo mientras el menu esta abierto O durante los frames de gracia al cerrar.
+            // Evita que A (confirmar en menu) salte, dispare u otras acciones del personaje.
+            if (isInputBlocked || skipInputFrames > 0)
+            {
+                if (skipInputFrames > 0) skipInputFrames--;
+                moveInput = Vector2.zero;
+                jumpPressed = false;
+                jumpHeld = false;
+                jumpBufferCounter = 0f;
+                dashPressed = false;
+                sprintHeld = false;
+                return;
+            }
+
             // No procesar input si está en knockback (recibió daño)
             if (playerHealth != null && !playerHealth.CanReceiveInput())
             {
@@ -264,8 +299,8 @@ namespace NABHI.Character
             moveInput.x = Input.GetAxisRaw("Horizontal");
             moveInput.y = Input.GetAxisRaw("Vertical");
 
-            jumpPressed = Input.GetButtonDown("Jump");
-            jumpHeld = Input.GetButton("Jump");
+            jumpPressed = Input.GetButtonDown("Jump") || Input.GetKeyDown(jumpKeyGamepad);
+            jumpHeld = Input.GetButton("Jump") || Input.GetKey(jumpKeyGamepad);
             dashPressed = Input.GetButtonDown("Dash");
             sprintHeld = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 

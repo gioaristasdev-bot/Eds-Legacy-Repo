@@ -145,11 +145,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 2b3a4e09b2d58754199410f6e32445d6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.56
+      value: 31.14
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 2b3a4e09b2d58754199410f6e32445d6, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.99
+      value: 1.82
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 2b3a4e09b2d58754199410f6e32445d6, type: 3}
       propertyPath: m_LocalPosition.z
@@ -305,6 +305,9 @@ PrefabInstance:
       addedObject: {fileID: 3829777291415141286}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 2b3a4e09b2d58754199410f6e32445d6, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 3563295974158454279}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 2b3a4e09b2d58754199410f6e32445d6, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 3926013213780408366}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 2b3a4e09b2d58754199410f6e32445d6, type: 3}
       insertIndex: -1
@@ -382,6 +385,51 @@ CircleCollider2D:
   m_Offset: {x: -0.9331393, y: 6.120597}
   serializedVersion: 2
   m_Radius: 4.0419183
+--- !u!61 &3563295974158454279
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7773780741438817415}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.4187479, y: 6.2485423}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 6.674986, y: 7.996711}
+  m_EdgeRadius: 0
 --- !u!114 &3926013213780408366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,7 +454,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   requireLineOfSight: 1
-  eyeHeight: 0
+  eyeOffset: {x: 0, y: 6.47}
+  alertOnDamage: 1
+  alertSearchRadius: 40
   invisibleLayerName: InvisiblePlayer
   patrolSpeed: 2
   patrolDistance: 4
@@ -417,6 +467,8 @@ MonoBehaviour:
   hackDisableDuration: 3
   animator: {fileID: 0}
   hitStateDuration: 0.25
+  spriteDefaultFacesLeft: 0
+  visualRoot: {fileID: 8874938663674354916}
   spriteRenderer: {fileID: 0}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   chaseColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -425,6 +477,8 @@ MonoBehaviour:
   stunColor: {r: 0.5, g: 0.5, b: 1, a: 1}
   hackedColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
   hurtColor: {r: 1, g: 1, b: 1, a: 1}
+  deathVFXPrefab: {fileID: 0}
+  deathFadeDuration: 0.8
   showDebugGizmos: 1
   hoverAmplitude: 0.35
   hoverFrequency: 1.8
@@ -437,6 +491,9 @@ MonoBehaviour:
   shotsPerBurst: 4
   cooldownDuration: 2.5
   attackRangeMultiplier: 0.75
+  contactDamage: 8
+  contactCooldown: 1
+  contactOffset: {x: -0.89, y: 5.08}
 --- !u!114 &841114234138346280
 MonoBehaviour:
   m_ObjectHideFlags: 0

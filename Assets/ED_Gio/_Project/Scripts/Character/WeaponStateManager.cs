@@ -36,6 +36,10 @@ namespace NABHI.Weapons
         [Tooltip("PlayerHealth (para verificar si puede disparar durante knockback)")]
         [SerializeField] private PlayerHealth playerHealth;
 
+        [Header("Input - Mando")]
+        [Tooltip("Boton de disparo en mando (X = JoystickButton2)")]
+        [SerializeField] private KeyCode fireKeyGamepad = KeyCode.JoystickButton2;
+
         #endregion
 
         #region ESTADO
@@ -89,8 +93,8 @@ namespace NABHI.Weapons
                 return;
             }
 
-            // Detectar si está disparando (Input)
-            bool shootInput = Input.GetButton("Fire1"); // Click izquierdo / Ctrl
+            // Detectar si está disparando (teclado/mouse o boton X del mando)
+            bool shootInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
 
             if (shootInput)
             {
@@ -193,7 +197,7 @@ namespace NABHI.Weapons
 
         private void OnGUI()
         {
-            if (Debug.isDebugBuild)
+            if (false)
             {
                 GUILayout.BeginArea(new Rect(10, 150, 300, 100));
                 GUILayout.Label($"<b>Weapon State:</b>");

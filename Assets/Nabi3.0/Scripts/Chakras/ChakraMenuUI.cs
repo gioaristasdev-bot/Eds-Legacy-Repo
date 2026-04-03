@@ -2,14 +2,16 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using NABHI.Chakras;
+using NABHI.Character;
 
 public class ChakraMenuUI : MonoBehaviour
 {
     [Header("Referencias")]
     public GameObject chakraMenuPanel;
     public ChakraSystem chakraSystem;
+    public CharacterController2D characterController;
 
-    [Header("Primer botón seleccionado")]
+    [Header("Primer botï¿½n seleccionado")]
     public GameObject firstSelectedButton;
 
     [Header("Botones de Chakras")]
@@ -28,6 +30,14 @@ public class ChakraMenuUI : MonoBehaviour
     {
         chakraMenuPanel.SetActive(false);
 
+        // Auto-buscar CharacterController2D si no fue asignado en el Inspector
+        if (characterController == null)
+        {
+            characterController = FindObjectOfType<CharacterController2D>();
+            if (characterController == null)
+                Debug.LogWarning("[ChakraMenuUI] No se encontro CharacterController2D en la escena.");
+        }
+
         // Asignar funciones a los botones
         floatButton.onClick.AddListener(() => SelectChakra(ChakraType.Float));
         invisibilityButton.onClick.AddListener(() => SelectChakra(ChakraType.Invisibility));
@@ -41,19 +51,19 @@ public class ChakraMenuUI : MonoBehaviour
 
     void Update()
     {
-        // Abrir menú con TAB
+        // Abrir menï¿½ con TAB
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleMenu();
         }
 
-        // Abrir menú con SELECT del gamepad
+        // Abrir menï¿½ con SELECT del gamepad
         if (Input.GetKeyDown(KeyCode.JoystickButton6))
         {
             ToggleMenu();
         }
 
-        // Cerrar menú con B / Cancel
+        // Cerrar menï¿½ con B / Cancel
         if (menuOpen && Input.GetKeyDown(KeyCode.JoystickButton1))
         {
             ToggleMenu();
@@ -66,16 +76,26 @@ public class ChakraMenuUI : MonoBehaviour
 
         chakraMenuPanel.SetActive(menuOpen);
 
+        // Notificar a ChakraSystem para bloquear/desbloquear su input de activacion (boton B)
+        // Evita que B cierre el menu Y active/desactive el chakra al mismo tiempo
+        chakraSystem.SetExternalMenuOpen(menuOpen);
+
         if (menuOpen)
         {
+            // Bloquear TODA accion del personaje mientras el menu esta abierto.
+            // Evita saltos, disparos u otras acciones con los botones del menu.
+            characterController?.SetInputBlocked(true);
             Time.timeScale = 0f;
 
-            // Seleccionar primer botón automáticamente
+            // Seleccionar primer botï¿½n automï¿½ticamente
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         }
         else
         {
+            // Desbloquear input + 1 frame de gracia para absorber el boton de cierre
+            characterController?.SetInputBlocked(false);
+            characterController?.SkipInputForFrames(1);
             Time.timeScale = 1f;
         }
     }
@@ -83,7 +103,19 @@ public class ChakraMenuUI : MonoBehaviour
     void SelectChakra(ChakraType type)
     {
         chakraSystem.SelectChakraFromUI(type);
-        chakraSystem.TryActivateSelectedChakra();
+
+        // Solo Float se activa automaticamente desde el menu (modo vuelo persistente).
+        // El resto se activa con B/E despues de cerrar el menu.
+        if (type == ChakraType.Float)
+        {
+            chakraSystem.TryActivateSelectedChakra();
+        }
+        else
+        {
+            // Al seleccionar cualquier otro chakra, desactivar el activo actual (ej: Float).
+            // No tiene sentido volar y ademas tener Invisibilidad/Tremor listo al mismo tiempo.
+            chakraSystem.DeactivateCurrentChakra();
+        }
 
         ToggleMenu();
     }

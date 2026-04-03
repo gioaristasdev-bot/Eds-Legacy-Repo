@@ -152,20 +152,18 @@ namespace NABHI.Weapons
             }
 
             // Si hay input, actualizar dirección
-            if (rawInput.magnitude > deadzone)
+            if (aimStyle == AimStyle.FrontOnly)
+            {
+                // Siempre dispara hacia adelante, ignora input de aim
+                aimDirection = new Vector2(facingDirection, 0);
+                lastAimDirection = aimDirection;
+            }
+            else if (rawInput.magnitude > deadzone)
             {
                 if (aimStyle == AimStyle.DirectionalAim)
-                {
                     aimDirection = GetNearestEightDirection(rawInput);
-                }
-                else if (aimStyle == AimStyle.FrontOnly)
-                {
-                    aimDirection = GetNearestFrontDirection(rawInput, facingDirection);
-                }
                 else
-                {
                     aimDirection = rawInput.normalized;
-                }
 
                 lastAimDirection = aimDirection;
             }
@@ -173,13 +171,9 @@ namespace NABHI.Weapons
             {
                 // Sin input, usar dirección horizontal del personaje
                 if (characterController != null)
-                {
                     aimDirection = new Vector2(facingDirection, 0);
-                }
                 else
-                {
                     aimDirection = lastAimDirection;
-                }
             }
         }
 

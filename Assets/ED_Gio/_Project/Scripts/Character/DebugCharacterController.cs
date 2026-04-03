@@ -9,6 +9,7 @@ namespace NABHI.Character
     [RequireComponent(typeof(CharacterController2D))]
     public class DebugCharacterController : MonoBehaviour
     {
+        [SerializeField] private bool showDebug = false;
         private CharacterController2D controller;
         private GUIStyle style;
 
@@ -19,6 +20,8 @@ namespace NABHI.Character
 
         private void OnGUI()
         {
+            if (!showDebug) return;
+
             // Configurar estilo de texto
             if (style == null)
             {

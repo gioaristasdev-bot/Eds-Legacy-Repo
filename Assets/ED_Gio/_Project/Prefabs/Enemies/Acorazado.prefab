@@ -105,7 +105,7 @@ Transform:
   m_GameObject: {fileID: 6521976026303046562}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.20791169, w: 0.9781476}
-  m_LocalPosition: {x: -4.4441833, y: -4.6712375, z: 0}
+  m_LocalPosition: {x: 3.02, y: -1.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149,7 +149,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -36.37
+      value: -31.68
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -321,7 +321,13 @@ PrefabInstance:
       addedObject: {fileID: 8512651638882661024}
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}
       insertIndex: -1
+      addedObject: {fileID: 5391375162276646117}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}
+      insertIndex: -1
       addedObject: {fileID: 1230452077445553367}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6217833577214689654}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}
 --- !u!1 &660730040066175649 stripped
 GameObject:
@@ -390,6 +396,51 @@ CapsuleCollider2D:
   m_Offset: {x: -1.9262981, y: 5.576136}
   m_Size: {x: 6.8669443, y: 10.895107}
   m_Direction: 0
+--- !u!61 &5391375162276646117
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660730040066175649}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -1.9154103, y: 5.746218}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 5.8916535, y: 10.665431}
+  m_EdgeRadius: 0
 --- !u!114 &1230452077445553367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -405,7 +456,7 @@ MonoBehaviour:
   maxHealth: 120
   currentHealth: 0
   detectionRadius: 12
-  fieldOfView: 70
+  fieldOfView: 91.9
   use360Detection: 0
   playerLayer:
     serializedVersion: 2
@@ -414,7 +465,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   requireLineOfSight: 1
-  eyeHeight: 0.4
+  eyeOffset: {x: -1.6, y: 4.56}
+  alertOnDamage: 1
+  alertSearchRadius: 40
   invisibleLayerName: InvisiblePlayer
   patrolSpeed: 1.5
   patrolDistance: 5
@@ -425,6 +478,8 @@ MonoBehaviour:
   hackDisableDuration: 3
   animator: {fileID: 0}
   hitStateDuration: 0.25
+  spriteDefaultFacesLeft: 0
+  visualRoot: {fileID: 1865470650770631362}
   spriteRenderer: {fileID: 0}
   idleColor: {r: 1, g: 1, b: 1, a: 1}
   chaseColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
@@ -433,6 +488,8 @@ MonoBehaviour:
   stunColor: {r: 0.5, g: 0.5, b: 1, a: 1}
   hackedColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
   hurtColor: {r: 1, g: 1, b: 1, a: 1}
+  deathVFXPrefab: {fileID: 0}
+  deathFadeDuration: 0.8
   showDebugGizmos: 1
   projectilePrefab: {fileID: 4319337542420934468, guid: 697dbb13e36323049b7d5b8baa068c63, type: 3}
   firePoint: {fileID: 7737592135837124891}
@@ -442,12 +499,29 @@ MonoBehaviour:
   shotsPerBurst: 2
   cooldownDuration: 3
   maxShootDistance: 12
+  contactDamage: 12
+  contactCooldown: 1
+  contactOffset: {x: -2.84, y: 3.96}
   groundCheckDistance: 1.5
   edgeCheckOffset: 0.8
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   feetCheckDistance: 0.3
+--- !u!114 &6217833577214689654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660730040066175649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12160762374c2cb489b7ee686b1dc4f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 10
+  cooldown: 1
 --- !u!4 &1865470650770631362 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 74ef5011687a8de4aaf19e092ac1c84c, type: 3}

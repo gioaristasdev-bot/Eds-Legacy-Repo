@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using NABHI.Character;
 using NABHI.Chakras.Abilities;
@@ -97,8 +98,14 @@ namespace NABHI.Enemies
         [SerializeField] protected LayerMask playerLayer;
         [SerializeField] protected LayerMask obstacleLayer;
         [SerializeField] protected bool requireLineOfSight = true;
-        [Tooltip("Offset vertical para el raycast de línea de visión (altura de los ojos)")]
-        [SerializeField] protected float eyeHeight = 0.4f;
+        [Tooltip("Offset del punto de visión relativo al pivot. X: horizontal (respeta flip), Y: vertical")]
+        [SerializeField] protected Vector2 eyeOffset = new Vector2(0f, 0.4f);
+
+        [Header("Alerta por Daño")]
+        [Tooltip("Si es true, al recibir daño el enemigo detecta al jugador aunque no esté en su FOV y lo persigue")]
+        [SerializeField] protected bool alertOnDamage = true;
+        [Tooltip("Radio fijo (unidades) para buscar al jugador al recibir daño. Independiente del detectionRadius")]
+        [SerializeField] protected float alertSearchRadius = 40f;
 
         [Header("Invisibilidad")]
         [SerializeField] protected string invisibleLayerName = "InvisiblePlayer";
@@ -132,6 +139,10 @@ namespace NABHI.Enemies
         [SerializeField] protected float hitStateDuration = 0.25f;
 
         [Header("Visual Feedback (color, temporal hasta tener sprites)")]
+        [Tooltip("Activar si el sprite del enemigo mira a la IZQUIERDA por defecto en el asset")]
+        [SerializeField] protected bool spriteDefaultFacesLeft = false;
+        [Tooltip("Asignar el hijo visual del prefab (contiene sprites/mesh). Si se asigna, el flip usa localScale.x en vez de flipX del SpriteRenderer")]
+        [SerializeField] protected Transform visualRoot;
         [SerializeField] protected SpriteRenderer spriteRenderer;
         [SerializeField] protected Color idleColor     = Color.white;
         [SerializeField] protected Color chaseColor    = Color.yellow;
@@ -140,6 +151,12 @@ namespace NABHI.Enemies
         [SerializeField] protected Color stunColor     = new Color(0.5f, 0.5f, 1f); // azul
         [SerializeField] protected Color hackedColor   = new Color(0.2f, 0.8f, 0.2f); // verde
         [SerializeField] protected Color hurtColor     = Color.white; // flash al recibir golpe
+
+        [Header("Muerte - Efectos")]
+        [Tooltip("Prefab de partículas que se instancia al morir (explosión, humo, etc.)")]
+        [SerializeField] private GameObject deathVFXPrefab;
+        [Tooltip("Duración del fade-out antes de destruir el objeto")]
+        [SerializeField] private float deathFadeDuration = 0.8f;
 
         [Header("Debug")]
         [SerializeField] protected bool showDebugGizmos = true;
@@ -176,6 +193,9 @@ namespace NABHI.Enemies
 
         // Muerte
         protected bool isDead;
+
+        // Alerta por daño
+        protected bool isAlertedByDamage;
 
         #endregion
 
@@ -287,6 +307,7 @@ namespace NABHI.Enemies
                 case EnemyState.Chase:
                     if (!IsPlayerStillDetected())
                     {
+                        isAlertedByDamage = false;
                         playerTarget = null;
                         ChangeState(EnemyState.Patrol);
                         break;
@@ -352,7 +373,8 @@ namespace NABHI.Enemies
             if (invisibleLayerIndex != -1 && playerTarget.gameObject.layer == invisibleLayerIndex)
                 return false;
 
-            if (Vector2.Distance(transform.position, playerTarget.position) > detectionRadius * 1.2f)
+            float chaseRadius = isAlertedByDamage ? alertSearchRadius : detectionRadius * 1.2f;
+            if (Vector2.Distance(transform.position, playerTarget.position) > chaseRadius)
                 return false;
 
             if (requireLineOfSight && !HasLineOfSight(playerTarget.position))
@@ -361,9 +383,16 @@ namespace NABHI.Enemies
             return true;
         }
 
+        protected Vector2 GetEyePosition()
+        {
+            return (Vector2)transform.position
+                + Vector2.right * (facingDirection * eyeOffset.x)
+                + Vector2.up    * eyeOffset.y;
+        }
+
         protected bool IsInFieldOfView(Vector2 targetPosition)
         {
-            Vector2 eyePos = (Vector2)transform.position + Vector2.up * eyeHeight;
+            Vector2 eyePos = GetEyePosition();
             Vector2 dir    = (targetPosition - eyePos).normalized;
             float   angle  = Vector2.Angle(new Vector2(facingDirection, 0), dir);
             return angle <= fieldOfView / 2f;
@@ -371,10 +400,10 @@ namespace NABHI.Enemies
 
         protected bool HasLineOfSight(Vector2 targetPosition)
         {
-            Vector2 eyePos      = (Vector2)transform.position + Vector2.up * eyeHeight;
-            Vector2 targetCenter = targetPosition + Vector2.up * eyeHeight;
-            Vector2 direction   = targetCenter - eyePos;
-            RaycastHit2D hit    = Physics2D.Raycast(eyePos, direction.normalized, direction.magnitude, obstacleLayer);
+            Vector2 eyePos       = GetEyePosition();
+            Vector2 targetCenter = targetPosition + Vector2.up * eyeOffset.y;
+            Vector2 direction    = targetCenter - eyePos;
+            RaycastHit2D hit     = Physics2D.Raycast(eyePos, direction.normalized, direction.magnitude, obstacleLayer);
             return hit.collider == null;
         }
 
@@ -387,10 +416,30 @@ namespace NABHI.Enemies
             if (isDead) return;
 
             currentHealth -= damage;
+            AlertOnDamage();
             EnterHitState();
 
             if (currentHealth <= 0)
                 Die();
+        }
+
+        protected virtual void AlertOnDamage()
+        {
+            if (!alertOnDamage) return;
+            if (playerTarget != null) return;
+            if (isStunned || isHacked || isDead) return;
+
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, alertSearchRadius, playerLayer);
+            foreach (var hit in hits)
+            {
+                if (invisibleLayerIndex != -1 && hit.gameObject.layer == invisibleLayerIndex)
+                    continue;
+
+                playerTarget       = hit.transform;
+                lastKnownPlayerPos = playerTarget.position;
+                isAlertedByDamage  = true;
+                return;
+            }
         }
 
         public bool IsAlive() => !isDead;
@@ -433,7 +482,19 @@ namespace NABHI.Enemies
         private void ExitHitState()
         {
             isInHitState = false;
-            ChangeState(stateBeforeHit);
+            ChangeState(GetStateAfterHit());
+        }
+
+        protected virtual EnemyState GetStateAfterHit()
+        {
+            if (alertOnDamage
+                && playerTarget != null
+                && !(invisibleLayerIndex != -1 && playerTarget.gameObject.layer == invisibleLayerIndex)
+                && (stateBeforeHit == EnemyState.Idle || stateBeforeHit == EnemyState.Patrol))
+            {
+                return EnemyState.Chase;
+            }
+            return stateBeforeHit;
         }
 
         #endregion
@@ -508,14 +569,37 @@ namespace NABHI.Enemies
             foreach (var col in GetComponents<Collider2D>())
                 col.enabled = false;
 
-            if (spriteRenderer != null)
+            if (deathVFXPrefab != null)
+                Instantiate(deathVFXPrefab, transform.position, Quaternion.identity);
+
+            StartCoroutine(DeathFadeRoutine());
+        }
+
+        private IEnumerator DeathFadeRoutine()
+        {
+            SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
+
+            Color[] startColors = new Color[renderers.Length];
+            for (int i = 0; i < renderers.Length; i++)
+                startColors[i] = renderers[i].color;
+
+            float elapsed = 0f;
+            while (elapsed < deathFadeDuration)
             {
-                Color c = spriteRenderer.color;
-                c.a = 0.3f;
-                spriteRenderer.color = c;
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / deathFadeDuration);
+
+                for (int i = 0; i < renderers.Length; i++)
+                {
+                    Color c = startColors[i];
+                    c.a = Mathf.Lerp(startColors[i].a, 0f, t);
+                    renderers[i].color = c;
+                }
+
+                yield return null;
             }
 
-            Destroy(gameObject, 1f);
+            Destroy(gameObject);
         }
 
         #endregion
@@ -632,9 +716,20 @@ namespace NABHI.Enemies
         {
             if      (directionX >  0.01f) facingDirection =  1;
             else if (directionX < -0.01f) facingDirection = -1;
+            else return;
 
-            if (spriteRenderer != null)
-                spriteRenderer.flipX = facingDirection < 0;
+            int visualDir = spriteDefaultFacesLeft ? -facingDirection : facingDirection;
+
+            if (visualRoot != null)
+            {
+                Vector3 scale = visualRoot.localScale;
+                scale.x = Mathf.Abs(scale.x) * visualDir;
+                visualRoot.localScale = scale;
+            }
+            else if (spriteRenderer != null)
+            {
+                spriteRenderer.flipX = visualDir < 0;
+            }
         }
 
         protected float DistanceToPlayer()
@@ -657,7 +752,10 @@ namespace NABHI.Enemies
         {
             if (!showDebugGizmos) return;
 
-            Vector3 eyePos = transform.position + Vector3.up * eyeHeight;
+            int gizmoDir   = Application.isPlaying ? facingDirection : 1;
+            Vector3 eyePos = transform.position
+                           + Vector3.right * (gizmoDir * eyeOffset.x)
+                           + Vector3.up    * eyeOffset.y;
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawWireSphere(eyePos, 0.1f);
@@ -667,9 +765,8 @@ namespace NABHI.Enemies
 
             if (!use360Detection)
             {
-                int dir    = Application.isPlaying ? facingDirection : 1;
-                float half = fieldOfView / 2f;
-                Vector3 fwd   = new Vector3(dir, 0, 0);
+                float half    = fieldOfView / 2f;
+                Vector3 fwd   = new Vector3(gizmoDir, 0, 0);
                 Vector3 left  = Quaternion.Euler(0, 0,  half) * fwd * detectionRadius;
                 Vector3 right = Quaternion.Euler(0, 0, -half) * fwd * detectionRadius;
                 Gizmos.color = Color.yellow;
@@ -679,7 +776,7 @@ namespace NABHI.Enemies
 
             if (Application.isPlaying && playerTarget != null)
             {
-                Vector3 targetCenter = playerTarget.position + Vector3.up * eyeHeight;
+                Vector3 targetCenter = playerTarget.position + Vector3.up * eyeOffset.y;
                 Gizmos.color = HasLineOfSight(playerTarget.position) ? Color.green : Color.red;
                 Gizmos.DrawLine(eyePos, targetCenter);
             }

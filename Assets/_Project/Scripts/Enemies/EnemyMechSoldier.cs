@@ -45,6 +45,12 @@ namespace NABHI.Enemies
         [Tooltip("Distancia máxima para iniciar ataque al detectar al jugador")]
         [SerializeField] private float maxShootDistance = 12f;
 
+        [Header("Acorazado - Daño por Contacto")]
+        [SerializeField] private float contactDamage = 12f;
+        [SerializeField] private float contactCooldown = 1f;
+        [Tooltip("Offset del centro del área de contacto relativo al pivot del prefab")]
+        [SerializeField] private Vector2 contactOffset = new Vector2(0f, 0.5f);
+
         [Header("Acorazado - Ground Check")]
         [SerializeField] private float groundCheckDistance = 1.5f;
         [SerializeField] private float edgeCheckOffset = 0.8f;
@@ -60,6 +66,7 @@ namespace NABHI.Enemies
         private float lastFireTime;
         private int shotsFired;
         private float cooldownTimer;
+        private float lastContactTime;
 
         #endregion
 
@@ -74,6 +81,29 @@ namespace NABHI.Enemies
 
             // El Acorazado es resistente al knockback
             // (también configurable en el Inspector vía herencia de EnemyBase)
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            CheckContactDamage();
+        }
+
+        private void CheckContactDamage()
+        {
+            if (isDead || isStunned || isHacked) return;
+            if (Time.time - lastContactTime < contactCooldown) return;
+
+            float radius = col != null ? col.bounds.extents.x + 0.2f : 0.7f;
+            Collider2D hit = Physics2D.OverlapCircle((Vector2)transform.position + contactOffset, radius, playerLayer);
+            if (hit == null) return;
+
+            var damageable = hit.GetComponent<NABHI.Character.IDamageable>();
+            if (damageable != null && damageable.IsAlive())
+            {
+                damageable.TakeDamage(contactDamage);
+                lastContactTime = Time.time;
+            }
         }
 
         protected override void Start()
@@ -133,25 +163,17 @@ namespace NABHI.Enemies
 
             int moveDir = movingRight ? 1 : -1;
             if (!IsGroundAhead(moveDir))
-            {
                 movingRight = !movingRight;
-                FlipSprite(movingRight ? 1f : -1f);
-            }
 
             float distFromOrigin = transform.position.x - patrolOrigin.x;
             if (distFromOrigin > patrolDistance)
-            {
                 movingRight = false;
-                FlipSprite(-1f);
-            }
             else if (distFromOrigin < -patrolDistance)
-            {
                 movingRight = true;
-                FlipSprite(1f);
-            }
 
             float moveX = movingRight ? patrolSpeed : -patrolSpeed;
             rb.velocity = new Vector2(moveX, rb.velocity.y);
+            FlipSprite(moveX);
         }
 
         protected override void OnChase()
@@ -313,6 +335,11 @@ namespace NABHI.Enemies
         protected override void OnDrawGizmosSelected()
         {
             base.OnDrawGizmosSelected();
+
+            // Área de contacto
+            float contactRadius = col != null ? col.bounds.extents.x + 0.2f : 0.7f;
+            Gizmos.color = new Color(1f, 0.3f, 0f, 0.35f);
+            Gizmos.DrawWireSphere((Vector3)((Vector2)transform.position + contactOffset), contactRadius);
 
             // Rango de disparo
             Gizmos.color = new Color(1f, 0.2f, 0f, 0.2f);

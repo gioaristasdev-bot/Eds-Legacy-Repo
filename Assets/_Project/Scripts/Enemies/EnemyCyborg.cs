@@ -121,25 +121,17 @@ namespace NABHI.Enemies
 
             int moveDir = movingRight ? 1 : -1;
             if (!IsGroundAhead(moveDir))
-            {
                 movingRight = !movingRight;
-                FlipSprite(movingRight ? 1f : -1f);
-            }
 
             float distFromOrigin = transform.position.x - patrolOrigin.x;
             if (distFromOrigin > patrolDistance)
-            {
                 movingRight = false;
-                FlipSprite(-1f);
-            }
             else if (distFromOrigin < -patrolDistance)
-            {
                 movingRight = true;
-                FlipSprite(1f);
-            }
 
             float moveX = movingRight ? patrolSpeed : -patrolSpeed;
             rb.velocity = new Vector2(moveX, rb.velocity.y);
+            FlipSprite(moveX);
         }
 
         protected override void OnChase()
@@ -177,6 +169,9 @@ namespace NABHI.Enemies
         protected override void OnAttack()
         {
             rb.velocity = new Vector2(0, rb.velocity.y);
+
+            if (playerTarget != null)
+                FlipSprite(playerTarget.position.x - transform.position.x);
 
             if (!isAttacking)
             {

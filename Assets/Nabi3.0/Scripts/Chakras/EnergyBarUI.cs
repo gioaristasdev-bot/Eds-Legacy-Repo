@@ -10,13 +10,13 @@ public class EnergyBarUI : MonoBehaviour
     void Start()
     {
         // Inicializar barra
-        energySlider.maxValue = energySystem.maxEnergy;
-        energySlider.value = energySystem.currentEnergy;
+        energySlider.maxValue = energySystem.MaxEnergy;
+        energySlider.value = energySystem.CurrentEnergy;
     }
 
     void Update()
     {
         // Actualizar barra constantemente
-        energySlider.value = energySystem.currentEnergy;
+        energySlider.value = energySystem.CurrentEnergy;
     }
 }

@@ -48,6 +48,12 @@ namespace NABHI.Enemies
         [Tooltip("Distancia para iniciar ataque (porcentaje del detectionRadius)")]
         [SerializeField] private float attackRangeMultiplier = 0.75f;
 
+        [Header("Guardián - Daño por Contacto")]
+        [SerializeField] private float contactDamage = 8f;
+        [SerializeField] private float contactCooldown = 1f;
+        [Tooltip("Offset del centro del área de contacto relativo al pivot del prefab")]
+        [SerializeField] private Vector2 contactOffset = new Vector2(0f, 0.5f);
+
         #endregion
 
         #region ESTADO
@@ -57,6 +63,7 @@ namespace NABHI.Enemies
         private float lastFireTime;
         private int shotsFired;
         private float cooldownTimer;
+        private float lastContactTime;
 
         #endregion
 
@@ -77,6 +84,28 @@ namespace NABHI.Enemies
             requireLineOfSight = true;
             hoverCenter        = transform.position;
             base.Start();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            CheckContactDamage();
+        }
+
+        private void CheckContactDamage()
+        {
+            if (isDead || isStunned || isHacked) return;
+            if (Time.time - lastContactTime < contactCooldown) return;
+
+            Collider2D hit = Physics2D.OverlapCircle((Vector2)transform.position + contactOffset, 0.7f, playerLayer);
+            if (hit == null) return;
+
+            var damageable = hit.GetComponent<NABHI.Character.IDamageable>();
+            if (damageable != null && damageable.IsAlive())
+            {
+                damageable.TakeDamage(contactDamage);
+                lastContactTime = Time.time;
+            }
         }
 
         #endregion
@@ -131,7 +160,9 @@ namespace NABHI.Enemies
             Vector2 moveDir   = targetPos - (Vector2)transform.position;
 
             rb.velocity = moveDir.normalized * patrolSpeed;
-            FlipSprite(rb.velocity.x);
+            // Usamos la derivada del seno (coseno) para detectar la dirección del patrol
+            // sin oscilación en el cruce por cero del seno
+            FlipSprite(Mathf.Cos(t * patrolSpeed * 0.4f));
         }
 
         protected override void OnChase()
@@ -291,6 +322,10 @@ namespace NABHI.Enemies
         protected override void OnDrawGizmosSelected()
         {
             base.OnDrawGizmosSelected();
+
+            // Área de contacto
+            Gizmos.color = new Color(1f, 0.3f, 0f, 0.35f);
+            Gizmos.DrawWireSphere((Vector3)((Vector2)transform.position + contactOffset), 0.7f);
 
             // Rango de ataque
             float attackRange = detectionRadius * attackRangeMultiplier;

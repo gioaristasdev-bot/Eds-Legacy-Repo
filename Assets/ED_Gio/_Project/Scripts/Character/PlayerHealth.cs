@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace NABHI.Character
 {
@@ -35,7 +34,6 @@ namespace NABHI.Character
         [SerializeField] private Rigidbody2D rb;
         [SerializeField] private HybridAnimationController hybridAnimationController;
         [SerializeField] private CharacterAnimator characterAnimator; // Fallback si no usa sistema híbrido
-        [SerializeField] private Slider healthSlider;
 
         [Header("Feedback Visual")]
         [Tooltip("GameObject que contiene los sprites (para hacer flicker)")]
@@ -72,6 +70,12 @@ namespace NABHI.Character
 
         #region UNITY CALLBACKS
 
+        void Awake()
+        {
+            // Inicializar salud en Awake para que otros scripts puedan leerla en Start()
+            currentHealth = maxHealth;
+        }
+
         void Start()
         {
             // Auto-find components si no están asignados
@@ -93,16 +97,6 @@ namespace NABHI.Character
             if (spriteRenderers == null || spriteRenderers.Length == 0)
             {
                 spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
-            }
-
-            // Inicializar salud
-            currentHealth = maxHealth;
-
-            // Inicializar Slider
-            if (healthSlider != null)
-            {
-                healthSlider.maxValue = maxHealth;
-                healthSlider.value = currentHealth;
             }
         }
 
@@ -153,11 +147,6 @@ namespace NABHI.Character
             OnHealthChanged?.Invoke(currentHealth);
             OnHit?.Invoke();
 
-            if (healthSlider != null)
-            {
-                healthSlider.value = currentHealth;
-            }
-
             // Cancelar dash si está activo (el knockback reemplaza al dash)
             if (controller != null && controller.IsDashing)
             {
@@ -202,11 +191,6 @@ namespace NABHI.Character
             Debug.Log($"[PlayerHealth] Curado: {healInt}. Salud actual: {currentHealth}/{maxHealth}");
 
             OnHealthChanged?.Invoke(currentHealth);
-
-            if (healthSlider != null)
-            {
-                healthSlider.value = currentHealth;
-            }
         }
 
         #endregion
@@ -350,11 +334,6 @@ namespace NABHI.Character
 
             OnHealthChanged?.Invoke(currentHealth);
 
-            if (healthSlider != null)
-            {
-                healthSlider.value = currentHealth;
-            }
-
             Debug.Log("[PlayerHealth] Player revivido");
         }
 
@@ -385,7 +364,7 @@ namespace NABHI.Character
 
         void OnGUI()
         {
-            if (!Debug.isDebugBuild) return;
+            return;
 
             GUILayout.BeginArea(new Rect(10, 150, 300, 150));
             GUILayout.Box("=== PLAYER HEALTH DEBUG ===");

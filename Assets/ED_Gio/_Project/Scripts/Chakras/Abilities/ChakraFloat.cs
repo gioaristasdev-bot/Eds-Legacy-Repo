@@ -31,6 +31,8 @@ namespace NABHI.Chakras.Abilities
         [Header("Input")]
         [Tooltip("Tecla para levitar (mientras el chakra esta activo)")]
         [SerializeField] private KeyCode floatKey = KeyCode.Space;
+        [Tooltip("Boton de mando para levitar - mismo que salto (A = JoystickButton0)")]
+        [SerializeField] private KeyCode floatKeyGamepad = KeyCode.JoystickButton0;
 
         [Header("Energy")]
         [Tooltip("Solo consume energia mientras levita activamente (mantiene salto)")]
@@ -76,8 +78,13 @@ namespace NABHI.Chakras.Abilities
 
             if (!isActive) return;
 
-            // Detectar si esta manteniendo el boton de salto
-            bool holdingFloat = Input.GetKey(floatKey);
+            // No aplicar fisica de vuelo con el juego pausado (menu abierto, timeScale=0).
+            // Evita que A-seleccionar en el menu setee velocidad en el Rigidbody y el personaje
+            // salga volando al reanudar la fisica.
+            if (Time.timeScale == 0f) return;
+
+            // Detectar si esta manteniendo el boton de salto (teclado Space o boton A del mando)
+            bool holdingFloat = Input.GetKey(floatKey) || Input.GetKey(floatKeyGamepad);
 
             if (holdingFloat)
             {
