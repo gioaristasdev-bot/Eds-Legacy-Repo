@@ -25,8 +25,8 @@ public class BrightnessController : MonoBehaviour
 
     private void Start()
     {
-        // Cargar valor guardado
-        brightnessValue = PlayerPrefs.GetFloat("Brightness", 0f);
+        // Cargar valor guardado, clampeado al max del slider para evitar pantalla negra
+        brightnessValue = Mathf.Clamp(PlayerPrefs.GetFloat("Brightness", 0f), 0f, 0.6f);
 
         ApplyBrightness(brightnessValue);
 

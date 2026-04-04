@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using UnityEngine.Video;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -22,7 +24,24 @@ public class MainMenuManager : MonoBehaviour
 
         optionsPanel.SetActive(false);
 
+        SetupVideoBackground();
+
         SelectButton(firstSelectedButton);
+    }
+
+    private void SetupVideoBackground()
+    {
+        GameObject videoObj = GameObject.Find("BackgroundVideoRawImage");
+        if (videoObj == null) return;
+
+        VideoPlayer videoPlayer = videoObj.GetComponent<VideoPlayer>();
+        RawImage rawImage = videoObj.GetComponent<RawImage>();
+        if (videoPlayer == null || rawImage == null) return;
+
+        RenderTexture rt = new RenderTexture(1920, 1080, 0);
+        videoPlayer.targetTexture = rt;
+        rawImage.texture = rt;
+        videoPlayer.Play();
     }
 
     public void PlayGame()

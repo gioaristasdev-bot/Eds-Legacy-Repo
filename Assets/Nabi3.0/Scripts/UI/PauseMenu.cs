@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using NABHI.UI;
+using NABHI.Character;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject firstConfirmSelected;
 
     private bool isPaused = false;
+    private CharacterController2D characterController;
+
+    private void Awake()
+    {
+        characterController = FindObjectOfType<CharacterController2D>();
+    }
 
     void Update()
     {
@@ -61,6 +68,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
 
+        if (characterController != null)
+            characterController.SetInputBlocked(true);
+
         SelectButton(firstPauseSelected);
     }
 
@@ -71,6 +81,12 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1f;
         isPaused = false;
+
+        if (characterController != null)
+        {
+            characterController.SetInputBlocked(false);
+            characterController.SkipInputForFrames(1);
+        }
 
         EventSystem.current.SetSelectedGameObject(null);
     }
@@ -103,7 +119,11 @@ public class PauseMenu : MonoBehaviour
 
     public void QuitGame()
     {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
 
     private void SelectButton(GameObject button)
