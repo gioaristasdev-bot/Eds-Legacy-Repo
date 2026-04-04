@@ -4,6 +4,8 @@ public class DoorInteraction2_5D : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private GameObject messageUI;
+    [Tooltip("Mensaje alternativo cuando la puerta requiere chakra de hacking (ej: 'Hackear con chakra')")]
+    [SerializeField] private GameObject hackMessageUI;
 
     [Header("Door")]
     [SerializeField] private Animator doorAnimator;
@@ -12,6 +14,10 @@ public class DoorInteraction2_5D : MonoBehaviour
     [Header("Audio")]
     [SerializeField] private AudioSource doorAudio;
 
+    [Header("Chakra")]
+    [Tooltip("Si está activo, el botón Y no funciona: la puerta solo se abre mediante el chakra de hacking")]
+    [SerializeField] private bool requiresHackingChakra = false;
+
     private bool playerInside;
     private bool isOpen;
 
@@ -19,6 +25,8 @@ public class DoorInteraction2_5D : MonoBehaviour
     {
         if (messageUI != null)
             messageUI.SetActive(false);
+        if (hackMessageUI != null)
+            hackMessageUI.SetActive(false);
     }
 
     private void Update()
@@ -26,20 +34,25 @@ public class DoorInteraction2_5D : MonoBehaviour
         if (!playerInside || isOpen)
             return;
 
-        // Bot�n Y del joystick (como el elevador)
+        if (requiresHackingChakra)
+            return;
+
+        // Botón Y del joystick
         if (Input.GetKeyDown(KeyCode.JoystickButton3))
         {
             OpenDoor();
         }
     }
 
-    private void OpenDoor()
+    public void OpenDoor()
     {
         isOpen = true;
         playerInside = false;
 
         if (messageUI != null)
             messageUI.SetActive(false);
+        if (hackMessageUI != null)
+            hackMessageUI.SetActive(false);
 
         if (doorAnimator != null)
             doorAnimator.SetTrigger(openTriggerName);
@@ -56,8 +69,16 @@ public class DoorInteraction2_5D : MonoBehaviour
 
         playerInside = true;
 
-        if (messageUI != null)
-            messageUI.SetActive(true);
+        if (requiresHackingChakra)
+        {
+            if (hackMessageUI != null)
+                hackMessageUI.SetActive(true);
+        }
+        else
+        {
+            if (messageUI != null)
+                messageUI.SetActive(true);
+        }
     }
 
     // ZONA DE SALIDA
@@ -68,8 +89,13 @@ public class DoorInteraction2_5D : MonoBehaviour
 
         playerInside = false;
 
-        if (!isOpen && messageUI != null)
-            messageUI.SetActive(false);
+        if (!isOpen)
+        {
+            if (messageUI != null)
+                messageUI.SetActive(false);
+            if (hackMessageUI != null)
+                hackMessageUI.SetActive(false);
+        }
     }
 }
 

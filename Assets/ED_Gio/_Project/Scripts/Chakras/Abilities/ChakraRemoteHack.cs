@@ -271,66 +271,13 @@ namespace NABHI.Chakras.Abilities
     }
 
     /// <summary>
-    /// Componente para terminales hackeables
-    /// </summary>
-    public class HackableTerminal : MonoBehaviour
-    {
-        [Header("Configuracion")]
-        [SerializeField] private bool singleUse = true;
-        [SerializeField] private UnityEngine.Events.UnityEvent onHacked;
-
-        [Header("Visual")]
-        [SerializeField] private SpriteRenderer terminalSprite;
-        [SerializeField] private Color activeColor = Color.green;
-        [SerializeField] private Color hackedColor = Color.cyan;
-
-        private bool isHacked = false;
-
-        public bool CanBeHacked => !isHacked || !singleUse;
-        public bool IsHacked => isHacked;
-
-        public void OnHacked()
-        {
-            isHacked = true;
-
-            // Cambiar color
-            if (terminalSprite != null)
-            {
-                terminalSprite.color = hackedColor;
-            }
-
-            // Invocar eventos
-            onHacked?.Invoke();
-
-            Debug.Log($"[HackableTerminal] {name} fue hackeada!");
-        }
-
-        public void Reset()
-        {
-            isHacked = false;
-            if (terminalSprite != null)
-            {
-                terminalSprite.color = activeColor;
-            }
-        }
-    }
-
-    /// <summary>
     /// Interface para enemigos y objetos hackeables por ChakraRemoteHack.
-    /// Implementada en EnemyBase para todos los enemigos del demo.
     /// </summary>
     public interface IHackable
     {
-        /// <summary>¿Puede ser hackeado ahora? (vivo, no ya hackeado, no stunneado)</summary>
         bool CanBeHacked { get; }
-
-        /// <summary>Llamado cuando el jugador empieza a hackear (barra de progreso iniciada).</summary>
         void OnHackStart();
-
-        /// <summary>Llamado cuando el hackeo se completa con éxito. Aplicar efecto aquí.</summary>
         void OnHackComplete();
-
-        /// <summary>Llamado si el hackeo es interrumpido antes de completarse.</summary>
         void OnHackInterrupted();
     }
 }
