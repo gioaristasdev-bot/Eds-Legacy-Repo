@@ -1,4 +1,5 @@
 using UnityEngine;
+using NABHI.Character;
 
 namespace NABHI.Weapons
 {
@@ -19,6 +20,8 @@ namespace NABHI.Weapons
 
         [Tooltip("Referencia al AimController (asignado automáticamente)")]
         private AimController aimController;
+
+        private PlayerSFX sfx;
 
         #endregion
 
@@ -105,6 +108,8 @@ namespace NABHI.Weapons
             {
                 Debug.LogWarning("[WeaponController] No se encontró AimController en el Player. El arma no podrá apuntar.");
             }
+
+            sfx = GetComponentInParent<PlayerSFX>();
 
             // Crear FirePoint si no existe
             if (firePoint == null)
@@ -322,14 +327,7 @@ namespace NABHI.Weapons
 
         protected virtual void OnFire()
         {
-            // Override en clases derivadas para sonido/VFX/screenshake
-            Debug.Log("Fire!");
-
-            // TODO: Agregar sonido de disparo
-            // AudioManager.Instance.PlaySound("GunShot");
-
-            // TODO: Agregar screenshake
-            // CameraShake.Instance.Shake(0.1f, 0.1f);
+            sfx?.PlayShot();
         }
 
         protected virtual void OnReloadStart()

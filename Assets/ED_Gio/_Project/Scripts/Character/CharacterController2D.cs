@@ -26,6 +26,7 @@ namespace NABHI.Character
         private PlayerHealth playerHealth; // Referencia al sistema de salud
         private ChakraFloat chakraFloat; // Referencia al chakra Float para deshabilitar salto
         private ChakraTremor chakraTremor; // Referencia al chakra Tremor para bloquear input
+        private PlayerSFX sfx; // Efectos de sonido del jugador
 
         #endregion
 
@@ -191,6 +192,7 @@ namespace NABHI.Character
             playerHealth = GetComponent<PlayerHealth>();
             chakraFloat = GetComponentInChildren<ChakraFloat>();
             chakraTremor = GetComponentInChildren<ChakraTremor>();
+            sfx = GetComponent<PlayerSFX>();
 
             // Configurar Rigidbody2D
             rb.gravityScale = 2.5f; // Ajustar al gusto
@@ -722,29 +724,27 @@ namespace NABHI.Character
 
         protected virtual void OnJump()
         {
-            // Override en clases derivadas para sonido/VFX
-            Debug.Log("Jump!");
+            sfx?.PlayJump();
         }
 
         protected virtual void OnWallJump()
         {
-            Debug.Log("Wall Jump!");
+            sfx?.PlayWallJump();
         }
 
         protected virtual void OnLanding()
         {
-            Debug.Log("Landed!");
             isJumping = false;
+            sfx?.PlayLand();
         }
 
         protected virtual void OnDashStart()
         {
-            Debug.Log("Dash Start!");
+            sfx?.PlayDash();
         }
 
         protected virtual void OnDashEnd()
         {
-            Debug.Log("Dash End!");
         }
 
         #endregion
