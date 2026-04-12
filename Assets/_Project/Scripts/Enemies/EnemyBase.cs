@@ -161,6 +161,9 @@ namespace NABHI.Enemies
         [Header("Debug")]
         [SerializeField] protected bool showDebugGizmos = true;
 
+        // Audio
+        protected EnemySFX sfx;
+
         #endregion
 
         #region ESTADO
@@ -223,6 +226,7 @@ namespace NABHI.Enemies
             if (animator == null)
                 animator = GetComponentInChildren<Animator>();
 
+            sfx = GetComponent<EnemySFX>();
             invisibleLayerIndex = LayerMask.NameToLayer(invisibleLayerName);
 
             int playerLayerIndex  = LayerMask.NameToLayer("Player");
@@ -676,7 +680,10 @@ namespace NABHI.Enemies
         ///       audioSource?.PlayOneShot(hitSound);
         ///   }
         /// </summary>
-        protected virtual void OnHitReceived() { }
+        protected virtual void OnHitReceived()
+        {
+            sfx?.PlayDamage();
+        }
 
         /// <summary>
         /// Llamado al morir, antes de Destroy. Override para animación de muerte,
@@ -689,7 +696,19 @@ namespace NABHI.Enemies
         ///       Instantiate(deathVFX, transform.position, Quaternion.identity);
         ///   }
         /// </summary>
-        protected virtual void OnDeath() { }
+        protected virtual void OnDeath()
+        {
+            sfx?.PlayDeath();
+        }
+
+        /// <summary>
+        /// Llamado al disparar un proyectil. Override en subclases si se necesita
+        /// comportamiento adicional. La llamada base reproduce el sonido de disparo.
+        /// </summary>
+        protected virtual void OnShoot()
+        {
+            sfx?.PlayShot();
+        }
 
         #endregion
 

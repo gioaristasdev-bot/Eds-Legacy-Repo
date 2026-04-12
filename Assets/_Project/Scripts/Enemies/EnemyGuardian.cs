@@ -243,6 +243,8 @@ namespace NABHI.Enemies
                 return;
             }
 
+            OnShoot();
+
             Vector2 spawnPos = firePoint != null
                 ? (Vector2)firePoint.position
                 : (Vector2)transform.position + new Vector2(facingDirection * 0.5f, 0f);

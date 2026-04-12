@@ -8035,11 +8035,6 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 534685442738874781, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
         type: 3}
-      propertyPath: chakra1_Float
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 534685442738874781, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
       propertyPath: selectedChakra
       value: 0
       objectReference: {fileID: 0}
@@ -8095,23 +8090,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7309174055325958252, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7309174055325958252, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
       propertyPath: activateKey
       value: 331
-      objectReference: {fileID: 0}
-    - target: {fileID: 7309174055325958252, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
-      propertyPath: gamepadActivateButton
-      value: 331
-      objectReference: {fileID: 0}
-    - target: {fileID: 7360313149595743695, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
-      propertyPath: chakraType
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7360313149595743695, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
         type: 3}
@@ -8125,24 +8105,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8049002439709789657, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
         type: 3}
-      propertyPath: maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8049002439709789657, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
       propertyPath: visualRoot
       value: 
       objectReference: {fileID: 1305959208}
-    - target: {fileID: 8049002439709789657, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
-      propertyPath: healthSlider
-      value: 
-      objectReference: {fileID: 680630868}
-    - target: {fileID: 8049002439709789657, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
-        type: 3}
-      propertyPath: spriteRenderers.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8182670296929810073, guid: 8c58ec83a30498d47b3bb203f5e4bb4b,
         type: 3}
       propertyPath: m_Name
@@ -28030,7 +27995,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &627151806
 RectTransform:
   m_ObjectHideFlags: 0
@@ -68263,6 +68228,127 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582393872}
   m_CullTransparentMesh: 1
+--- !u!1 &1582394705 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4090854264293973769, guid: 8d7519c18da0d054881503834bdf7a06,
+    type: 3}
+  m_PrefabInstance: {fileID: 1748265255}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1582394711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582394705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50458e1d7f2448d4eaaef1905e0ad609, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageClips: []
+  deathClips: []
+  shotClips: []
+  footstepClips: []
+  footstepInterval: 0.48
+  footstepVolume: 0.35
+  sfxVolume: 0.9
+--- !u!82 &1582394712
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582394705}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1583042576
 GameObject:
   m_ObjectHideFlags: 0
@@ -75780,7 +75866,15 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4090854264293973769, guid: 8d7519c18da0d054881503834bdf7a06,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1582394712}
+    - targetCorrespondingSourceObject: {fileID: 4090854264293973769, guid: 8d7519c18da0d054881503834bdf7a06,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1582394711}
   m_SourcePrefab: {fileID: 100100000, guid: 8d7519c18da0d054881503834bdf7a06, type: 3}
 --- !u!1 &1749250894
 GameObject:

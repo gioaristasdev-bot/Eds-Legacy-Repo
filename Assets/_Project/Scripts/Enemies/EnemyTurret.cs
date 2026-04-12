@@ -283,6 +283,8 @@ namespace NABHI.Enemies
                 return;
             }
 
+            OnShoot();
+
             Vector2 spawnPos = firePoint != null ? firePoint.position : (Vector2)turretPivot.position;
             // Dirección real del cañón: eje +X del pivot rotado por el offset del barrel
             float barrelWorldAngle = turretPivot.eulerAngles.z + barrelAngleOffset;
