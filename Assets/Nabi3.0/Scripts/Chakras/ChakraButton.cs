@@ -8,6 +8,8 @@ public class ChakraButton : MonoBehaviour
 
     public void Activate()
     {
+        // Si chakraSystem no esta asignado, ChakraMenuUI maneja la activacion.
+        if (chakraSystem == null) return;
         chakraSystem.TryActivateChakra((ChakraType)chakraID);
     }
 }
