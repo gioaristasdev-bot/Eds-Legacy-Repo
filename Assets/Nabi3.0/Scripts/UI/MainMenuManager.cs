@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using UnityEngine.Video;
@@ -16,6 +16,13 @@ public class MainMenuManager : MonoBehaviour
     [Header("Scene")]
     [SerializeField] private string firstLevelSceneName = "Level1";
 
+    // 🔊 NUEVO: AUDIO
+    [Header("Menu Audio")]
+    [SerializeField] private AudioClip menuMusic;
+    [SerializeField] private float musicVolume = 0.5f;
+
+    private AudioSource musicSource;
+
     private bool isStartingGame;
 
     private void Start()
@@ -26,7 +33,24 @@ public class MainMenuManager : MonoBehaviour
 
         SetupVideoBackground();
 
+        // 🔊 INICIAR MUSICA
+        PlayMenuMusic();
+
         SelectButton(firstSelectedButton);
+    }
+
+    // 🔊 NUEVO MÉTODO
+    private void PlayMenuMusic()
+    {
+        if (menuMusic == null) return;
+
+        musicSource = gameObject.AddComponent<AudioSource>();
+        musicSource.clip = menuMusic;
+        musicSource.loop = true;
+        musicSource.volume = musicVolume;
+        musicSource.playOnAwake = false;
+        musicSource.spatialBlend = 0f; // 2D
+        musicSource.Play();
     }
 
     private void SetupVideoBackground()
@@ -49,6 +73,10 @@ public class MainMenuManager : MonoBehaviour
         if (isStartingGame) return;
 
         isStartingGame = true;
+
+        // 🔊 OPCIONAL: parar música al iniciar juego
+        if (musicSource != null)
+            musicSource.Stop();
 
         SceneTransitionManager.Instance.LoadScene(firstLevelSceneName);
     }
