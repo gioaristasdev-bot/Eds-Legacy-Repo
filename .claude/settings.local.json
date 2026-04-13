@@ -4,7 +4,10 @@
       "Bash(gh auth:*)",
       "Bash(git:*)",
       "Bash(xargs grep:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(grep -v \"\\\\.meta$\")",
+      "Bash(grep -E \"\\\\.\\(controller|anim|cs|prefab\\)$\")",
+      "Bash(grep -v \"m_Name: $\")"
     ]
   }
 }

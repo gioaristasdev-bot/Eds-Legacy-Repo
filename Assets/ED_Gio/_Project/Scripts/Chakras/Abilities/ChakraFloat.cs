@@ -46,10 +46,12 @@ namespace NABHI.Chakras.Abilities
         private Rigidbody2D rb;
         private float originalGravityScale;
         private bool isAscending;
+        private HybridAnimationController animController;
 
         protected override void Awake()
         {
             base.Awake();
+            animController = GetComponentInParent<HybridAnimationController>();
 
             // Configurar tipo
             chakraType = ChakraType.Float;
@@ -185,6 +187,9 @@ namespace NABHI.Chakras.Abilities
                 rb.gravityScale = floatGravityScale;
             }
 
+            // Activar animacion de levitacion
+            animController?.SetLevitating(true);
+
             // Activar particulas base (aura de levitacion)
             if (floatParticles != null)
             {
@@ -202,6 +207,9 @@ namespace NABHI.Chakras.Abilities
             {
                 rb.gravityScale = originalGravityScale;
             }
+
+            // Desactivar animacion de levitacion
+            animController?.SetLevitating(false);
 
             // Detener todas las particulas
             if (floatParticles != null)
