@@ -15,7 +15,8 @@ public class ElevatorController2D : MonoBehaviour
 
     [Header("Effects")]
     public ParticleSystem[] particles;
-    public AudioSource elevatorAudio;
+    [SerializeField] private AudioClip elevatorClip;
+    [SerializeField] private AudioSource elevatorAudio;
 
     private bool playerInside;
     private bool isMoving;
@@ -56,8 +57,11 @@ public class ElevatorController2D : MonoBehaviour
         }
 
         // 🔊 Activar audio
-        if (elevatorAudio != null)
+        if (elevatorAudio != null && elevatorClip != null)
+        {
+            elevatorAudio.clip = elevatorClip;
             elevatorAudio.Play();
+        }
     }
 
     void MoveElevator()

@@ -470,6 +470,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &180233581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 180233575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 5fb7bb04ab67196408cc5b1f0a217ab5, type: 3}
+  volume: 1
 --- !u!1 &204035105
 GameObject:
   m_ObjectHideFlags: 0
@@ -888,6 +902,7 @@ GameObject:
   - component: {fileID: 424877701}
   - component: {fileID: 424877700}
   - component: {fileID: 424877702}
+  - component: {fileID: 424877703}
   m_Layer: 5
   m_Name: MasterVolume
   m_TagString: Untagged
@@ -945,7 +960,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!224 &424877701
 RectTransform:
   m_ObjectHideFlags: 0
@@ -984,6 +1011,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &424877703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424877699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 4f404d7153383e74a8a51ddff134ca94, type: 3}
+  volume: 1
 --- !u!1 &531433217
 GameObject:
   m_ObjectHideFlags: 0
@@ -2593,6 +2634,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayButton
       objectReference: {fileID: 0}
+    - target: {fileID: 1336178290991655317, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1376470498042611859, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9,
         type: 3}
       propertyPath: m_Type
@@ -2846,6 +2892,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 947558215}
+    - targetCorrespondingSourceObject: {fileID: 1336178290991655317, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 947558218}
   m_SourcePrefab: {fileID: 100100000, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9, type: 3}
 --- !u!1 &947558209 stripped
 GameObject:
@@ -2898,6 +2948,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23361d1f2f9c6324298b093271a11fa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &947558218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 947558209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: a86ac0a7ac8aa40459ffa1b6a47da9ce, type: 3}
+  volume: 2
 --- !u!1 &1062870933
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3380,7 @@ GameObject:
   - component: {fileID: 1167987376}
   - component: {fileID: 1167987375}
   - component: {fileID: 1167987377}
+  - component: {fileID: 1167987378}
   m_Layer: 5
   m_Name: MusicVolume
   m_TagString: Untagged
@@ -3412,6 +3477,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1167987378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167987374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 5fb7bb04ab67196408cc5b1f0a217ab5, type: 3}
+  volume: 1
 --- !u!1 &1174098932
 GameObject:
   m_ObjectHideFlags: 0
@@ -3917,6 +3996,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1196004517}
+    - targetCorrespondingSourceObject: {fileID: 1336178290991655317, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1196004520}
   m_SourcePrefab: {fileID: 100100000, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9, type: 3}
 --- !u!114 &1196004514 stripped
 MonoBehaviour:
@@ -3957,6 +4040,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1196004520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196004515}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 6243cba26801d794eb26594be62c6647, type: 3}
+  volume: 2
 --- !u!1 &1197778316
 GameObject:
   m_ObjectHideFlags: 0
@@ -4341,6 +4438,7 @@ GameObject:
   - component: {fileID: 1310861742}
   - component: {fileID: 1310861743}
   - component: {fileID: 1310861744}
+  - component: {fileID: 1310861745}
   m_Layer: 5
   m_Name: Brightness
   m_TagString: Untagged
@@ -4437,6 +4535,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1310861745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1310861741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 4f404d7153383e74a8a51ddff134ca94, type: 3}
+  volume: 1
 --- !u!1 &1349519340
 GameObject:
   m_ObjectHideFlags: 0
@@ -5299,6 +5411,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 180233577}
+    - targetCorrespondingSourceObject: {fileID: 1336178290991655317, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 180233581}
   m_SourcePrefab: {fileID: 100100000, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9, type: 3}
 --- !u!1 &1580941450
 GameObject:
@@ -5389,6 +5505,7 @@ GameObject:
   - component: {fileID: 1611888295}
   - component: {fileID: 1611888294}
   - component: {fileID: 1611888297}
+  - component: {fileID: 1611888298}
   m_Layer: 5
   m_Name: LanguageDropdown
   m_TagString: Untagged
@@ -5532,6 +5649,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1611888298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1611888292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: e0f442b85a1a3c44995380326d7e714c, type: 3}
+  volume: 1
 --- !u!1 &1662886858
 GameObject:
   m_ObjectHideFlags: 0
@@ -5618,6 +5749,7 @@ GameObject:
   - component: {fileID: 1773654518}
   - component: {fileID: 1773654519}
   - component: {fileID: 1773654520}
+  - component: {fileID: 1773654521}
   m_Layer: 5
   m_Name: FullscreenToggle
   m_TagString: Untagged
@@ -5709,6 +5841,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1773654521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773654517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: 5fb7bb04ab67196408cc5b1f0a217ab5, type: 3}
+  volume: 1
 --- !u!1 &1773753082
 GameObject:
   m_ObjectHideFlags: 0
@@ -6145,6 +6291,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1781893428}
+    - targetCorrespondingSourceObject: {fileID: 1336178290991655317, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781893431}
   m_SourcePrefab: {fileID: 100100000, guid: 5ed0b2e7a1ed6d54b9c9294ba5637cb9, type: 3}
 --- !u!224 &1781893425 stripped
 RectTransform:
@@ -6185,6 +6335,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1781893431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781893426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: a86ac0a7ac8aa40459ffa1b6a47da9ce, type: 3}
+  volume: 2
 --- !u!1 &1786899814
 GameObject:
   m_ObjectHideFlags: 0
@@ -6436,6 +6600,7 @@ GameObject:
   - component: {fileID: 1812930612}
   - component: {fileID: 1812930613}
   - component: {fileID: 1812930614}
+  - component: {fileID: 1812930615}
   m_Layer: 5
   m_Name: SFXVolume
   m_TagString: Untagged
@@ -6532,6 +6697,20 @@ MonoBehaviour:
   normalScale: {x: 1, y: 1, z: 1}
   selectedScale: {x: 1.1, y: 1.1, z: 1.1}
   speed: 10
+--- !u!114 &1812930615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1812930611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa7e7e998667844d987379dc672c1b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverSound: {fileID: 8300000, guid: e0f442b85a1a3c44995380326d7e714c, type: 3}
+  volume: 1
 --- !u!1 &1822286637
 GameObject:
   m_ObjectHideFlags: 0
@@ -6813,6 +6992,8 @@ MonoBehaviour:
   firstSelectedButton: {fileID: 947558209}
   firstOptionsSelected: {fileID: 424877699}
   firstLevelSceneName: Level1
+  menuMusic: {fileID: 8300000, guid: f81e62cf781dba34c9ed0fddef7756a2, type: 3}
+  musicVolume: 0.2
 --- !u!4 &1929085548
 Transform:
   m_ObjectHideFlags: 0

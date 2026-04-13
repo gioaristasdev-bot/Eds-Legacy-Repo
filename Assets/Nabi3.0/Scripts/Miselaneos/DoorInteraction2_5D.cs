@@ -12,7 +12,7 @@ public class DoorInteraction2_5D : MonoBehaviour
     [SerializeField] private string openTriggerName = "OpenDoor";
 
     [Header("Audio")]
-    [SerializeField] private AudioSource doorAudio;
+    [SerializeField] private AudioClip doorAudio;
 
     [Header("Chakra")]
     [Tooltip("Si está activo, el botón Y no funciona: la puerta solo se abre mediante el chakra de hacking")]
@@ -58,7 +58,7 @@ public class DoorInteraction2_5D : MonoBehaviour
             doorAnimator.SetTrigger(openTriggerName);
 
         if (doorAudio != null)
-            doorAudio.Play();
+            AudioSource.PlayClipAtPoint(doorAudio, transform.position);
     }
 
     // ZONA DE ENTRADA
