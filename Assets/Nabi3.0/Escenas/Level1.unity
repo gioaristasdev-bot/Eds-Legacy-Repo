@@ -6351,12 +6351,12 @@ GameObject:
   - component: {fileID: 113657009}
   - component: {fileID: 113657008}
   m_Layer: 0
-  m_Name: Image (5)
+  m_Name: Telequinesis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &113657007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6374,7 +6374,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 200}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &113657008
 MonoBehaviour:
@@ -6396,7 +6396,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f52fcbc9b8a42454da95c996c85289b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f9c3932792ae28244a1744fcd7fea16a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6614,10 +6614,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
+    m_HighlightedSprite: {fileID: 21300000, guid: 3b7844ea7d2c9dc49a247d9439f47f64,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 517862fac4ec0c34a9bf5fa7f83e8942, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 517862fac4ec0c34a9bf5fa7f83e8942, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -6676,7 +6676,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e196fbd708d883046b1d345c40ad00b8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f31fc0a8c18b0dc40a193178b7f17167, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6693,7 +6693,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115620558}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
@@ -8688,7 +8688,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0c82821792ddb8e43bed094bc5f0999d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a8f116a5ada820042bf25a201cd5bfd3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -12192,7 +12192,7 @@ GameObject:
   - component: {fileID: 230934264}
   - component: {fileID: 230934263}
   m_Layer: 0
-  m_Name: Image (2)
+  m_Name: Hack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12237,7 +12237,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bfbbc8849d9970341b52389c2c8c25db, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 617e756e7bae5774fab664d1e26705a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14649,7 +14649,7 @@ GameObject:
   - component: {fileID: 308529071}
   - component: {fileID: 308529070}
   m_Layer: 0
-  m_Name: Image (4)
+  m_Name: Invisivilidad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17214,7 +17214,7 @@ GameObject:
   - component: {fileID: 362524642}
   - component: {fileID: 362524641}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: Telekinesis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24365,7 +24365,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535940933}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
@@ -24416,10 +24416,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
+    m_HighlightedSprite: {fileID: 21300000, guid: e396158ef427ec0449898b526449f488,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: f474cd095c9089646aa2848761882c89, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: f474cd095c9089646aa2848761882c89, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -25432,12 +25432,12 @@ GameObject:
   - component: {fileID: 553928004}
   - component: {fileID: 553928003}
   m_Layer: 0
-  m_Name: Image
+  m_Name: Eco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &553928002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25477,7 +25477,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3c9ab95fc2f52954994066721f8ac751, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 64ea662484697b14fb06224e882a58f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -26839,7 +26839,7 @@ GameObject:
   - component: {fileID: 581446154}
   - component: {fileID: 581446153}
   m_Layer: 0
-  m_Name: Image (6)
+  m_Name: Temblor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26862,7 +26862,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 150, y: 200}
+  m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &581446153
 MonoBehaviour:
@@ -26884,7 +26884,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f50f27b10801484468f6b20c3614ff7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fb861d4f06f019f4c8416f1c4fc52aae, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -28722,7 +28722,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &627151806
 RectTransform:
   m_ObjectHideFlags: 0
@@ -29164,7 +29164,7 @@ GameObject:
   - component: {fileID: 642466431}
   - component: {fileID: 642466430}
   m_Layer: 0
-  m_Name: Image (2)
+  m_Name: Eco
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29465,7 +29465,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: a8f116a5ada820042bf25a201cd5bfd3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3c927ce6ced786849aef9ea78ac14cee, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -29617,7 +29617,7 @@ GameObject:
   - component: {fileID: 656254701}
   - component: {fileID: 656254700}
   m_Layer: 0
-  m_Name: Image (7)
+  m_Name: Temblor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33850,7 +33850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3c927ce6ced786849aef9ea78ac14cee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 0c82821792ddb8e43bed094bc5f0999d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -35080,7 +35080,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ab0a53e0d936a0e408c8f597936737e0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc3bd362a65cae84ebb6f1007c1ee9f0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -38753,10 +38753,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
+    m_HighlightedSprite: {fileID: 21300000, guid: fc4acdc802771364890b9ec2b5dfc187,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 1f49f5d7095985e499cf007749ba575b, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 1f49f5d7095985e499cf007749ba575b, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -38832,7 +38832,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 825968218}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
@@ -43285,7 +43285,7 @@ GameObject:
   - component: {fileID: 925932147}
   - component: {fileID: 925932146}
   m_Layer: 0
-  m_Name: Image (5)
+  m_Name: PulsoElectromagnetico
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44467,7 +44467,7 @@ GameObject:
   - component: {fileID: 957612250}
   - component: {fileID: 957612249}
   m_Layer: 0
-  m_Name: Image (1)
+  m_Name: Float
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44512,7 +44512,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d2d981bb041dd7a4d99cd550f0ba2e31, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19fab070e3e097b47991efd987614751, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -51429,7 +51429,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 43c2331500d7d0c4b8b969769e5b37a8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ab0a53e0d936a0e408c8f597936737e0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -53078,7 +53078,7 @@ GameObject:
   - component: {fileID: 1172023921}
   - component: {fileID: 1172023920}
   m_Layer: 0
-  m_Name: Image (4)
+  m_Name: Pulso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53123,7 +53123,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6480ac7a79904c744ac4d7d30661912d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cc7c82208d356cd4b91de61511e4e865, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -59991,10 +59991,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
+    m_HighlightedSprite: {fileID: 21300000, guid: 42b58b4525bfb1245b57774bd7018e80,
       type: 3}
     m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 8aaa9441343e99345adada3b95475afa, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -60002,7 +60002,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1329670012}
   m_OnClick:
     m_PersistentCalls:
@@ -60053,7 +60053,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0e2ebce3e6602d443b4c05898ca54fbf, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e852c461e41722843a3de2789d5f6013, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -60070,7 +60070,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329670009}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
@@ -60477,10 +60477,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
+    m_HighlightedSprite: {fileID: 21300000, guid: 5744928139322dc43ad69ebf37a7e1d6,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 6df976a6e6f50fa4caf7640aaf194677, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 6df976a6e6f50fa4caf7640aaf194677, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -60556,7 +60556,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1344656423}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
@@ -64078,7 +64078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 46.47876, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1433157334
@@ -66372,7 +66372,7 @@ GameObject:
   - component: {fileID: 1484982783}
   - component: {fileID: 1484982782}
   m_Layer: 0
-  m_Name: Image (3)
+  m_Name: Hacker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67104,7 +67104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 46.47876, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1507792065
@@ -68784,7 +68784,7 @@ MonoBehaviour:
   chakraMenuPanel: {fileID: 627151805}
   chakraSystem: {fileID: 1849571209}
   characterController: {fileID: 1849571201}
-  firstSelectedButton: {fileID: 535940933}
+  firstSelectedButton: {fileID: 1329670009}
   floatButton: {fileID: 535940937}
   invisibilityButton: {fileID: 825968219}
   tremorButton: {fileID: 115620559}
@@ -68795,17 +68795,16 @@ MonoBehaviour:
   gravityPulseButton: {fileID: 37429715}
   chakraTitleText: {fileID: 682210793}
   chakraDescriptionText: {fileID: 1081115063}
-  chakraSymbolImage: {fileID: 553928003}
+  chakraSymbolImage: {fileID: 113657008}
   capsulaImage: {fileID: 0}
   edImages:
-  - {fileID: 424232039}
-  - {fileID: 362524639}
+  - {fileID: 1946240742}
+  - {fileID: 308529068}
+  - {fileID: 656254698}
   - {fileID: 642466428}
   - {fileID: 1484982780}
-  - {fileID: 308529068}
   - {fileID: 925932144}
-  - {fileID: 1946240742}
-  - {fileID: 656254698}
+  - {fileID: 362524639}
   chakraData:
   - title: 
     description: 
@@ -68814,15 +68813,15 @@ MonoBehaviour:
   - title: Float
     description: 
     color: {r: 0.97235936, g: 0.5896226, b: 1, a: 0}
-    symbol: {fileID: 0}
+    symbol: {fileID: 21300000, guid: 19fab070e3e097b47991efd987614751, type: 3}
   - title: Invisibiliy
     description: 
     color: {r: 0, g: 0.13424778, b: 1, a: 0}
     symbol: {fileID: 21300000, guid: 39309071febd9fb4ba2db06cefb9ee46, type: 3}
   - title: Tremor
-    description: 
+    description: Tiembla todo
     color: {r: 0, g: 0.5754717, b: 0.06685553, a: 0}
-    symbol: {fileID: 21300000, guid: f50f27b10801484468f6b20c3614ff7d, type: 3}
+    symbol: {fileID: 0}
   - title: Echo Sense
     description: 
     color: {r: 1, g: 0.38418835, b: 0, a: 0}
@@ -70637,7 +70636,7 @@ MonoBehaviour:
     m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
       type: 3}
     m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: d20ce03a798ef4146ace4cb424dfa661, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -70645,7 +70644,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1583042579}
   m_OnClick:
     m_PersistentCalls:
@@ -70696,7 +70695,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f5560aa811deb5c4d821aca82841766f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b8616cdd580f5b64e8221a09e5615a66, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -70713,7 +70712,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1583042576}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
@@ -82896,7 +82895,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fc3bd362a65cae84ebb6f1007c1ee9f0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 43c2331500d7d0c4b8b969769e5b37a8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -83641,7 +83640,7 @@ GameObject:
   - component: {fileID: 1851273518}
   - component: {fileID: 1851273517}
   m_Layer: 0
-  m_Name: Image (3)
+  m_Name: Invisivilidad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83686,7 +83685,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 39309071febd9fb4ba2db06cefb9ee46, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 42736b2203547764d92be9ce6f6309b8, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -87567,7 +87566,7 @@ GameObject:
   - component: {fileID: 1946240745}
   - component: {fileID: 1946240744}
   m_Layer: 0
-  m_Name: Image (6)
+  m_Name: Float
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94380,7 +94379,7 @@ GameObject:
   - component: {fileID: 2142833205}
   - component: {fileID: 2142833208}
   m_Layer: 5
-  m_Name: ChakraEMP
+  m_Name: ChakraPulsoElectromgnetico
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -94415,10 +94414,10 @@ MonoBehaviour:
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
-    m_HighlightedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b,
+    m_HighlightedSprite: {fileID: 21300000, guid: 7ea81a4528a64e34bbfc0b79309b0e77,
       type: 3}
-    m_PressedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
-    m_SelectedSprite: {fileID: 21300000, guid: cc405b34fc9e55540acaca9a0ffc4b9b, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: a423c6d8b0bf77649b13e5e273623642, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: a423c6d8b0bf77649b13e5e273623642, type: 3}
     m_DisabledSprite: {fileID: 0}
   m_AnimationTriggers:
     m_NormalTrigger: Normal
@@ -94426,7 +94425,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2142833204}
   m_OnClick:
     m_PersistentCalls:
@@ -94477,7 +94476,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8e937cf94d9975c4abaef8f190e7656b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c85ab1d8359699142ae2eac9fd632c1d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -94494,7 +94493,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142833201}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48721bd72dd129544bd0b47d9747c553, type: 3}
   m_Name: 
