@@ -38,6 +38,7 @@ namespace NABHI.Chakras.Abilities
         private Coroutine hackCoroutine;
         private bool isHacking;
         private float hackProgress;
+        private HybridAnimationController animController;
 
         // Propiedades
         public bool IsHacking => isHacking;
@@ -47,6 +48,7 @@ namespace NABHI.Chakras.Abilities
         protected override void Awake()
         {
             base.Awake();
+            animController = GetComponentInParent<HybridAnimationController>();
 
             // Configurar tipo
             chakraType = ChakraType.RemoteHack;
@@ -166,6 +168,9 @@ namespace NABHI.Chakras.Abilities
             isHacking = true;
             hackProgress = 0f;
 
+            // Activar animacion de hackeo
+            animController?.SetHacking(true);
+
             // Efectos
             if (hackParticles != null)
                 hackParticles.Play();
@@ -213,6 +218,7 @@ namespace NABHI.Chakras.Abilities
             isHacking = false;
             hackProgress = 0f;
             currentTarget = null;
+            animController?.SetHacking(false);
 
             if (hackParticles != null)
                 hackParticles.Stop();
@@ -226,6 +232,7 @@ namespace NABHI.Chakras.Abilities
             isHacking = false;
             hackProgress = 0f;
             currentTarget = null;
+            animController?.SetHacking(false);
 
             if (hackParticles != null)
                 hackParticles.Stop();
@@ -244,6 +251,7 @@ namespace NABHI.Chakras.Abilities
             isHacking = false;
             hackProgress = 0f;
             currentTarget = null;
+            animController?.SetHacking(false);
 
             if (hackBeam != null)
                 hackBeam.enabled = false;
