@@ -123,7 +123,7 @@ MonoBehaviour:
   energyCostPerSecond: 10
   energyCostPerUse: 20
   cooldown: 0
-  isUnlocked: 0
+  isUnlocked: 1
   floatForce: 8
   maxUpwardSpeed: 4
   floatGravityScale: 0.2
@@ -182,7 +182,7 @@ MonoBehaviour:
   energyCostPerSecond: 5
   energyCostPerUse: 5
   cooldown: 0
-  isUnlocked: 0
+  isUnlocked: 1
   invisibleAlpha: 0.2
   fadeSpeed: 5
   cancelOnAttack: 1
@@ -238,7 +238,7 @@ MonoBehaviour:
   energyCostPerSecond: 10
   energyCostPerUse: 20
   cooldown: 0
-  isUnlocked: 0
+  isUnlocked: 1
   tremblRadius: 10
   stunDuration: 2
   knockbackForce: 8

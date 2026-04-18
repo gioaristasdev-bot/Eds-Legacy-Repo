@@ -76,8 +76,15 @@ namespace NABHI.Chakras
         {
             if (energySystem == null)
                 energySystem = GetComponent<EnergySystem>();
+        }
 
-            // Registrar todos los chakras hijos
+        private void Start()
+        {
+            // Registrar chakras en Start() y no en Awake() para garantizar que los Awake()
+            // de los componentes hijos (ChakraFloat, ChakraRemoteHack, etc.) ya hayan corrido
+            // y establecido correctamente su chakraType, activationMode, etc.
+            // En Builds, Unity ejecuta Awake() del padre antes que el de los hijos,
+            // por lo que RegisterChakras() en Awake() registraría todos los chakras con tipo 0 (None).
             RegisterChakras();
         }
 
