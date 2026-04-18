@@ -77,9 +77,9 @@ namespace NABHI.Enemies
         /// </summary>
         public static class AnimParam
         {
-            public const string State    = "State";    // Integer - estado actual
-            public const string Hit      = "Hit";      // Trigger - golpe recibido
-            public const string IsDead   = "IsDead";  // Bool    - muerte persistente
+            public const string State    = "State";       // Integer - estado actual
+            public const string Hit      = "Hit";        // Trigger - golpe recibido
+            public const string IsDead   = "IsDead";    // Bool    - muerte persistente
             public const string IsMoving = "IsMoving"; // Bool    - en movimiento
         }
 

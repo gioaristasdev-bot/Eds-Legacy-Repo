@@ -280,7 +280,7 @@ namespace NABHI.Enemies
             if (newState == EnemyState.Cooldown)
                 cooldownTimer = cooldownDuration;
 
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
+             //ANIMACIÓN (descomentar cuando el artista entregue sprites):
             if (animator == null) return;
 
             animator.SetInteger(AnimParam.State, (int)newState);
@@ -290,7 +290,7 @@ namespace NABHI.Enemies
 
             if (newState == EnemyState.Hit)  animator.SetTrigger(AnimParam.Hit);
             if (newState == EnemyState.Dead) animator.SetBool(AnimParam.IsDead, true);
-            */
+            
         }
 
         protected override void OnHitReceived()
