@@ -4,7 +4,10 @@
       "Bash(gh auth:*)",
       "Bash(git:*)",
       "Bash(xargs grep:*)",
-      "Bash(python3:*)"
+      "Bash(python3:*)",
+      "Bash(sed -n '9637,9645p' \"C:/Users/PcVip/Documents/ProyectoNabi 3.0 05-03-2026-2022.3.51f1PrubasCarlos1/Nabhi EDs Legacy/Assets/Nabi3.0/Escenas/Level1.unity\")",
+      "Bash(sed -n '45909,45917p' \"C:/Users/PcVip/Documents/ProyectoNabi 3.0 05-03-2026-2022.3.51f1PrubasCarlos1/Nabhi EDs Legacy/Assets/Nabi3.0/Escenas/Level1.unity\")",
+      "Bash(sed -n '69533,69541p' \"C:/Users/PcVip/Documents/ProyectoNabi 3.0 05-03-2026-2022.3.51f1PrubasCarlos1/Nabhi EDs Legacy/Assets/Nabi3.0/Escenas/Level1.unity\")"
     ]
   }
 }

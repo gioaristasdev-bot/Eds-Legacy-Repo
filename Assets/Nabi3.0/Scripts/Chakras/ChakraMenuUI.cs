@@ -28,10 +28,12 @@ public class ChakraMenuUI : MonoBehaviour
     [Header("Feedback Visual")]
     public TextMeshProUGUI chakraTitleText;
     public TextMeshProUGUI chakraDescriptionText;
-    public Image chakraSymbolImage;   // Imagen del simbolo del chakra (debajo del titulo)
+    public Image chakraSymbolImage;   // Imagen del simbolo del chakra (debajo del titulo) — opcional, swap de sprite
     public Image capsulaImage;        // Cambia de color segun el chakra
     // Orden: 0=Float, 1=Invisibility, 2=Tremor, 3=EchoSense, 4=RemoteHack, 5=EMP, 6=Telekinesis, 7=GravityPulse
     public GameObject[] edImages;
+    // Orden: 0=Float, 1=Invisibility, 2=Tremor, 3=EchoSense, 4=RemoteHack, 5=EMP, 6=Telekinesis, 7=GravityPulse
+    public GameObject[] symbolImages;
 
     [Header("Datos por Chakra")]
     // Orden: Float, Invisibility, Tremor, EchoSense, RemoteHack, EMP, Telekinesis, GravityPulse
@@ -94,9 +96,12 @@ public class ChakraMenuUI : MonoBehaviour
                 AddPointerEnterTrigger(buttonOrder[idx], typeOrder[idx]);
         }
 
-        // Inicializar datos por defecto si el array esta vacio o sin titulo en el primer elemento
-        if (chakraData == null || chakraData.Length == 0 ||
-            string.IsNullOrEmpty(chakraData[0].title))
+        // Inicializar datos por defecto solo si no hay ningun elemento con titulo valido.
+        // Se verifica cualquier elemento (no solo el primero) para evitar que una entrada
+        // vacia accidental en el inicio del array borre los datos reales del Inspector.
+        bool hasValidChakraData = chakraData != null &&
+            System.Array.Exists(chakraData, d => !string.IsNullOrEmpty(d.title));
+        if (!hasValidChakraData)
             InitDefaultChakraData();
 
         if (chakraTitleText == null)
@@ -155,6 +160,8 @@ public class ChakraMenuUI : MonoBehaviour
             characterController?.SetInputBlocked(true);
             Time.timeScale = 0f;
 
+            RefreshButtonStates();
+
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
 
@@ -184,6 +191,15 @@ public class ChakraMenuUI : MonoBehaviour
         ToggleMenu();
     }
 
+    void RefreshButtonStates()
+    {
+        for (int i = 0; i < buttonOrder.Length; i++)
+        {
+            if (buttonOrder[i] != null)
+                buttonOrder[i].interactable = chakraSystem.IsChakraUnlocked(typeOrder[i]);
+        }
+    }
+
     void UpdateVisuals(ChakraType type)
     {
         int index = ChakraTypeToIndex(type);
@@ -209,6 +225,15 @@ public class ChakraMenuUI : MonoBehaviour
             {
                 if (edImages[i] != null)
                     edImages[i].SetActive(i == index);
+            }
+        }
+
+        if (symbolImages != null)
+        {
+            for (int i = 0; i < symbolImages.Length; i++)
+            {
+                if (symbolImages[i] != null)
+                    symbolImages[i].SetActive(i == index);
             }
         }
     }

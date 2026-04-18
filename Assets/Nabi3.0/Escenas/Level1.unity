@@ -6509,7 +6509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &113657007
 RectTransform:
   m_ObjectHideFlags: 0
@@ -45961,10 +45961,6 @@ MonoBehaviour:
   - {fileID: 1946240742}
   - {fileID: 656254698}
   chakraData:
-  - title: 
-    description: 
-    color: {r: 0, g: 0, b: 0, a: 0}
-    symbol: {fileID: 0}
   - title: Float
     description: 
     color: {r: 0.97235936, g: 0.5896226, b: 1, a: 0}
@@ -69593,7 +69589,7 @@ MonoBehaviour:
   gravityPulseButton: {fileID: 37429715}
   chakraTitleText: {fileID: 682210793}
   chakraDescriptionText: {fileID: 1081115063}
-  chakraSymbolImage: {fileID: 113657008}
+  chakraSymbolImage: {fileID: 0}
   capsulaImage: {fileID: 0}
   edImages:
   - {fileID: 1946240742}
@@ -69603,11 +69599,16 @@ MonoBehaviour:
   - {fileID: 1484982780}
   - {fileID: 925932144}
   - {fileID: 362524639}
+  symbolImages:
+  - {fileID: 957612247}
+  - {fileID: 1851273515}
+  - {fileID: 581446151}
+  - {fileID: 553928001}
+  - {fileID: 230934261}
+  - {fileID: 0}
+  - {fileID: 113657006}
+  - {fileID: 1172023918}
   chakraData:
-  - title: 
-    description: 
-    color: {r: 0, g: 0, b: 0, a: 0}
-    symbol: {fileID: 0}
   - title: Float
     description: 
     color: {r: 0.97235936, g: 0.5896226, b: 1, a: 0}
