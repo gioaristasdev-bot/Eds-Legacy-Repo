@@ -21,6 +21,9 @@ namespace NABHI.Weapons
         [Tooltip("Referencia al AimController (asignado automáticamente)")]
         private AimController aimController;
 
+        [Tooltip("WeaponStateManager del Player (asignado automáticamente)")]
+        private WeaponStateManager weaponStateManager;
+
         private PlayerSFX sfx;
 
         #endregion
@@ -109,6 +112,7 @@ namespace NABHI.Weapons
                 Debug.LogWarning("[WeaponController] No se encontró AimController en el Player. El arma no podrá apuntar.");
             }
 
+            weaponStateManager = GetComponentInParent<WeaponStateManager>();
             sfx = GetComponentInParent<PlayerSFX>();
 
             // Crear FirePoint si no existe
@@ -155,6 +159,10 @@ namespace NABHI.Weapons
 
         private bool CanFire()
         {
+            // Solo disparar si el arma fue recogida
+            if (weaponStateManager != null && !weaponStateManager.HasPickedUpWeapon)
+                return false;
+
             // No puede disparar si está recargando
             if (isReloading)
                 return false;
@@ -221,8 +229,9 @@ namespace NABHI.Weapons
                 return aimController.AimDirection;
             }
 
-            // Fallback: disparar hacia donde mira el personaje
-            return Vector2.right * Mathf.Sign(transform.lossyScale.x);
+            // Fallback: usar rotación Y del transform para detectar el flip (escala ya no aplica)
+            bool facingRight = Mathf.Abs(transform.rotation.eulerAngles.y) < 90f;
+            return facingRight ? Vector2.right : Vector2.left;
         }
 
         #endregion

@@ -69,13 +69,22 @@ public class HybridAnimationController : MonoBehaviour
 
         if (riggedVisual == null)
         {
-            Debug.LogError("[HybridAnimationController] riggedVisual no asignado.");
-            enabled = false;
-            return;
+            // Buscar primer hijo con Animator como fallback
+            Animator found = GetComponentInChildren<Animator>();
+            if (found != null)
+            {
+                riggedVisual = found.gameObject;
+                if (riggedAnimator == null)
+                    riggedAnimator = found;
+                Debug.LogWarning($"[HybridAnimationController] riggedVisual auto-asignado a '{riggedVisual.name}'. Asígnalo en Inspector.");
+            }
+            else
+            {
+                Debug.LogError("[HybridAnimationController] riggedVisual no asignado y no se encontró Animator en hijos.");
+                enabled = false;
+                return;
+            }
         }
-
-        riggedBaseScale = riggedVisual.transform.localScale;
-        riggedBaseScale.x = Mathf.Abs(riggedBaseScale.x);
 
         riggedVisual.SetActive(true);
     }
@@ -137,9 +146,7 @@ public class HybridAnimationController : MonoBehaviour
 
         isFacingRight = shouldFaceRight;
 
-        Vector3 scale = riggedBaseScale;
-        scale.x = isFacingRight ? riggedBaseScale.x : -riggedBaseScale.x;
-        riggedVisual.transform.localScale = scale;
+        riggedVisual.transform.localRotation = Quaternion.Euler(0f, isFacingRight ? 0f : 180f, 0f);
     }
 
     #endregion

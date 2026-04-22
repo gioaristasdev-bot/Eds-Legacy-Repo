@@ -48,6 +48,9 @@ namespace NABHI.Weapons
         private float lastShootTime = 0f;
         private bool hasShot = false;
 
+        // true una vez que el jugador recoge el arma del mundo — impide holster automático
+        private bool hasPickedUpWeapon = false;
+
         #endregion
 
         #region PROPIEDADES PÚBLICAS
@@ -55,7 +58,12 @@ namespace NABHI.Weapons
         /// <summary>
         /// ¿El arma está equipada actualmente?
         /// </summary>
-        public bool IsWeaponEquipped => isWeaponEquipped;
+        public bool IsWeaponEquipped => hasPickedUpWeapon && isWeaponEquipped;
+
+        /// <summary>
+        /// ¿El jugador ya recogió el arma del mundo?
+        /// </summary>
+        public bool HasPickedUpWeapon => hasPickedUpWeapon;
 
         /// <summary>
         /// ¿Está disparando activamente? (para animación de Shoot)
@@ -86,6 +94,28 @@ namespace NABHI.Weapons
 
         private void Update()
         {
+            // Si el jugador ya recogió el arma, siempre está equipada — no holstear
+            if (hasPickedUpWeapon)
+            {
+                isWeaponEquipped = true;
+
+                if (playerHealth != null && !playerHealth.CanReceiveInput())
+                {
+                    IsShooting = false;
+                    if (weaponGameObject != null) weaponGameObject.SetActive(false);
+                    return;
+                }
+
+                bool shootInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
+                IsShooting = shootInput;
+
+                // El visual del arma solo aparece al disparar
+                if (weaponGameObject != null)
+                    weaponGameObject.SetActive(IsShooting);
+
+                return;
+            }
+
             // No permitir disparar si está en knockback (recibiendo daño)
             if (playerHealth != null && !playerHealth.CanReceiveInput())
             {
@@ -94,9 +124,9 @@ namespace NABHI.Weapons
             }
 
             // Detectar si está disparando (teclado/mouse o boton X del mando)
-            bool shootInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
+            bool fireInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
 
-            if (shootInput)
+            if (fireInput)
             {
                 // Equipar arma al disparar
                 if (!isWeaponEquipped)
@@ -107,7 +137,7 @@ namespace NABHI.Weapons
                 // Actualizar tiempo de último disparo
                 lastShootTime = Time.time;
                 hasShot = true;
-                IsShooting = true;
+                IsShooting = false; // Sin pickup no se activa isShooting
             }
             else
             {
@@ -139,6 +169,16 @@ namespace NABHI.Weapons
         #endregion
 
         #region MÉTODOS PÚBLICOS
+
+        /// <summary>
+        /// Llamar cuando el jugador recoge el arma del mundo.
+        /// A partir de este momento el arma permanece equipada indefinidamente.
+        /// </summary>
+        public void PickupWeapon()
+        {
+            hasPickedUpWeapon = true;
+            EquipWeapon();
+        }
 
         /// <summary>
         /// Equipar arma manualmente (muestra el arma)
