@@ -84147,8 +84147,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ed's animation without gun
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 5072924076795353626, guid: 734135a660e65254aae2b0c124887a84, type: 3}
+    - {fileID: 7722488369446054235, guid: 734135a660e65254aae2b0c124887a84, type: 3}
+    - {fileID: 6382178075642919938, guid: 734135a660e65254aae2b0c124887a84, type: 3}
+    - {fileID: 5968542355907832427, guid: 734135a660e65254aae2b0c124887a84, type: 3}
+    - {fileID: 3346659080121010707, guid: 734135a660e65254aae2b0c124887a84, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 6744207817080242354, guid: 734135a660e65254aae2b0c124887a84, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1625423055453707064, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
