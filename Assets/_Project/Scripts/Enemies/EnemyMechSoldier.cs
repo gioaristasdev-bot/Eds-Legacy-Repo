@@ -274,40 +274,35 @@ namespace NABHI.Enemies
 
         #region HOOKS DE ANIMACIÓN
 
+        // Parámetros del AcorazadoAnimator.controller
+        private static readonly int AliveHash    = Animator.StringToHash("Alive");
+        private static readonly int IdleHash     = Animator.StringToHash("Idle");
+        private static readonly int WalkingHash  = Animator.StringToHash("Walking");
+        private static readonly int ShootingHash = Animator.StringToHash("Shooting");
+
         protected override void OnAnimStateChanged(EnemyState newState)
         {
-            // Inicializar timer de Cooldown
             if (newState == EnemyState.Cooldown)
                 cooldownTimer = cooldownDuration;
 
-             //ANIMACIÓN (descomentar cuando el artista entregue sprites):
             if (animator == null) return;
 
-            animator.SetInteger(AnimParam.State, (int)newState);
+            bool alive    = newState != EnemyState.Dead;
+            bool walking  = newState == EnemyState.Patrol;
+            bool shooting = newState == EnemyState.Attack;
+            bool idle     = alive && !walking && !shooting;
 
-            bool moving = newState == EnemyState.Patrol;
-            animator.SetBool(AnimParam.IsMoving, moving);
-
-            if (newState == EnemyState.Hit)  animator.SetTrigger(AnimParam.Hit);
-            if (newState == EnemyState.Dead) animator.SetBool(AnimParam.IsDead, true);
-            
+            animator.SetBool(AliveHash,    alive);
+            animator.SetBool(WalkingHash,  walking);
+            animator.SetBool(ShootingHash, shooting);
+            animator.SetBool(IdleHash,     idle);
         }
 
-        protected override void OnHitReceived()
-        {
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
-            animator?.SetTrigger(AnimParam.Hit);
-            */
-        }
+        protected override void OnHitReceived() { }
 
         protected override void OnDeath()
         {
             rb.velocity = Vector2.zero;
-
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
-            animator?.SetBool(AnimParam.IsDead, true);
-            // Instantiate(deathVFX, transform.position, Quaternion.identity);
-            */
         }
 
         #endregion
