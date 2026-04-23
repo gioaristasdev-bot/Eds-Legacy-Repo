@@ -102,17 +102,11 @@ namespace NABHI.Weapons
                 if (playerHealth != null && !playerHealth.CanReceiveInput())
                 {
                     IsShooting = false;
-                    if (weaponGameObject != null) weaponGameObject.SetActive(false);
                     return;
                 }
 
                 bool shootInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
                 IsShooting = shootInput;
-
-                // El visual del arma solo aparece al disparar
-                if (weaponGameObject != null)
-                    weaponGameObject.SetActive(IsShooting);
-
                 return;
             }
 
@@ -166,6 +160,13 @@ namespace NABHI.Weapons
             }
         }
 
+        private void LateUpdate()
+        {
+            if (weaponGameObject == null) return;
+            // Fuente única de verdad para la visibilidad: solo visible después del pickup y mientras dispara
+            weaponGameObject.SetActive(hasPickedUpWeapon && IsShooting);
+        }
+
         #endregion
 
         #region MÉTODOS PÚBLICOS
@@ -186,11 +187,6 @@ namespace NABHI.Weapons
         public void EquipWeapon()
         {
             isWeaponEquipped = true;
-
-            if (weaponGameObject != null)
-            {
-                weaponGameObject.SetActive(true);
-            }
         }
 
         /// <summary>
@@ -201,11 +197,6 @@ namespace NABHI.Weapons
             isWeaponEquipped = false;
             hasShot = false;
             IsShooting = false;
-
-            if (weaponGameObject != null)
-            {
-                weaponGameObject.SetActive(false);
-            }
         }
 
         /// <summary>
