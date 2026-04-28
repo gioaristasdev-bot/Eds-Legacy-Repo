@@ -15,6 +15,9 @@ EditorBuildSettings:
     path: Assets/Nabi3.0/Escenas/LoadingScene.unity
     guid: 8074b508943691446b9985c4d54ee649
   - enabled: 1
+    path: Assets/Nabi3.0/Escenas/VideoIntro.unity
+    guid: c2970efb19e13ce4385ede5e47f34239
+  - enabled: 1
     path: Assets/Nabi3.0/Escenas/Level1.unity
     guid: b305c2889616abf418f1c30318424cfd
   - enabled: 1
