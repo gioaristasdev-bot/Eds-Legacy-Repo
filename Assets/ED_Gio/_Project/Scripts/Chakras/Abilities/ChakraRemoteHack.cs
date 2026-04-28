@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using NABHI.Character;
 using Debug = UnityEngine.Debug;
 
 namespace NABHI.Chakras.Abilities
@@ -39,6 +40,7 @@ namespace NABHI.Chakras.Abilities
         private bool isHacking;
         private float hackProgress;
         private HybridAnimationController animController;
+        private PlayerSFX playerSFX;
 
         // Propiedades
         public bool IsHacking => isHacking;
@@ -49,6 +51,7 @@ namespace NABHI.Chakras.Abilities
         {
             base.Awake();
             animController = GetComponentInParent<HybridAnimationController>();
+            playerSFX = GetComponentInParent<PlayerSFX>();
 
             // Configurar tipo
             chakraType = ChakraType.RemoteHack;
@@ -168,10 +171,9 @@ namespace NABHI.Chakras.Abilities
             isHacking = true;
             hackProgress = 0f;
 
-            // Activar animacion de hackeo
             animController?.SetHacking(true);
+            playerSFX?.PlayHack();
 
-            // Efectos
             if (hackParticles != null)
                 hackParticles.Play();
 

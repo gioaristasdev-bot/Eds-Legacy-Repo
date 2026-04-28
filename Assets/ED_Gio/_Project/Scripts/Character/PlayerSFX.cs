@@ -54,6 +54,20 @@ namespace NABHI.Character
         [Tooltip("EDFX/Items/Health Pickup — Health Pickup *.wav")]
         public AudioClip[] healthPickupClips;
 
+        [Header("Chakra Float")]
+        [Tooltip("Sonido al activar la levitacion")]
+        public AudioClip[] floatActivateClips;
+
+        [Tooltip("Sonido al desactivar la levitacion")]
+        public AudioClip[] floatDeactivateClips;
+
+        [Tooltip("Sonido al iniciar el ascenso (mantener salto)")]
+        public AudioClip[] floatAscendClips;
+
+        [Header("Chakra Hack")]
+        [Tooltip("Sonido al ejecutar el hackeo")]
+        public AudioClip[] hackClips;
+
         [Header("Volumenes")]
         [Range(0f, 1f)] public float footstepVolume = 0.45f;
         [Range(0f, 1f)] public float sfxVolume = 1f;
@@ -143,6 +157,18 @@ namespace NABHI.Character
 
         /// <summary>Al recoger un item de salud.</summary>
         public void PlayHealthPickup() => PlayRandom(healthPickupClips);
+
+        /// <summary>Al activar el chakra Float (levitación).</summary>
+        public void PlayFloatActivate() => PlayRandom(floatActivateClips);
+
+        /// <summary>Al desactivar el chakra Float.</summary>
+        public void PlayFloatDeactivate() => PlayRandom(floatDeactivateClips);
+
+        /// <summary>Al iniciar el ascenso activo (mantener salto en Float).</summary>
+        public void PlayFloatAscend() => PlayRandom(floatAscendClips);
+
+        /// <summary>Al ejecutar el hackeo remoto.</summary>
+        public void PlayHack() => PlayRandom(hackClips);
 
         // ─── Interno ─────────────────────────────────────────────────────────
 

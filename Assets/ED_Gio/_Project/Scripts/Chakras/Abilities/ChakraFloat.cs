@@ -1,4 +1,5 @@
 using UnityEngine;
+using NABHI.Character;
 using Debug = UnityEngine.Debug;
 
 namespace NABHI.Chakras.Abilities
@@ -47,11 +48,13 @@ namespace NABHI.Chakras.Abilities
         private float originalGravityScale;
         private bool isAscending;
         private HybridAnimationController animController;
+        private PlayerSFX playerSFX;
 
         protected override void Awake()
         {
             base.Awake();
             animController = GetComponentInParent<HybridAnimationController>();
+            playerSFX = GetComponentInParent<PlayerSFX>();
 
             // Configurar tipo
             chakraType = ChakraType.Float;
@@ -163,7 +166,8 @@ namespace NABHI.Chakras.Abilities
 
         private void OnStartAscending()
         {
-            // Particulas de ascenso
+            playerSFX?.PlayFloatAscend();
+
             if (ascendParticles != null)
             {
                 ascendParticles.Play();
@@ -187,10 +191,9 @@ namespace NABHI.Chakras.Abilities
                 rb.gravityScale = floatGravityScale;
             }
 
-            // Activar animacion de levitacion
+            playerSFX?.PlayFloatActivate();
             animController?.SetLevitating(true);
 
-            // Activar particulas base (aura de levitacion)
             if (floatParticles != null)
             {
                 floatParticles.Play();
@@ -202,13 +205,12 @@ namespace NABHI.Chakras.Abilities
 
         protected override void OnDeactivate()
         {
-            // Restaurar gravedad normal
             if (rb != null)
             {
                 rb.gravityScale = originalGravityScale;
             }
 
-            // Desactivar animacion de levitacion
+            playerSFX?.PlayFloatDeactivate();
             animController?.SetLevitating(false);
 
             // Detener todas las particulas
