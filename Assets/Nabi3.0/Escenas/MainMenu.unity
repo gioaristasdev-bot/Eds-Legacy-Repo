@@ -6991,7 +6991,7 @@ MonoBehaviour:
   optionsPanel: {fileID: 1777715517}
   firstSelectedButton: {fileID: 947558209}
   firstOptionsSelected: {fileID: 424877699}
-  firstLevelSceneName: Level1
+  firstLevelSceneName: VideoIntro
   menuMusic: {fileID: 8300000, guid: f81e62cf781dba34c9ed0fddef7756a2, type: 3}
   musicVolume: 0.2
 --- !u!4 &1929085548

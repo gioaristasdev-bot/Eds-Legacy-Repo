@@ -273,7 +273,7 @@ public class ChakraMenuUI : MonoBehaviour
             new ChakraVisualData
             {
                 title = "TREMOR",
-                description = "Genera una onda sismica que aturde a los enemigos cercanos.",
+                description = "Chakra da base e da estabilidade Impacta o solo e destrói obstáculos para abrir caminho.",
                 color = new Color(0.20f, 0.80f, 0.30f)
             },
             new ChakraVisualData
