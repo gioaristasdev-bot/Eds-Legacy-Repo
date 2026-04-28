@@ -155,7 +155,9 @@ namespace NABHI.Enemies
         [Header("Muerte - Efectos")]
         [Tooltip("Prefab de partículas que se instancia al morir (explosión, humo, etc.)")]
         [SerializeField] private GameObject deathVFXPrefab;
-        [Tooltip("Duración del fade-out antes de destruir el objeto")]
+        [Tooltip("Tiempo que se mantiene la animación de muerte antes de empezar el fade")]
+        [SerializeField] private float deathAnimDuration = 2f;
+        [Tooltip("Duración del fade-out hasta desaparecer")]
         [SerializeField] private float deathFadeDuration = 0.8f;
 
         [Header("Debug")]
@@ -559,6 +561,7 @@ namespace NABHI.Enemies
 
         #endregion
 
+
         #region MUERTE
 
         protected virtual void Die()
@@ -581,6 +584,12 @@ namespace NABHI.Enemies
 
         private IEnumerator DeathFadeRoutine()
         {
+            yield return new WaitForSeconds(deathAnimDuration);
+
+            // Desactivar Animator para que no sobreescriba el color durante el fade
+            Animator anim = GetComponentInChildren<Animator>();
+            if (anim != null) anim.enabled = false;
+
             SpriteRenderer[] renderers = GetComponentsInChildren<SpriteRenderer>();
 
             Color[] startColors = new Color[renderers.Length];

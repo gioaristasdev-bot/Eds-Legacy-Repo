@@ -4,48 +4,55 @@ using NABHI.Character;
 namespace NABHI.Enemies
 {
     /// <summary>
-    /// CYBORG — Enemigo melee terrestre.
+    /// CYBORG — Enemigo terrestre de rango medio.
     ///
-    /// Estados (Documento Técnico): Idle → Chase → Attack → Recover → Hit → Death
-    /// Patrulla horizontal con ground check, persecución al jugador.
-    /// Doble sistema de daño: contacto continuo + golpe melee fuerte.
-    /// Estado Recover: pausa post-ataque antes de retomar Chase.
+    /// Estados: Patrol → Chase → Attack (disparo en ráfaga) → Cooldown → Hit → Death
+    /// Patrulla horizontal con ground check. Al detectar al jugador lo persigue.
+    /// Al entrar en rango de ataque se detiene y dispara en ráfagas.
     ///
     /// Chakras:
-    ///   IHackable  → lo controla brevemente (base EnemyBase desactiva por hackDisableDuration)
+    ///   IHackable  → desactiva temporalmente (base EnemyBase)
     ///   IStunnable → interrumpe Chase/Attack (base EnemyBase)
-    ///   Invisibilidad → deja de detectar al jugador (base EnemyBase, layer InvisiblePlayer)
+    ///   Invisibilidad → deja de detectar al jugador (base EnemyBase)
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
     public class EnemyCyborg : EnemyBase
     {
-        #region CONFIGURACIÓN CYBORG
+        #region CONFIGURACIÓN
 
         [Header("Cyborg - Daño por Contacto")]
-        [SerializeField] private float contactDamage = 10f;
-        [SerializeField] private float contactCooldown = 0.8f;
+        [SerializeField] private float contactDamage = 5f;
+        [SerializeField] private float contactCooldown = 1f;
 
-        [Header("Cyborg - Golpe Melee (fuerte)")]
-        [SerializeField] private float meleeDamage = 20f;
-        [SerializeField] private float meleeRange = 1.5f;
-        [SerializeField] private float meleeCooldown = 1.5f;
-        [SerializeField] private Vector2 meleeKnockback = new Vector2(8f, 4f);
+        [Header("Cyborg - Disparo")]
+        [SerializeField] private GameObject projectilePrefab;
+        [SerializeField] private Transform firePoint;
+        [SerializeField] private float fireRate = 0.6f;
+        [SerializeField] private float projectileDamage = 12f;
+        [SerializeField] private float projectileSpeed = 14f;
+
+        [Header("Cyborg - Ráfaga y Cooldown")]
+        [Tooltip("Disparos rápidos por sub-ráfaga")]
+        [SerializeField] private int shotsPerBurst = 3;
+        [Tooltip("Número de sub-ráfagas antes del Cooldown")]
+        [SerializeField] private int burstCount = 2;
+        [Tooltip("Pausa entre sub-ráfagas (ej: entre los 3 primeros y los 3 siguientes)")]
+        [SerializeField] private float burstPause = 0.5f;
+        [Tooltip("Pausa larga después de completar todas las ráfagas")]
+        [SerializeField] private float cooldownDuration = 2.5f;
+        [Tooltip("Distancia a la que deja de perseguir y empieza a disparar")]
+        [SerializeField] private float attackRange = 6f;
 
         [Header("Cyborg - Ground Check")]
         [SerializeField] private float groundCheckDistance = 1.5f;
         [SerializeField] private float edgeCheckOffset = 0.8f;
         [SerializeField] private LayerMask groundLayer;
-
-        [Header("Cyborg - Ataque Visual")]
-        [SerializeField] private float attackWindup = 0.3f;
-
-        [Header("Cyborg - Recover (post-ataque)")]
-        [Tooltip("Duración de la pausa de recuperación tras el golpe melee antes de retomar Chase")]
-        [SerializeField] private float recoverDuration = 0.6f;
-
-        [Header("Cyborg - Ground Check (Self)")]
         [SerializeField] private float feetCheckDistance = 0.3f;
+        [Tooltip("Offset del origen del ground check relativo al pivot. Ajustar si el gizmo no coincide con los pies.")]
+        [SerializeField] private Vector2 groundCheckOriginOffset = Vector2.zero;
+        [Tooltip("Desactiva el ground check temporalmente para probar movimiento")]
+        [SerializeField] private bool ignoreGroundCheck = false;
 
         #endregion
 
@@ -53,13 +60,13 @@ namespace NABHI.Enemies
 
         private Rigidbody2D rb;
         private Collider2D col;
-        private float lastAttackTime;
         private float lastContactTime;
-        private float attackWindupTimer;
-        private bool isAttacking;
-
-        // Recover
-        private float recoverTimer;
+        private float lastFireTime;
+        private int currentShot;
+        private int currentBurst;
+        private bool inBurstPause;
+        private float burstPauseTimer;
+        private float cooldownTimer;
 
         #endregion
 
@@ -70,12 +77,8 @@ namespace NABHI.Enemies
             base.Awake();
             rb  = GetComponent<Rigidbody2D>();
             col = GetComponent<Collider2D>();
-            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
-        }
 
-        protected override void Start()
-        {
-            base.Start();
+            rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         }
 
         protected override void Update()
@@ -84,18 +87,13 @@ namespace NABHI.Enemies
             CheckContactDamage();
         }
 
-        /// <summary>
-        /// Chequeo de daño por contacto usando OverlapCircle
-        /// (funciona con Physics2D.IgnoreLayerCollision entre Player y Enemies).
-        /// </summary>
-        private void CheckContactDamage()
+private void CheckContactDamage()
         {
             if (isDead || isStunned || isHacked) return;
             if (Time.time - lastContactTime < contactCooldown) return;
 
-            float contactRadius = col != null ? col.bounds.extents.x + 0.2f : 0.6f;
-            Collider2D hit = Physics2D.OverlapCircle(transform.position, contactRadius, playerLayer);
-
+            float radius = col != null ? col.bounds.extents.x + 0.2f : 0.6f;
+            Collider2D hit = Physics2D.OverlapCircle(transform.position, radius, playerLayer);
             if (hit == null) return;
 
             IDamageable damageable = hit.GetComponent<IDamageable>();
@@ -103,7 +101,6 @@ namespace NABHI.Enemies
             {
                 damageable.TakeDamage(contactDamage);
                 lastContactTime = Time.time;
-                Debug.Log($"[EnemyCyborg] Daño por contacto: {contactDamage}");
             }
         }
 
@@ -124,10 +121,8 @@ namespace NABHI.Enemies
                 movingRight = !movingRight;
 
             float distFromOrigin = transform.position.x - patrolOrigin.x;
-            if (distFromOrigin > patrolDistance)
-                movingRight = false;
-            else if (distFromOrigin < -patrolDistance)
-                movingRight = true;
+            if (distFromOrigin > patrolDistance)       movingRight = false;
+            else if (distFromOrigin < -patrolDistance) movingRight = true;
 
             float moveX = movingRight ? patrolSpeed : -patrolSpeed;
             rb.velocity = new Vector2(moveX, rb.velocity.y);
@@ -138,10 +133,9 @@ namespace NABHI.Enemies
         {
             if (playerTarget == null) return;
 
-            float distToPlayer = DistanceToPlayer();
-
-            if (distToPlayer <= meleeRange && Time.time - lastAttackTime >= meleeCooldown)
+            if (DistanceToPlayer() <= attackRange)
             {
+                rb.velocity = new Vector2(0, rb.velocity.y);
                 ChangeState(EnemyState.Attack);
                 return;
             }
@@ -152,8 +146,8 @@ namespace NABHI.Enemies
                 return;
             }
 
-            float dirX = playerTarget.position.x - transform.position.x;
-            int chaseDir = dirX > 0 ? 1 : -1;
+            float dirX    = playerTarget.position.x - transform.position.x;
+            int chaseDir  = dirX > 0 ? 1 : -1;
             FlipSprite(dirX);
 
             if (!IsGroundAhead(chaseDir))
@@ -162,77 +156,101 @@ namespace NABHI.Enemies
                 return;
             }
 
-            float moveX = chaseDir * chaseSpeed;
-            rb.velocity = new Vector2(moveX, rb.velocity.y);
+            rb.velocity = new Vector2(chaseDir * chaseSpeed, rb.velocity.y);
         }
 
         protected override void OnAttack()
         {
+            // Quieto durante toda la ráfaga — sin persecución
             rb.velocity = new Vector2(0, rb.velocity.y);
 
+            // Solo voltear para mirar al jugador, sin moverse
             if (playerTarget != null)
                 FlipSprite(playerTarget.position.x - transform.position.x);
 
-            if (!isAttacking)
+            // Pausa entre sub-ráfagas
+            if (inBurstPause)
             {
-                isAttacking = true;
-                attackWindupTimer = attackWindup;
+                burstPauseTimer -= Time.deltaTime;
+                if (burstPauseTimer <= 0f)
+                    inBurstPause = false;
                 return;
             }
 
-            attackWindupTimer -= Time.deltaTime;
-            if (attackWindupTimer <= 0)
+            if (Time.time - lastFireTime >= fireRate)
             {
-                ExecuteMeleeAttack();
-                isAttacking = false;
-                lastAttackTime = Time.time;
-                // Transición a Recover en vez de Chase directamente
-                ChangeState(EnemyState.Recover);
+                FireProjectile();
+                lastFireTime = Time.time;
+                currentShot++;
+
+                if (currentShot >= shotsPerBurst)
+                {
+                    currentShot = 0;
+                    currentBurst++;
+
+                    if (currentBurst >= burstCount)
+                    {
+                        ResetBurstState();
+                        ChangeState(EnemyState.Cooldown);
+                    }
+                    else
+                    {
+                        inBurstPause    = true;
+                        burstPauseTimer = burstPause;
+                    }
+                }
             }
         }
 
-        protected override void OnRecover()
+        private void ResetBurstState()
         {
-            // Quedarse quieto durante la recuperación
+            currentShot     = 0;
+            currentBurst    = 0;
+            inBurstPause    = false;
+            burstPauseTimer = 0f;
+        }
+
+        protected override void OnCooldown()
+        {
             rb.velocity = new Vector2(0, rb.velocity.y);
 
-            recoverTimer -= Time.deltaTime;
-            if (recoverTimer <= 0)
-                ChangeState(EnemyState.Chase);
+            cooldownTimer -= Time.deltaTime;
+            if (cooldownTimer <= 0)
+            {
+                if (playerTarget != null && IsPlayerStillDetected())
+                    ChangeState(EnemyState.Chase);
+                else
+                    ChangeState(EnemyState.Patrol);
+            }
         }
 
         #endregion
 
-        #region ATAQUE MELEE
+        #region DISPARO
 
-        private void ExecuteMeleeAttack()
+        private void FireProjectile()
         {
-            if (playerTarget == null) return;
-
-            Collider2D hit = Physics2D.OverlapCircle(
-                (Vector2)transform.position + new Vector2(facingDirection * meleeRange * 0.5f, 0),
-                meleeRange,
-                playerLayer
-            );
-
-            if (hit == null)
+            if (projectilePrefab == null)
             {
-                Debug.Log($"[EnemyCyborg] Golpe falló - jugador fuera de rango");
+                Debug.LogWarning($"[EnemyCyborg] {gameObject.name}: projectilePrefab no asignado");
                 return;
             }
 
-            IDamageable damageable = hit.GetComponent<IDamageable>();
-            if (damageable != null && damageable.IsAlive())
-            {
-                damageable.TakeDamage(meleeDamage);
-                Debug.Log($"[EnemyCyborg] Golpe melee: {meleeDamage} daño");
+            OnShoot();
 
-                PlayerHealth playerHealth = hit.GetComponent<PlayerHealth>();
-                if (playerHealth != null)
-                {
-                    Vector2 knockDir = new Vector2(facingDirection, 0.5f).normalized;
-                    playerHealth.ApplyKnockback(knockDir * meleeKnockback.magnitude);
-                }
+            Vector2 spawnPos = firePoint != null
+                ? (Vector2)firePoint.position
+                : (Vector2)transform.position + new Vector2(facingDirection * 0.5f, 0.2f);
+
+            // Disparo frontal: siempre en la dirección que mira, sin apuntar al jugador
+            Vector2 dir = new Vector2(facingDirection, 0);
+
+            GameObject projObj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
+            EnemyProjectile proj = projObj.GetComponent<EnemyProjectile>();
+            if (proj != null)
+            {
+                proj.SetDamage(projectileDamage);
+                proj.Initialize(dir, projectileSpeed);
             }
         }
 
@@ -242,66 +260,61 @@ namespace NABHI.Enemies
 
         protected override void OnAnimStateChanged(EnemyState newState)
         {
-            // Inicializar timer de Recover al entrar en ese estado
-            if (newState == EnemyState.Recover)
-                recoverTimer = recoverDuration;
+            if (newState == EnemyState.Cooldown)
+                cooldownTimer = cooldownDuration;
 
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
+            // Bloquear X durante el disparo para evitar deslizamiento por inercia
+            rb.constraints = newState == EnemyState.Attack
+                ? RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation
+                : RigidbodyConstraints2D.FreezeRotation;
+
             if (animator == null) return;
 
             animator.SetInteger(AnimParam.State, (int)newState);
 
-            bool moving = newState == EnemyState.Chase
-                       || newState == EnemyState.Patrol;
+            bool moving   = newState == EnemyState.Patrol || newState == EnemyState.Chase;
+            bool shooting = newState == EnemyState.Attack;
             animator.SetBool(AnimParam.IsMoving, moving);
+            animator.SetBool("IsShooting", shooting);
 
             if (newState == EnemyState.Hit)  animator.SetTrigger(AnimParam.Hit);
             if (newState == EnemyState.Dead) animator.SetBool(AnimParam.IsDead, true);
-            */
         }
 
         protected override void OnHitReceived()
         {
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
+            base.OnHitReceived();
             animator?.SetTrigger(AnimParam.Hit);
-            */
         }
 
         protected override void OnDeath()
         {
             rb.velocity = Vector2.zero;
-
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             animator?.SetBool(AnimParam.IsDead, true);
-            // Instanciar VFX de muerte:
-            // Instantiate(deathVFX, transform.position, Quaternion.identity);
-            */
         }
 
         #endregion
 
         #region GROUND CHECK
 
-        /// <summary>
-        /// Verifica si hay suelo debajo. Raycast desde la base del collider (col.bounds.min.y).
-        /// </summary>
+        private Vector2 GetGroundCheckOrigin()
+        {
+            float baseY = col != null ? col.bounds.min.y : transform.position.y;
+            return new Vector2(transform.position.x, baseY) + groundCheckOriginOffset;
+        }
+
         private bool IsGrounded()
         {
-            float originY = col != null ? col.bounds.min.y : transform.position.y;
-            Vector2 origin = new Vector2(transform.position.x, originY);
-            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, feetCheckDistance, groundLayer);
+            if (ignoreGroundCheck) return true;
+            RaycastHit2D hit = Physics2D.Raycast(GetGroundCheckOrigin(), Vector2.down, feetCheckDistance, groundLayer);
             return hit.collider != null;
         }
 
-        /// <summary>
-        /// Verifica si hay suelo adelante (detección de bordes de plataforma).
-        /// Raycast desde la base del collider + offset horizontal.
-        /// </summary>
         private bool IsGroundAhead(int direction)
         {
-            float originY = col != null ? col.bounds.min.y : transform.position.y;
-            Vector2 checkPos = new Vector2(transform.position.x + direction * edgeCheckOffset, originY);
-            RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, groundCheckDistance, groundLayer);
+            if (ignoreGroundCheck) return true;
+            Vector2 origin = GetGroundCheckOrigin() + new Vector2(direction * edgeCheckOffset, 0);
+            RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, groundCheckDistance, groundLayer);
             return hit.collider != null;
         }
 
@@ -313,21 +326,30 @@ namespace NABHI.Enemies
         {
             base.OnDrawGizmosSelected();
 
-            // Área de golpe melee (frente)
-            int meleeDir = Application.isPlaying ? facingDirection : 1;
-            Vector3 meleeCenter = transform.position + new Vector3(meleeDir * meleeRange * 0.5f, 0, 0);
-            Gizmos.color = new Color(1f, 0f, 0f, 0.4f);
-            Gizmos.DrawWireSphere(meleeCenter, meleeRange);
+            // Rango de ataque
+            Gizmos.color = new Color(1f, 0.3f, 0f, 0.25f);
+            Gizmos.DrawWireSphere(transform.position, attackRange);
 
-            // Ground check (pies)
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.down * feetCheckDistance);
-
-            // Edge check (adelante)
+            // Fire point
             int dir = Application.isPlaying ? facingDirection : 1;
-            Vector3 checkPos = transform.position + new Vector3(dir * edgeCheckOffset, 0, 0);
+            Vector3 fp = firePoint != null
+                ? firePoint.position
+                : transform.position + new Vector3(dir * 0.5f, 0.2f, 0);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(fp, 0.1f);
+
+            // Ground check origin
+            float baseY = col != null ? col.bounds.min.y : transform.position.y;
+            Vector3 feetOrigin = new Vector3(transform.position.x, baseY) + (Vector3)groundCheckOriginOffset;
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(feetOrigin, 0.05f);
+            Gizmos.DrawLine(feetOrigin, feetOrigin + Vector3.down * feetCheckDistance);
+
+            // Edge check
+            Vector3 edgeOrigin = feetOrigin + new Vector3(dir * edgeCheckOffset, 0, 0);
             Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(checkPos, checkPos + Vector3.down * groundCheckDistance);
+            Gizmos.DrawWireSphere(edgeOrigin, 0.05f);
+            Gizmos.DrawLine(edgeOrigin, edgeOrigin + Vector3.down * groundCheckDistance);
         }
 
         #endregion

@@ -60,9 +60,9 @@ namespace NABHI.Weapons
         {
             rb = GetComponent<Rigidbody2D>();
 
-            // Configurar Rigidbody
             rb.gravityScale = affectedByGravity ? 1f : 0f;
             rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+            rb.mass = 0.001f;
         }
 
         private void Start()
@@ -80,20 +80,27 @@ namespace NABHI.Weapons
             }
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        // Colisión física (Is Trigger = false) — mantiene partículas de Hovl Studio
+        private void OnCollisionEnter2D(Collision2D collision)
         {
-            // Debug.Log($"[Projectile] Triggered with: {collision.gameObject.name} (Layer: {LayerMask.LayerToName(collision.gameObject.layer)})");
+            if (hasHit && !piercing) return;
 
-            // Ignorar si ya impactó (para piercing)
-            if (hasHit && !piercing)
-                return;
-
-            // Detectar qué golpeó
-            bool shouldDestroy = HandleCollision(collision);
-
+            bool shouldDestroy = HandleCollision(collision.collider);
             if (shouldDestroy)
             {
-                // Debug.Log($"[Projectile] Destroying after hitting {collision.gameObject.name}");
+                hasHit = true;
+                DestroyProjectile();
+            }
+        }
+
+        // Colisión trigger (Is Trigger = true) — alternativa si se necesita pasar por geometría
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (hasHit && !piercing) return;
+
+            bool shouldDestroy = HandleCollision(collision);
+            if (shouldDestroy)
+            {
                 hasHit = true;
                 DestroyProjectile();
             }

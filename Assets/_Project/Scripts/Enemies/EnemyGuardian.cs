@@ -5,22 +5,20 @@ namespace NABHI.Enemies
     /// <summary>
     /// GUARDIÁN — Enemigo aéreo de distancia media.
     ///
-    /// Estados (Documento Técnico): Hover → Track Player (Chase) → Shoot → Cooldown → Hit → Death
-    /// Flotación lateral suave mientras patrulla. Persigue al jugador volando.
-    /// Disparo energético rápido en ráfagas. Cooldown entre ráfagas.
+    /// Estados: Hover (Patrol) → Chase → Attack (ráfagas) → Cooldown → Hit → Death
+    /// Flotación sinusoidal mientras patrulla. Persigue volando. Dispara apuntando al jugador.
+    /// gravityScale=0 en vida → gravityScale=1 al morir (cae).
     ///
     /// Chakras:
-    ///   IHackable  → congela al guardián (base EnemyBase lo desactiva por hackDisableDuration)
+    ///   IHackable  → congela (base EnemyBase)
     ///   IStunnable → desestabiliza el hover (base EnemyBase)
-    ///   Invisibilidad → pierde al jugador como objetivo (base EnemyBase, layer InvisiblePlayer)
-    ///
-    /// Nota: No vulnerable a EMP (sin IEMPTarget).
+    ///   Invisibilidad → pierde objetivo (base EnemyBase, layer InvisiblePlayer)
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(Collider2D))]
     public class EnemyGuardian : EnemyBase
     {
-        #region CONFIGURACIÓN GUARDIÁN
+        #region CONFIGURACIÓN
 
         [Header("Guardián - Hover/Patrulla")]
         [Tooltip("Amplitud de la oscilación vertical durante el hover")]
@@ -39,9 +37,13 @@ namespace NABHI.Enemies
         [SerializeField] private float projectileSpeed = 18f;
 
         [Header("Guardián - Ráfaga y Cooldown")]
-        [Tooltip("Número de disparos consecutivos por ráfaga")]
+        [Tooltip("Disparos rápidos por sub-ráfaga")]
         [SerializeField] private int shotsPerBurst = 4;
-        [Tooltip("Pausa entre ráfagas")]
+        [Tooltip("Número de sub-ráfagas antes del Cooldown")]
+        [SerializeField] private int burstCount = 2;
+        [Tooltip("Pausa entre sub-ráfagas")]
+        [SerializeField] private float burstPause = 0.5f;
+        [Tooltip("Pausa larga después de completar todas las ráfagas")]
         [SerializeField] private float cooldownDuration = 2.5f;
 
         [Header("Guardián - Rango de Ataque")]
@@ -61,7 +63,10 @@ namespace NABHI.Enemies
         private Rigidbody2D rb;
         private Vector2 hoverCenter;
         private float lastFireTime;
-        private int shotsFired;
+        private int currentShot;
+        private int currentBurst;
+        private bool inBurstPause;
+        private float burstPauseTimer;
         private float cooldownTimer;
         private float lastContactTime;
 
@@ -79,7 +84,6 @@ namespace NABHI.Enemies
 
         protected override void Start()
         {
-            // Guardián usa FOV (no 360°) y requiere línea de visión
             use360Detection    = false;
             requireLineOfSight = true;
             hoverCenter        = transform.position;
@@ -151,7 +155,6 @@ namespace NABHI.Enemies
 
         protected override void OnPatrol()
         {
-            // Hover lateral suave: movimiento sinusoidal en X + oscilación en Y
             float t       = Time.time;
             float xOffset = Mathf.Sin(t * patrolSpeed * 0.4f) * lateralRange;
             float yOffset = Mathf.Sin(t * hoverFrequency) * hoverAmplitude;
@@ -160,8 +163,7 @@ namespace NABHI.Enemies
             Vector2 moveDir   = targetPos - (Vector2)transform.position;
 
             rb.velocity = moveDir.normalized * patrolSpeed;
-            // Usamos la derivada del seno (coseno) para detectar la dirección del patrol
-            // sin oscilación en el cruce por cero del seno
+            // Derivada del seno (coseno) para detectar dirección sin oscilación en cruce de cero
             FlipSprite(Mathf.Cos(t * patrolSpeed * 0.4f));
         }
 
@@ -169,17 +171,15 @@ namespace NABHI.Enemies
         {
             if (playerTarget == null) return;
 
-            float dist         = DistanceToPlayer();
-            float attackRange  = detectionRadius * attackRangeMultiplier;
+            float dist        = DistanceToPlayer();
+            float attackRange = detectionRadius * attackRangeMultiplier;
 
-            // Si está en rango de ataque, comenzar ráfaga
             if (dist <= attackRange)
             {
                 ChangeState(EnemyState.Attack);
                 return;
             }
 
-            // Volar hacia el jugador con hover vertical
             Vector2 dir    = DirectionToPlayer();
             float   yHover = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
             rb.velocity    = new Vector2(dir.x * chaseSpeed, dir.y * chaseSpeed + yHover);
@@ -190,27 +190,47 @@ namespace NABHI.Enemies
         {
             if (playerTarget == null || !IsPlayerStillDetected())
             {
+                ResetBurstState();
                 ChangeState(playerTarget != null ? EnemyState.Chase : EnemyState.Patrol);
                 return;
             }
 
-            // Flotar ligeramente en posición mientras dispara
+            // Hover suave en posición mientras dispara
             float yHover = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude * 0.5f;
             rb.velocity  = new Vector2(0, yHover);
 
-            // Mirar al jugador
             FlipSprite(playerTarget.position.x - transform.position.x);
+
+            // Pausa entre sub-ráfagas
+            if (inBurstPause)
+            {
+                burstPauseTimer -= Time.deltaTime;
+                if (burstPauseTimer <= 0f)
+                    inBurstPause = false;
+                return;
+            }
 
             if (Time.time - lastFireTime >= fireRate)
             {
                 FireProjectile();
                 lastFireTime = Time.time;
-                shotsFired++;
+                currentShot++;
 
-                if (shotsFired >= shotsPerBurst)
+                if (currentShot >= shotsPerBurst)
                 {
-                    shotsFired = 0;
-                    ChangeState(EnemyState.Cooldown);
+                    currentShot = 0;
+                    currentBurst++;
+
+                    if (currentBurst >= burstCount)
+                    {
+                        ResetBurstState();
+                        ChangeState(EnemyState.Cooldown);
+                    }
+                    else
+                    {
+                        inBurstPause    = true;
+                        burstPauseTimer = burstPause;
+                    }
                 }
             }
         }
@@ -231,6 +251,14 @@ namespace NABHI.Enemies
             }
         }
 
+        private void ResetBurstState()
+        {
+            currentShot     = 0;
+            currentBurst    = 0;
+            inBurstPause    = false;
+            burstPauseTimer = 0f;
+        }
+
         #endregion
 
         #region DISPARO
@@ -249,7 +277,7 @@ namespace NABHI.Enemies
                 ? (Vector2)firePoint.position
                 : (Vector2)transform.position + new Vector2(facingDirection * 0.5f, 0f);
 
-            // Apuntar directamente al jugador (proyectiles rápidos y precisos)
+            // Apuntar directamente al jugador (proyectil rápido y preciso)
             Vector2 dir = DirectionToPlayer();
 
             GameObject projObj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
@@ -259,8 +287,6 @@ namespace NABHI.Enemies
                 proj.SetDamage(projectileDamage);
                 proj.Initialize(dir, projectileSpeed);
             }
-
-            Debug.Log($"[EnemyGuardian] Disparo {shotsFired + 1}/{shotsPerBurst}");
         }
 
         #endregion
@@ -269,52 +295,33 @@ namespace NABHI.Enemies
 
         protected override void OnAnimStateChanged(EnemyState newState)
         {
-            // Inicializar timer de Cooldown
             if (newState == EnemyState.Cooldown)
                 cooldownTimer = cooldownDuration;
 
-            // Resetear contador de disparos al salir de Attack
-            if (newState != EnemyState.Attack && newState != EnemyState.Cooldown)
-                shotsFired = 0;
-
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             if (animator == null) return;
 
             animator.SetInteger(AnimParam.State, (int)newState);
 
-            bool moving = newState == EnemyState.Patrol
-                       || newState == EnemyState.Chase;
+            bool moving   = newState == EnemyState.Patrol || newState == EnemyState.Chase;
+            bool shooting = newState == EnemyState.Attack;
             animator.SetBool(AnimParam.IsMoving, moving);
+            animator.SetBool("IsShooting", shooting);
 
             if (newState == EnemyState.Hit)  animator.SetTrigger(AnimParam.Hit);
             if (newState == EnemyState.Dead) animator.SetBool(AnimParam.IsDead, true);
-
-            // ESTADOS GUARDIÁN (para el artista):
-            // Hover/Patrol = 0-1 → animación de flotación tranquila
-            // Chase = 2       → inclinación hacia adelante / propulsores activos
-            // Attack = 3      → posición de disparo, cañones desplegados
-            // Cooldown = 4    → volver a pose neutral, vent de calor
-            // Hit = 5         → sacudida / destello
-            // Dead = 10       → caída con humo
-            */
         }
 
         protected override void OnHitReceived()
         {
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
+            base.OnHitReceived();
             animator?.SetTrigger(AnimParam.Hit);
-            */
         }
 
         protected override void OnDeath()
         {
-            rb.gravityScale = 1f; // El guardián cae al morir
+            rb.gravityScale = 1f; // Cae al morir
             rb.velocity     = Vector2.zero;
-
-            /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             animator?.SetBool(AnimParam.IsDead, true);
-            // Instantiate(deathVFX, transform.position, Quaternion.identity);
-            */
         }
 
         #endregion
