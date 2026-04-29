@@ -190,6 +190,10 @@ namespace NABHI.Enemies
             if (animator == null)
                 animator = GetComponentInChildren<Animator>();
 
+            // Desactivar root motion para que las animaciones no muevan el transform
+            if (animator != null)
+                animator.applyRootMotion = false;
+
             if (spriteRenderers == null || spriteRenderers.Length == 0)
                 spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         }
@@ -206,16 +210,27 @@ namespace NABHI.Enemies
 
         private void Update()
         {
-            // Solo hover en Idle y Cooldown; los ataques se controlan por coroutine
+            if (currentState == BossState.Idle || currentState == BossState.Cooldown)
+                FlipTowardPlayer();
+        }
+
+        private void FixedUpdate()
+        {
             if (currentState != BossState.Idle && currentState != BossState.Cooldown)
                 return;
 
-            ApplyHoverVelocity();
+            float targetY = hoverHeight + Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
+            float velY    = (targetY - rb.position.y) * 6f;
 
-            if (currentState == BossState.Idle)
-                TrackPlayerX();
+            float velX = 0f;
+            if (currentState == BossState.Idle && playerTarget != null)
+            {
+                float dirX = playerTarget.position.x - rb.position.x;
+                // Gain alto: cierra distancia rápido, se frena al acercarse
+                velX = Mathf.Clamp(dirX * 10f, -trackPlayerSpeed, trackPlayerSpeed);
+            }
 
-            FlipTowardPlayer();
+            rb.velocity = new Vector2(velX, velY);
         }
 
         // ════════════════════════════════════════════════════════════════════
@@ -226,7 +241,7 @@ namespace NABHI.Enemies
         {
             currentState = BossState.Intro;
 
-            // Fijar posición inicial a la hover height
+            // Fijar solo la Y a hover height; X viene de la posición en escena
             Vector2 startPos = rb.position;
             startPos.y = hoverHeight;
             rb.position = startPos;
@@ -261,21 +276,6 @@ namespace NABHI.Enemies
         // ════════════════════════════════════════════════════════════════════
         // HOVER Y TRACKING
         // ════════════════════════════════════════════════════════════════════
-
-        private void ApplyHoverVelocity()
-        {
-            float targetY = hoverHeight + Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
-            float velY    = (targetY - rb.position.y) * 6f;
-            rb.velocity = new Vector2(rb.velocity.x, velY);
-        }
-
-        private void TrackPlayerX()
-        {
-            if (playerTarget == null) return;
-            float dirX = playerTarget.position.x - rb.position.x;
-            float velX = Mathf.Clamp(dirX * trackPlayerSpeed, -trackPlayerSpeed, trackPlayerSpeed);
-            rb.velocity = new Vector2(velX, rb.velocity.y);
-        }
 
         private void FlipTowardPlayer()
         {
@@ -337,9 +337,10 @@ namespace NABHI.Enemies
             currentState = BossState.Attack1;
             animator?.SetTrigger(AnimParam.Attack1);
 
-            // 1. Posicionarse sobre el jugador en X (manteniendo hover en Y)
-            float targetX = playerTarget != null ? playerTarget.position.x : transform.position.x;
-            yield return StartCoroutine(MoveToX(targetX, slamPositionSpeed));
+            rb.velocity = Vector2.zero;
+
+            // 1. Seguir al player en X en tiempo real hasta centrarse sobre él
+            yield return StartCoroutine(MoveToPlayerX(slamPositionSpeed));
 
             // 2. Telegrafeo — pausa breve antes de bajar
             rb.velocity = Vector2.zero;
@@ -366,6 +367,8 @@ namespace NABHI.Enemies
         {
             currentState = BossState.Attack2;
             animator?.SetTrigger(AnimParam.Attack2);
+
+            rb.velocity = Vector2.zero;
 
             // 1. Desplazarse al centro del arena
             float centerX = arenaCenter != null ? arenaCenter.position.x : 0f;
@@ -448,17 +451,33 @@ namespace NABHI.Enemies
         // UTILIDADES DE MOVIMIENTO
         // ════════════════════════════════════════════════════════════════════
 
-        /// <summary>Mueve el boss al targetX manteniendo hover en Y.</summary>
+        /// <summary>Sigue al player en X en tiempo real hasta quedar centrado sobre él.</summary>
+        private IEnumerator MoveToPlayerX(float speed)
+        {
+            if (playerTarget == null) yield break;
+
+            while (Mathf.Abs(rb.position.x - playerTarget.position.x) > 0.15f)
+            {
+                float targetX = playerTarget.position.x;
+                float newX    = Mathf.MoveTowards(rb.position.x, targetX, speed * Time.fixedDeltaTime);
+                rb.MovePosition(new Vector2(newX, rb.position.y));
+                FlipTowardPlayer();
+                yield return new WaitForFixedUpdate();
+            }
+            rb.MovePosition(new Vector2(playerTarget.position.x, rb.position.y));
+        }
+
+        /// <summary>Mueve el boss al targetX manteniendo Y actual. Solo eje X.</summary>
         private IEnumerator MoveToX(float targetX, float speed)
         {
             while (Mathf.Abs(rb.position.x - targetX) > 0.15f)
             {
-                float currentY  = hoverHeight + Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
-                Vector2 target  = new Vector2(targetX, currentY);
-                rb.MovePosition(Vector2.MoveTowards(rb.position, target, speed * Time.deltaTime));
+                float newX = Mathf.MoveTowards(rb.position.x, targetX, speed * Time.fixedDeltaTime);
+                rb.MovePosition(new Vector2(newX, rb.position.y));
                 FlipTowardPlayer();
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
+            rb.MovePosition(new Vector2(targetX, rb.position.y));
         }
 
         /// <summary>Desciende verticalmente a targetY manteniendo X bloqueada.</summary>
@@ -466,12 +485,11 @@ namespace NABHI.Enemies
         {
             while (rb.position.y > targetY + 0.05f)
             {
-                Vector2 pos = rb.position;
-                pos.x = lockedX;
-                pos.y = Mathf.MoveTowards(pos.y, targetY, speed * Time.deltaTime);
-                rb.MovePosition(pos);
-                yield return null;
+                float newY = Mathf.MoveTowards(rb.position.y, targetY, speed * Time.fixedDeltaTime);
+                rb.MovePosition(new Vector2(lockedX, newY));
+                yield return new WaitForFixedUpdate();
             }
+            rb.MovePosition(new Vector2(lockedX, targetY));
         }
 
         /// <summary>Asciende verticalmente a targetY manteniendo X bloqueada.</summary>
@@ -479,12 +497,11 @@ namespace NABHI.Enemies
         {
             while (rb.position.y < targetY - 0.1f)
             {
-                Vector2 pos = rb.position;
-                pos.x = lockedX;
-                pos.y = Mathf.MoveTowards(pos.y, targetY, speed * Time.deltaTime);
-                rb.MovePosition(pos);
-                yield return null;
+                float newY = Mathf.MoveTowards(rb.position.y, targetY, speed * Time.fixedDeltaTime);
+                rb.MovePosition(new Vector2(lockedX, newY));
+                yield return new WaitForFixedUpdate();
             }
+            rb.MovePosition(new Vector2(lockedX, targetY));
         }
 
         /// <summary>Instancia VFX y aplica daño en área.</summary>
