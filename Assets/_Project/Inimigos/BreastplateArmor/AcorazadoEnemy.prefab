@@ -31,8 +31,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.09432, y: -0.01, z: -0.7835198}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5978545853317164312}
   m_Father: {fileID: 0}
@@ -156,7 +156,8 @@ MonoBehaviour:
   stunColor: {r: 0.5, g: 0.5, b: 1, a: 1}
   hackedColor: {r: 0.2, g: 0.8, b: 0.2, a: 1}
   hurtColor: {r: 1, g: 1, b: 1, a: 1}
-  deathVFXPrefab: {fileID: 0}
+  deathVFXPrefab: {fileID: 1290715649332758, guid: 587eaecaa621be74486f351c78b4f0a8,
+    type: 3}
   deathAnimDuration: 2
   deathFadeDuration: 0.8
   showDebugGizmos: 1
@@ -290,10 +291,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50458e1d7f2448d4eaaef1905e0ad609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageClips: []
-  deathClips: []
-  shotClips: []
-  footstepClips: []
+  damageClips:
+  - {fileID: 8300000, guid: 1cc7159f523077542950726d14890550, type: 3}
+  deathClips:
+  - {fileID: 8300000, guid: fc54551be4e00e94ebfa531f8cb7c834, type: 3}
+  shotClips:
+  - {fileID: 8300000, guid: f9505f4d623e7fc4fb678fd8a6b9f3d3, type: 3}
+  footstepClips:
+  - {fileID: 8300000, guid: 476801e72673e524892a99bf41c88a5c, type: 3}
+  - {fileID: 8300000, guid: f26b6bbe58d7bea458a251c64e64eddb, type: 3}
+  - {fileID: 8300000, guid: 8f26c10a53cd0344cb255631abdde298, type: 3}
+  - {fileID: 8300000, guid: d9ec19def629d944b957594eba43bc94, type: 3}
+  - {fileID: 8300000, guid: c01c7f18e2d147b4a9f976f0a3565af8, type: 3}
+  - {fileID: 8300000, guid: a63eefcdbba0f304d94f2b34996ce0f1, type: 3}
+  - {fileID: 8300000, guid: 6eb16d825e664f34885d67dd011362da, type: 3}
+  - {fileID: 8300000, guid: 3211a0be07d7509428c6420b0d4802a8, type: 3}
+  - {fileID: 8300000, guid: 50546114206d0584e9b046eb53241549, type: 3}
+  - {fileID: 8300000, guid: f55c06d6ce5f3214c9e40ceb80e9cf9d, type: 3}
   footstepInterval: 0.48
   footstepVolume: 0.35
   sfxVolume: 0.9
