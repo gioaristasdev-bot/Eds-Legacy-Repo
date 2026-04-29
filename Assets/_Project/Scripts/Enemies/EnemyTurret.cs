@@ -228,6 +228,7 @@ namespace NABHI.Enemies
 
         protected override void OnHitReceived()
         {
+            base.OnHitReceived();
             /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             animator?.SetTrigger(AnimParam.Hit);
             */
@@ -235,6 +236,7 @@ namespace NABHI.Enemies
 
         protected override void OnDeath()
         {
+            base.OnDeath();
             /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             animator?.SetBool(AnimParam.IsDead, true);
             // Instantiate(deathVFX, transform.position, Quaternion.identity);

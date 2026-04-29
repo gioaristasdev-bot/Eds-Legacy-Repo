@@ -205,6 +205,7 @@ namespace NABHI.Enemies
 
         protected override void OnHitReceived()
         {
+            base.OnHitReceived();
             /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             animator?.SetTrigger(AnimParam.Hit);
             */
@@ -212,6 +213,7 @@ namespace NABHI.Enemies
 
         protected override void OnDeath()
         {
+            base.OnDeath();
             rb.velocity = Vector2.zero;
 
             /* ANIMACIÓN (descomentar cuando el artista entregue sprites):

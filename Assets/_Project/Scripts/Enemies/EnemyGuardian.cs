@@ -319,6 +319,7 @@ namespace NABHI.Enemies
 
         protected override void OnDeath()
         {
+            base.OnDeath();
             rb.gravityScale = 1f; // Cae al morir
             rb.velocity     = Vector2.zero;
             animator?.SetBool(AnimParam.IsDead, true);

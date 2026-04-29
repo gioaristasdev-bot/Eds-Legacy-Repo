@@ -304,6 +304,7 @@ namespace NABHI.Enemies
 
         protected override void OnDeath()
         {
+            base.OnDeath();
             rb.velocity = Vector2.zero;
             animator?.SetBool(AnimParam.IsDead, true);
         }

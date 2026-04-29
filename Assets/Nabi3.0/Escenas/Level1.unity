@@ -28162,6 +28162,8 @@ MonoBehaviour:
   footstepInterval: 0.48
   footstepVolume: 0.35
   sfxVolume: 0.9
+  minDistance: 5
+  maxDistance: 30
 --- !u!82 &486112583
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50368,6 +50370,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CyborgEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5920194808149408861, guid: b02bcf58b42abd949b60c38cf3e3af12,
+        type: 3}
+      propertyPath: sfxVolume
+      value: 0.984
       objectReference: {fileID: 0}
     - target: {fileID: 5920194808149408861, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
@@ -112043,6 +112050,8 @@ MonoBehaviour:
   footstepInterval: 0.48
   footstepVolume: 0.35
   sfxVolume: 0.9
+  minDistance: 5
+  maxDistance: 30
 --- !u!82 &2021019845
 AudioSource:
   m_ObjectHideFlags: 0
