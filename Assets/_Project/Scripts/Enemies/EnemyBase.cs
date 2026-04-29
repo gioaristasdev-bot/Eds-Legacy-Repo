@@ -233,8 +233,12 @@ namespace NABHI.Enemies
 
             int playerLayerIndex  = LayerMask.NameToLayer("Player");
             int enemiesLayerIndex = LayerMask.NameToLayer("Enemies");
+
             if (playerLayerIndex != -1 && enemiesLayerIndex != -1)
                 Physics2D.IgnoreLayerCollision(playerLayerIndex, enemiesLayerIndex, true);
+
+            if (invisibleLayerIndex != -1 && enemiesLayerIndex != -1)
+                Physics2D.IgnoreLayerCollision(invisibleLayerIndex, enemiesLayerIndex, true);
         }
 
         protected virtual void Start()

@@ -53,8 +53,9 @@ namespace NABHI.Chakras.Abilities
             // Tasa de consumo 3N
             energyCostPerSecond = 30f;
 
-            // Obtener sprites
-            spriteRenderers = GetComponentsInParent<SpriteRenderer>();
+            // Obtener sprites desde la raiz del player hacia abajo
+            var root = transform.parent != null ? transform.parent : transform;
+            spriteRenderers = root.GetComponentsInChildren<SpriteRenderer>();
             CacheOriginalColors();
         }
 

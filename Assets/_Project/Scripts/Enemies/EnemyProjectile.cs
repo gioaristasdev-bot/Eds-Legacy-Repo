@@ -64,9 +64,8 @@ namespace NABHI.Enemies
             if (collision.GetComponent<EnemyProjectile>() != null)
                 return;
 
-            // Dañar al jugador
-            if (collision.gameObject.layer == LayerMask.NameToLayer("Player") ||
-                collision.gameObject.layer == LayerMask.NameToLayer("InvisiblePlayer"))
+            // Dañar al jugador (no dañar si está invisible)
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Player"))
             {
                 IDamageable damageable = collision.GetComponent<IDamageable>();
                 if (damageable != null && damageable.IsAlive())
