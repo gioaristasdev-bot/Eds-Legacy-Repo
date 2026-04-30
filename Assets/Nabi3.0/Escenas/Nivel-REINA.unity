@@ -32600,6 +32600,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8362056711914695534, guid: 547b91929649b3042bef0f0dd98dddd8,
         type: 3}
+      propertyPath: deathVideoSequence
+      value: 
+      objectReference: {fileID: 195197946}
+    - target: {fileID: 8362056711914695534, guid: 547b91929649b3042bef0f0dd98dddd8,
+        type: 3}
       propertyPath: grabImpactOffset.x
       value: -0.04
       objectReference: {fileID: 0}
