@@ -30,6 +30,8 @@ public class DeathVideoSequence : MonoBehaviour
     {
         sequenceStarted = true;
 
+        GameAudioManager.Instance?.StopMusic();
+
         yield return PlayVideo(deathVideo);
 
         yield return new WaitForSeconds(delayBetweenVideos);
