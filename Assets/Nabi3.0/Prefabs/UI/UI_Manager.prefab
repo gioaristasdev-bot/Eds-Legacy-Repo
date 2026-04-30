@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2427139718196157848
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8436132506495716355}
+  - component: {fileID: 4125301736119967935}
+  - component: {fileID: 1155827894273210574}
+  m_Layer: 0
+  m_Name: UI_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8436132506495716355
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427139718196157848}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4125301736119967935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427139718196157848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6661e317bf727d84cb60cdf1a5b6f2a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pausePanel: {fileID: 0}
+  firstSelectedButton: {fileID: 0}
+--- !u!114 &1155827894273210574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2427139718196157848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf4d123358dd4845901b2b2ae5887e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chakraMenuPanel: {fileID: 0}
+  chakraSystem: {fileID: 0}
+  characterController: {fileID: 0}
+  firstSelectedButton: {fileID: 0}
+  floatButton: {fileID: 0}
+  invisibilityButton: {fileID: 0}
+  tremorButton: {fileID: 0}
+  echoSenseButton: {fileID: 0}
+  remoteHackButton: {fileID: 0}
+  empButton: {fileID: 0}
+  telekinesisButton: {fileID: 0}
+  gravityPulseButton: {fileID: 0}
+  chakraTitleText: {fileID: 0}
+  chakraDescriptionText: {fileID: 0}
+  chakraSymbolImage: {fileID: 0}
+  capsulaImage: {fileID: 0}
+  edImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  symbolImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chakraData:
+  - title: FLUTUAR
+    description: "Chakra do fluxo e do movimento.\r\nPermite flutuar e alcan\xE7ar
+      \xE1reas mais altas."
+    color: {r: 0.97235936, g: 0.5896226, b: 1, a: 0}
+    symbol: {fileID: 21300000, guid: 19fab070e3e097b47991efd987614751, type: 3}
+  - title: INVISIBILIDADE
+    description: "Chakra do equil\xEDbrio e da harmonia.\r\nEvita detec\xE7\xE3o
+      e permite avan\xE7ar sem confronto."
+    color: {r: 0, g: 0.13424778, b: 1, a: 0}
+    symbol: {fileID: 21300000, guid: 39309071febd9fb4ba2db06cefb9ee46, type: 3}
+  - title: Tremor
+    description: "Chakra da base e da estabilidade.\r\nImpacta o solo e destr\xF3i
+      obst\xE1culos para abrir caminho."
+    color: {r: 0, g: 0.5754717, b: 0.06685553, a: 0}
+    symbol: {fileID: 0}
+  - title: Eco Sense
+    description: "Chakra da percep\xE7\xE3o e da intui\xE7\xE3o.\r\nRevela elementos
+      ocultos e caminhos invis\xEDveis."
+    color: {r: 1, g: 0.38418835, b: 0, a: 0}
+    symbol: {fileID: 21300000, guid: d2d981bb041dd7a4d99cd550f0ba2e31, type: 3}
+  - title: Hack
+    description: "Chakra da conex\xE3o e da intera\xE7\xE3o.\r\nPermite controlar
+      sistemas e tecnologia da IA."
+    color: {r: 1, g: 0.8751692, b: 0, a: 0}
+    symbol: {fileID: 21300000, guid: bfbbc8849d9970341b52389c2c8c25db, type: 3}
+  - title: PEM
+    description: "Chakra do poder e da proje\xE7\xE3o.\r\nEmite um pulso que desativa
+      inimigos."
+    color: {r: 0, g: 0.9785433, b: 1, a: 0}
+    symbol: {fileID: 21300000, guid: 3c9ab95fc2f52954994066721f8ac751, type: 3}
+  - title: TELECINESE
+    description: "Chakra da consci\xEAncia e do controle.\r\nPermite manipular objetos
+      \xE0 dist\xE2ncia.\r\n"
+    color: {r: 1, g: 0, b: 0, a: 0}
+    symbol: {fileID: 21300000, guid: f52fcbc9b8a42454da95c996c85289b9, type: 3}
+  - title: Gravity Pulse
+    description: 
+    color: {r: 0.5566038, g: 0, b: 0.48046687, a: 0}
+    symbol: {fileID: 21300000, guid: 6480ac7a79904c744ac4d7d30661912d, type: 3}
