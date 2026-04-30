@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80b2545f2b0fce4fa0a313cccb3f832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 100
   currentHealth: 0
   detectionRadius: 8
   fieldOfView: 120
@@ -158,7 +158,7 @@ MonoBehaviour:
   hurtColor: {r: 1, g: 1, b: 1, a: 1}
   deathVFXPrefab: {fileID: 1290715649332758, guid: 587eaecaa621be74486f351c78b4f0a8,
     type: 3}
-  deathAnimDuration: 2
+  deathAnimDuration: 0
   deathFadeDuration: 0.8
   showDebugGizmos: 1
   contactDamage: 12
@@ -311,6 +311,9 @@ MonoBehaviour:
   footstepInterval: 0.48
   footstepVolume: 0.35
   sfxVolume: 0.9
+  deathVolume: 1
+  minDistance: 5
+  maxDistance: 30
 --- !u!1 &5676542836140854035
 GameObject:
   m_ObjectHideFlags: 0

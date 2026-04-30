@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f5a5cc63392bc7478118750b5737f98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 80
   currentHealth: 0
   detectionRadius: 9
   fieldOfView: 119.97
@@ -193,7 +193,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -290,13 +290,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50458e1d7f2448d4eaaef1905e0ad609, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageClips: []
-  deathClips: []
-  shotClips: []
-  footstepClips: []
+  damageClips:
+  - {fileID: 8300000, guid: ab725f1ce2daefa4c92d06cbc0081d06, type: 3}
+  deathClips:
+  - {fileID: 8300000, guid: dbc09817852a5c34c94c41b831ab62f1, type: 3}
+  shotClips:
+  - {fileID: 8300000, guid: bd1f742d9ec76f041a26f71845e7c147, type: 3}
+  footstepClips:
+  - {fileID: 8300000, guid: 756c2d6d15aae3945976f23579920f58, type: 3}
+  - {fileID: 8300000, guid: 3396d7d90d7e9824a9cefe0e2b10230c, type: 3}
+  - {fileID: 8300000, guid: 8c59754c84a4b1a40a1060373f93a5a1, type: 3}
+  - {fileID: 8300000, guid: 07c4d992e335c1940935288a63d9a843, type: 3}
+  - {fileID: 8300000, guid: 16f84fc75cd35db4cbf41ba199826148, type: 3}
+  - {fileID: 8300000, guid: c10b6f441824b48479b55fafc758f964, type: 3}
+  - {fileID: 8300000, guid: 739951f997633bb4abbba8f1ce547de1, type: 3}
+  - {fileID: 8300000, guid: 8e38dbc41d35b014e9a37c4d8139d579, type: 3}
+  - {fileID: 8300000, guid: 925057c1e11250242ab47ea568003a28, type: 3}
+  - {fileID: 8300000, guid: 6e439fcd5db8dc94197f03af66b50238, type: 3}
   footstepInterval: 0.48
   footstepVolume: 0.35
-  sfxVolume: 0.9
+  sfxVolume: 0.984
+  deathVolume: 1
+  minDistance: 5
+  maxDistance: 30
 --- !u!1 &5773606653143378459
 GameObject:
   m_ObjectHideFlags: 0

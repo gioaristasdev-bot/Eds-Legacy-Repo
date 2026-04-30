@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9b8751c837f014ba7ceb2ea7402ac5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 40
+  maxHealth: 50
   currentHealth: 0
   detectionRadius: 8
   fieldOfView: 120
@@ -388,6 +388,9 @@ MonoBehaviour:
   footstepInterval: 0.48
   footstepVolume: 0.35
   sfxVolume: 0.9
+  deathVolume: 1
+  minDistance: 5
+  maxDistance: 30
 --- !u!1 &5998032966789544195
 GameObject:
   m_ObjectHideFlags: 0

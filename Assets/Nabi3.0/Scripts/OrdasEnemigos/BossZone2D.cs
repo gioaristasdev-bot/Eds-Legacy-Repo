@@ -49,22 +49,22 @@ public class BossZone2D : MonoBehaviour
 
     void Update()
     {
-        // Verifica si el Boss ha sido derrotado (ya no está activo)
-        if (bossSpawned && !bossDefeated && (!boss.activeSelf || boss == null))
+        // Verifica si el Boss ha sido derrotado
+        if (bossSpawned && !bossDefeated && (boss == null || !boss.activeSelf))
         {
             bossDefeated = true;
 
-            // Desaparecer los muros al eliminar el Boss
+            // Desaparecer los muros
             foreach (GameObject wall in walls)
             {
                 wall.SetActive(false);
             }
 
-            // Detener la música del Boss y volver a la música del nivel
+            // Música
             audioSource.Stop();
-            levelMusic.UnPause();         // Regresa la música original del nivel
+            levelMusic.UnPause();
 
-            // Desactivar el script para que no se ejecute más
+            // Desactivar script
             this.enabled = false;
         }
     }

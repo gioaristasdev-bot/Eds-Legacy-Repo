@@ -242,9 +242,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd2ab96c91551894e9242a40c23222dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
+  maxHealth: 150
   currentHealth: 0
-  detectionRadius: 5.72
+  detectionRadius: 12
   fieldOfView: 255.49
   use360Detection: 0
   playerLayer:
@@ -413,6 +413,9 @@ MonoBehaviour:
   footstepInterval: 0.48
   footstepVolume: 0.35
   sfxVolume: 0.9
+  deathVolume: 1
+  minDistance: 5
+  maxDistance: 30
 --- !u!1001 &4241519726155966544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,6 +533,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 520321416540129741, guid: c78186588deebd54aa9b2e11b300d4ad,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1596357972171728719, guid: c78186588deebd54aa9b2e11b300d4ad,
         type: 3}

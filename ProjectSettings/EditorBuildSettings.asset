@@ -23,4 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Nabi3.0/Escenas/Nivel-REINA.unity
     guid: 4c56bda9cd5d4c14089397d52d21490f
+  - enabled: 1
+    path: Assets/Nabi3.0/Escenas/Creditos.unity
+    guid: a006e4b2a9f94264badf4b352e2700e5
   m_configObjects: {}
