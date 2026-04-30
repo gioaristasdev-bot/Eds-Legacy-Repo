@@ -19,37 +19,34 @@ public class DeathVideoSequence : MonoBehaviour
 
     private bool sequenceStarted = false;
 
-    void Update()
+    // Llamar desde BossReina al terminar el Attack3
+    public void TriggerSequence()
     {
         if (sequenceStarted) return;
-
-        // 👇 Detecta muerte SIN usar PlayerHealth
-        if (player == null || !player.activeInHierarchy)
-        {
-            StartCoroutine(PlaySequence());
-        }
+        StartCoroutine(PlaySequence());
     }
 
     IEnumerator PlaySequence()
     {
         sequenceStarted = true;
 
-        // 🎥 VIDEO 1
-        videoPlayer.clip = deathVideo;
-        videoPlayer.Play();
+        yield return PlayVideo(deathVideo);
 
-        yield return new WaitUntil(() => !videoPlayer.isPlaying);
-
-        // ⏱️ pausa
         yield return new WaitForSeconds(delayBetweenVideos);
 
-        // 🎥 VIDEO 2
-        videoPlayer.clip = secondVideo;
+        yield return PlayVideo(secondVideo);
+
+        SceneManager.LoadScene(creditsSceneName);
+    }
+
+    IEnumerator PlayVideo(VideoClip clip)
+    {
+        videoPlayer.clip = clip;
         videoPlayer.Play();
 
+        // El VideoPlayer tarda un frame en arrancar; esperar a que isPlaying sea true
+        // antes de esperar a que sea false evita saltar el video inmediatamente.
+        yield return new WaitUntil(() => videoPlayer.isPlaying);
         yield return new WaitUntil(() => !videoPlayer.isPlaying);
-
-        // ➡️ créditos
-        SceneManager.LoadScene(creditsSceneName);
     }
 }

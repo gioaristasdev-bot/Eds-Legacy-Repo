@@ -194,6 +194,16 @@ namespace NABHI.Enemies
 
         #endregion
 
+        #region Secuencia Muerte Ed
+
+        [Header("Secuencia Muerte Ed")]
+        [Tooltip("Script que maneja los videos de muerte. Se activa automáticamente al terminar el Attack3.")]
+        [SerializeField] private DeathVideoSequence deathVideoSequence;
+        [Tooltip("Segundos de pausa dramática entre el fin del Attack3 y el inicio de la secuencia de video.")]
+        [SerializeField] private float deathSequenceDelay = 0.8f;
+
+        #endregion
+
         #region Debug
 
         [Header("Debug")]
@@ -304,7 +314,14 @@ namespace NABHI.Enemies
         private IEnumerator FinalAttackRoutine()
         {
             yield return StartCoroutine(Attack3Routine());
+
             EnterFinalIdle();
+
+            if (deathVideoSequence != null)
+            {
+                yield return new WaitForSeconds(deathSequenceDelay);
+                deathVideoSequence.TriggerSequence();
+            }
         }
 
         private void Update()
