@@ -472,17 +472,19 @@ namespace NABHI.Enemies
         private IEnumerator Attack1Routine(Vector2 attackPos)
         {
             currentState = BossState.Attack1;
-            animator?.SetTrigger(AnimParam.Attack1);
             rb.velocity = Vector2.zero;
 
-            // 1. Moverse a la posición X fija del ataque
+            // 1. Moverse a la posición X fija del ataque (sin animación todavía)
             yield return StartCoroutine(MoveToX(attackPos.x, slamPositionSpeed));
 
             // 2. Telegrafeo
             rb.velocity = Vector2.zero;
             yield return new WaitForSeconds(slamTelegraphPause);
 
-            // 3. Espera antes de activar daño corporal (sincronía con animación)
+            // 3. Trigger de animación aquí: el boss ya está en posición, empieza la animación del slam
+            //    slamContactDamageDelay debe coincidir con los frames hasta el impacto visual en la animación
+            animator?.SetTrigger(AnimParam.Attack1);
+
             float lockedX = rb.position.x;
             if (slamContactDamageDelay > 0f)
                 yield return new WaitForSeconds(slamContactDamageDelay);
