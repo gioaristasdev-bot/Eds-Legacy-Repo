@@ -131,7 +131,7 @@ MonoBehaviour:
     m_Bits: 8
   obstacleLayer:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 6144
   requireLineOfSight: 1
   eyeOffset: {x: 0, y: 0.4}
   alertOnDamage: 1
