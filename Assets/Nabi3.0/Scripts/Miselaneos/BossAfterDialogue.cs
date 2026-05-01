@@ -3,10 +3,13 @@
 public class BossAfterDialogue : MonoBehaviour
 {
     [Header("Referencia al sistema de diálogo")]
-    [SerializeField] private GameObject[] dialogueUI; // los mismos que usas
+    [SerializeField] private GameObject[] dialogueUI;
 
     [Header("Boss")]
     [SerializeField] private GameObject boss;
+
+    [Header("Puerta")]
+    [SerializeField] private GameObject door; // 👈 nueva referencia
 
     private bool bossSpawned = false;
     private bool dialogueStarted = false;
@@ -15,7 +18,7 @@ public class BossAfterDialogue : MonoBehaviour
     {
         if (bossSpawned) return;
 
-        // Detectar si algún diálogo estuvo activo alguna vez
+        // Detectar si algún diálogo estuvo activo
         foreach (GameObject ui in dialogueUI)
         {
             if (ui != null && ui.activeSelf)
@@ -46,9 +49,17 @@ public class BossAfterDialogue : MonoBehaviour
     {
         bossSpawned = true;
 
+        // 👇 Aparece el boss
         if (boss != null)
             boss.SetActive(true);
 
-        Debug.Log("🔥 Boss aparece después del diálogo");
+        // 👇 Cerrar puerta
+        Animator anim = door.GetComponent<Animator>();
+
+        if (anim != null)
+        {
+            anim.SetTrigger("Close");
+        }
+        Debug.Log("🔥 Boss aparece y la puerta se cierra");
     }
 }

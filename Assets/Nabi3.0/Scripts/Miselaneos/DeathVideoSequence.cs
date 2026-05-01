@@ -17,6 +17,9 @@ public class DeathVideoSequence : MonoBehaviour
     [SerializeField] private float delayBetweenVideos = 1.5f;
     [SerializeField] private string creditsSceneName;
 
+    [Header("UI")]
+    [SerializeField] private GameObject healthUI;
+
     private bool sequenceStarted = false;
 
     // Llamar desde BossReina al terminar el Attack3
@@ -29,6 +32,10 @@ public class DeathVideoSequence : MonoBehaviour
     IEnumerator PlaySequence()
     {
         sequenceStarted = true;
+
+        // 👇 DESACTIVAR UI
+        if (healthUI != null)
+            healthUI.SetActive(false);
 
         GameAudioManager.Instance?.StopMusic();
 
