@@ -483,6 +483,7 @@ namespace NABHI.Enemies
 
             // 3. Trigger de animación aquí: el boss ya está en posición, empieza la animación del slam
             //    slamContactDamageDelay debe coincidir con los frames hasta el impacto visual en la animación
+            animator?.ResetTrigger(AnimParam.Attack1);
             animator?.SetTrigger(AnimParam.Attack1);
 
             float lockedX = rb.position.x;

@@ -12821,6 +12821,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368744041}
     m_Modifications:
+    - target: {fileID: 1766347533115949532, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
+        type: 3}
+      propertyPath: patrolDistance
+      value: 3.59
+      objectReference: {fileID: 0}
     - target: {fileID: 3034057055248431294, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
       propertyPath: m_Name
@@ -12829,17 +12834,17 @@ PrefabInstance:
     - target: {fileID: 3034057055248431294, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3954484981519606147, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 139.83
+      value: 141.72
       objectReference: {fileID: 0}
     - target: {fileID: 3954484981519606147, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 31.85
+      value: 31.94
       objectReference: {fileID: 0}
     - target: {fileID: 3954484981519606147, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
@@ -74040,6 +74045,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368744041}
     m_Modifications:
+    - target: {fileID: 1484723545037540554, guid: b02bcf58b42abd949b60c38cf3e3af12,
+        type: 3}
+      propertyPath: patrolDistance
+      value: 4.38
+      objectReference: {fileID: 0}
     - target: {fileID: 2939041798480328551, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
       propertyPath: m_Name
@@ -74048,7 +74058,7 @@ PrefabInstance:
     - target: {fileID: 2939041798480328551, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5920194808149408861, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
@@ -74143,12 +74153,12 @@ PrefabInstance:
     - target: {fileID: 8677057656841823583, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 146.36
+      value: 151.12
       objectReference: {fileID: 0}
     - target: {fileID: 8677057656841823583, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 32.23
+      value: 32.27
       objectReference: {fileID: 0}
     - target: {fileID: 8677057656841823583, guid: b02bcf58b42abd949b60c38cf3e3af12,
         type: 3}
@@ -82252,6 +82262,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 368744041}
     m_Modifications:
+    - target: {fileID: 1766347533115949532, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
+        type: 3}
+      propertyPath: patrolDistance
+      value: 5.06
+      objectReference: {fileID: 0}
     - target: {fileID: 3034057055248431294, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
       propertyPath: m_Name
@@ -82265,7 +82280,7 @@ PrefabInstance:
     - target: {fileID: 3954484981519606147, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 140.11
+      value: 142.8
       objectReference: {fileID: 0}
     - target: {fileID: 3954484981519606147, guid: 22de30aa7ebe1d0469ed2b38bc7b616a,
         type: 3}
@@ -115550,6 +115565,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3187297313107845299, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+        type: 3}
+      propertyPath: energyCostPerUse
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3187297313107845299, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+        type: 3}
+      propertyPath: energyCostPerSecond
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6008504212968553290, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
       propertyPath: visualRoot
@@ -115559,6 +115584,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7576507371491838136, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+        type: 3}
+      propertyPath: energyCostPerSecond
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8940058197377347431, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
