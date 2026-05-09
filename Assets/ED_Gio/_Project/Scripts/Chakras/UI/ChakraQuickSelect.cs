@@ -1,4 +1,7 @@
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
 using NABHI.Chakras;
 using NABHI.Character;
 
@@ -17,17 +20,20 @@ namespace NABHI.Chakras.UI
         [SerializeField] private ChakraSystem chakraSystem;
         [SerializeField] private CharacterController2D characterController;
 
-        [Header("Panel Visual (ChakraMenuPanel_V2 existente)")]
+        [Header("Panel Visual")]
+        [Tooltip("Padre que contiene todo el menu (ej: ChakraMenuPanel_V2). Se activa al abrir.")]
+        [SerializeField] private GameObject parentPanel;
+        [Tooltip("Unico hijo del padre que debe mostrarse (ej: PanelChakras). Sus hermanos se ocultan.")]
         [SerializeField] private GameObject panelRoot;
 
         [Header("Slots del panel — arrastrar cada hijo de PanelChakras")]
-        [SerializeField] private Transform slotRemoteHack;    // arriba derecha  ↗
-        [SerializeField] private Transform slotEchoSense;     // derecha          →
-        [SerializeField] private Transform slotFloat;         // abajo derecha   ↘
-        [SerializeField] private Transform slotEMP;           // arriba izquierda ↖
-        [SerializeField] private Transform slotTremor;        // izquierda        ←
-        [SerializeField] private Transform slotInvisibility;  // abajo izquierda ↙
-        [SerializeField] private Transform slotTelekinesis;   // centro           ●
+        [SerializeField] private Transform slotRemoteHack;    // arriba derecha  UP-RIGHT
+        [SerializeField] private Transform slotEchoSense;     // derecha          RIGHT
+        [SerializeField] private Transform slotFloat;         // abajo derecha   DOWN-RIGHT
+        [SerializeField] private Transform slotEMP;           // arriba izquierda UP-LEFT
+        [SerializeField] private Transform slotTremor;        // izquierda        LEFT
+        [SerializeField] private Transform slotInvisibility;  // abajo izquierda DOWN-LEFT
+        [SerializeField] private Transform slotTelekinesis;   // centro           CENTER
 
         [Header("Input")]
         [Tooltip("LB del mando Xbox = JoystickButton4")]
@@ -38,18 +44,26 @@ namespace NABHI.Chakras.UI
         [SerializeField] private float stickDeadzone = 0.25f;
 
         [Header("Comportamiento")]
-        [Tooltip("Escala de tiempo mientras la rueda esta abierta (0.2 = slow-mo estilo GTA)")]
+        [Tooltip("Escala de tiempo mientras el selector esta abierto (0.2 = slow-mo estilo GTA)")]
         [SerializeField] private float slowMoScale = 0.2f;
         [Tooltip("Escala del slot destacado")]
         [SerializeField] private float highlightScale = 1.25f;
 
-        // ── Estado interno ──────────────────────────────────────────────────
+        // Estado interno
         private bool isOpen = false;
         private ChakraType hoveredType = ChakraType.None;
         private Transform hoveredSlot = null;
         private float originalTimeScale = 1f;
 
-        // ── Inicializacion ──────────────────────────────────────────────────
+        // Hermanos de panelRoot que ocultamos al abrir (para restaurarlos al cerrar)
+        private readonly List<GameObject> hiddenSiblings = new List<GameObject>();
+
+        // Image de fondo de panelRoot: se deshabilita en modo selector rapido
+        private Image panelRootImage;
+        // Image del padre: alpha 0 en modo selector rapido, restaurado al cerrar
+        private Image parentPanelImage;
+        private Color parentPanelOriginalColor;
+
         private void Start()
         {
             if (chakraSystem == null)
@@ -57,11 +71,20 @@ namespace NABHI.Chakras.UI
             if (characterController == null)
                 characterController = FindObjectOfType<CharacterController2D>();
 
+            if (parentPanel != null)
+                parentPanel.SetActive(false);
+
             if (panelRoot != null)
-                panelRoot.SetActive(false);
+                panelRootImage = panelRoot.GetComponent<Image>();
+
+            if (parentPanel != null)
+            {
+                parentPanelImage = parentPanel.GetComponent<Image>();
+                if (parentPanelImage != null)
+                    parentPanelOriginalColor = parentPanelImage.color;
+            }
         }
 
-        // ── Loop principal ──────────────────────────────────────────────────
         private void Update()
         {
             if (Input.GetKeyDown(holdButton) && !isOpen)
@@ -70,15 +93,45 @@ namespace NABHI.Chakras.UI
                 Close();
 
             if (isOpen)
+            {
+                // Evitar que el EventSystem navegue botones con el stick izquierdo
+                if (EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null)
+                    EventSystem.current.SetSelectedGameObject(null);
+
                 HandleStickInput();
+            }
         }
 
-        // ── Abrir / Cerrar ──────────────────────────────────────────────────
+        // ── Abrir ───────────────────────────────────────────────────────────
         private void Open()
         {
             isOpen = true;
 
+            // 1. Activar el padre para que el hijo sea visible
+            if (parentPanel != null)
+            {
+                parentPanel.SetActive(true);
+
+                // 2. Ocultar todos los hermanos de panelRoot dentro del padre
+                hiddenSiblings.Clear();
+                foreach (Transform child in parentPanel.transform)
+                {
+                    if (child.gameObject == panelRoot) continue;
+                    if (!child.gameObject.activeSelf) continue;
+                    child.gameObject.SetActive(false);
+                    hiddenSiblings.Add(child.gameObject);
+                }
+            }
+
+            // 3. Asegurar que panelRoot esta activo y ocultar fondos
             panelRoot?.SetActive(true);
+            if (panelRootImage != null) panelRootImage.enabled = false;
+            if (parentPanelImage != null)
+            {
+                var c = parentPanelOriginalColor;
+                c.a = 0f;
+                parentPanelImage.color = c;
+            }
 
             originalTimeScale = Time.timeScale;
             Time.timeScale = slowMoScale;
@@ -90,11 +143,12 @@ namespace NABHI.Chakras.UI
             SetHovered(ChakraType.Telekinesis, slotTelekinesis);
         }
 
+        // ── Cerrar ──────────────────────────────────────────────────────────
         private void Close()
         {
             isOpen = false;
 
-            // Confirmar seleccion si el chakra esta desbloqueado
+            // Confirmar seleccion
             if (hoveredType != ChakraType.None && chakraSystem != null
                 && chakraSystem.IsChakraUnlocked(hoveredType))
             {
@@ -108,9 +162,16 @@ namespace NABHI.Chakras.UI
 
             ClearHover();
 
-            Time.timeScale = originalTimeScale;
-            panelRoot?.SetActive(false);
+            // Restaurar fondos y hermanos antes de desactivar el padre
+            if (panelRootImage != null) panelRootImage.enabled = true;
+            if (parentPanelImage != null) parentPanelImage.color = parentPanelOriginalColor;
+            foreach (var sibling in hiddenSiblings)
+                if (sibling != null) sibling.SetActive(true);
+            hiddenSiblings.Clear();
 
+            parentPanel?.SetActive(false);
+
+            Time.timeScale = originalTimeScale;
             chakraSystem?.SetExternalMenuOpen(false);
             characterController?.SetInputBlocked(false);
             characterController?.SkipInputForFrames(1);
@@ -128,7 +189,6 @@ namespace NABHI.Chakras.UI
 
             if (stick.magnitude < stickDeadzone)
             {
-                // Sin direccion clara → Telekinesis (centro)
                 newType = ChakraType.Telekinesis;
                 newSlot = slotTelekinesis;
             }
@@ -144,11 +204,10 @@ namespace NABHI.Chakras.UI
         }
 
         // ── Mapeo angulo → chakra ───────────────────────────────────────────
-        // Los 6 sectores de 60° empiezan desde la derecha (0°) en sentido antihorario.
         //
-        //          EMP (90°–150°)   RemoteHack (30°–90°)
-        //  Tremor (150°–210°)  ●Telekinesis  EchoSense (330°–30°)
-        //      Invisibility (210°–270°)  Float (270°–330°)
+        //   EMP (90-150)      RemoteHack (30-90)
+        //   Tremor (150-210)  Telekinesis  EchoSense (330-30)
+        //   Invisibility (210-270)  Float (270-330)
         //
         private void GetChakraForAngle(float angle, out ChakraType type, out Transform slot)
         {
@@ -195,7 +254,6 @@ namespace NABHI.Chakras.UI
             if (hoveredSlot != null)
                 hoveredSlot.localScale = Vector3.one * highlightScale;
 
-            // Preview en ChakraSystem (sin activar)
             if (chakraSystem != null && chakraSystem.IsChakraUnlocked(type))
                 chakraSystem.SelectChakra(type);
         }
@@ -209,7 +267,6 @@ namespace NABHI.Chakras.UI
             hoveredType = ChakraType.None;
         }
 
-        // ── Helper para ejes ────────────────────────────────────────────────
         private float TryGetAxis(string axisName)
         {
             try { return Input.GetAxisRaw(axisName); }
