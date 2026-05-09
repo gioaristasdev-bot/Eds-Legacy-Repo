@@ -334,14 +334,14 @@ namespace NABHI.Chakras.UI
         {
             switch (type)
             {
-                case ChakraType.Float: return new Color(1f, 0.4f, 0.7f);         // Rosa
-                case ChakraType.Invisibility: return new Color(0.2f, 0.4f, 1f);   // Azul
-                case ChakraType.Tremor: return new Color(0.2f, 0.8f, 0.4f);       // Verde
-                case ChakraType.EchoSense: return new Color(1f, 0.6f, 0.2f);      // Naranja
-                case ChakraType.RemoteHack: return new Color(1f, 0.9f, 0.2f);     // Amarillo
-                case ChakraType.EMP: return new Color(0.4f, 0.8f, 1f);            // Azul claro
-                case ChakraType.Telekinesis: return new Color(0.9f, 0.2f, 0.2f);  // Rojo
-                case ChakraType.GravityPulse: return new Color(0.9f, 0.2f, 0.2f); // Rojo
+                case ChakraType.Float: return new Color(1f, 0.4f, 0.7f);
+                case ChakraType.Invisibility: return new Color(0.2f, 0.4f, 1f);
+                case ChakraType.Tremor: return new Color(0.2f, 0.8f, 0.4f);
+                case ChakraType.EchoSense: return new Color(1f, 0.6f, 0.2f);
+                case ChakraType.RemoteHack: return new Color(1f, 0.9f, 0.2f);
+                case ChakraType.EMP: return new Color(0.4f, 0.8f, 1f);
+                case ChakraType.Telekinesis: return new Color(0.9f, 0.2f, 0.2f);
+                case ChakraType.GravityPulse: return new Color(0.9f, 0.2f, 0.2f);
                 default: return Color.white;
             }
         }

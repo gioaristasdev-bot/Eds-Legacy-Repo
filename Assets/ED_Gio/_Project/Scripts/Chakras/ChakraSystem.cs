@@ -128,6 +128,9 @@ namespace NABHI.Chakras
 
         private void HandleInput()
         {
+            // Bloquear toda entrada si hay un menu externo abierto (ej: ChakraWheelUI en modo LB)
+            if (isExternalMenuOpen) return;
+
             // === RUEDA DE SELECCION (Hold wheelKey) ===
             if (Input.GetKey(wheelKey))
             {
