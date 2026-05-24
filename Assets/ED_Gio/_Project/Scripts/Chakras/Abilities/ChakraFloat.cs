@@ -9,8 +9,9 @@ namespace NABHI.Chakras.Abilities
     /// Color: Rosa - Corona (Espiritualidad)
     ///
     /// Cuando el chakra esta activo:
-    /// - Mantener Salto (Espacio) = Levitar hacia arriba (consume energia)
+    /// - Mantener Salto (Espacio) = Levitar hacia arriba
     /// - Soltar Salto = Descender lentamente (gravedad reducida)
+    /// - La energia se consume continuamente mientras el chakra este activo
     ///
     /// Activar con E, desactivar con E.
     /// </summary>
@@ -35,10 +36,6 @@ namespace NABHI.Chakras.Abilities
         [Tooltip("Boton de mando para levitar - mismo que salto (A = JoystickButton0)")]
         [SerializeField] private KeyCode floatKeyGamepad = KeyCode.JoystickButton0;
 
-        [Header("Energy")]
-        [Tooltip("Solo consume energia mientras levita activamente (mantiene salto)")]
-        [SerializeField] private bool onlyConsumeWhileAscending = true;
-
         [Header("Visual")]
         [SerializeField] private ParticleSystem floatParticles;
         [SerializeField] private ParticleSystem ascendParticles;
@@ -62,7 +59,7 @@ namespace NABHI.Chakras.Abilities
             chakraColor = new Color(1f, 0.4f, 0.7f); // Rosa
             activationMode = ChakraActivationMode.Continuous;
 
-            // Este chakra maneja su propia energia (solo consume al mantener Espacio)
+            // Este chakra maneja su propia energia (consume continuamente mientras este activo)
             manualEnergyManagement = true;
 
             // Obtener referencias
@@ -88,12 +85,21 @@ namespace NABHI.Chakras.Abilities
             // salga volando al reanudar la fisica.
             if (Time.timeScale == 0f) return;
 
+            // Consumir energia continuamente mientras el chakra este activo
+            if (energySystem != null)
+            {
+                if (!energySystem.ConsumeEnergyPerSecond(energyCostPerSecond))
+                {
+                    Deactivate();
+                    return;
+                }
+            }
+
             // Detectar si esta manteniendo el boton de salto (teclado Space o boton A del mando)
             bool holdingFloat = Input.GetKey(floatKey) || Input.GetKey(floatKeyGamepad);
 
             if (holdingFloat)
             {
-                // Ascender
                 ApplyAscendPhysics();
 
                 if (!isAscending)
@@ -101,33 +107,15 @@ namespace NABHI.Chakras.Abilities
                     isAscending = true;
                     OnStartAscending();
                 }
-
-                // Consumir energia solo mientras asciende
-                if (onlyConsumeWhileAscending && energySystem != null)
-                {
-                    if (!energySystem.ConsumeEnergyPerSecond(energyCostPerSecond))
-                    {
-                        // Sin energia, desactivar chakra
-                        Deactivate();
-                        return;
-                    }
-                }
             }
             else
             {
-                // Descender lentamente
                 ApplyDescentPhysics();
 
                 if (isAscending)
                 {
                     isAscending = false;
                     OnStopAscending();
-                }
-
-                // Si no consume energia solo al ascender, detener el consumo
-                if (onlyConsumeWhileAscending && energySystem != null)
-                {
-                    energySystem.StopUsingEnergy();
                 }
             }
         }
