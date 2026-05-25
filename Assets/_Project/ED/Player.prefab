@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 4275900590346638094}
   - component: {fileID: 4008525220598854822}
   - component: {fileID: 3877175878731070911}
+  - component: {fileID: 2730987605140381808}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -879,6 +880,35 @@ MonoBehaviour:
   - {fileID: 0}
   footstepVolume: 0.45
   sfxVolume: 1
+--- !u!114 &2730987605140381808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7063659274252483093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b2d8a2453ad9084aaef6c933eb3d0fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chakraSystem: {fileID: 1540395860012174330}
+  characterController: {fileID: 680152384424936141}
+  parentPanel: {fileID: 0}
+  panelRoot: {fileID: 0}
+  slotRemoteHack: {fileID: 0}
+  slotEchoSense: {fileID: 0}
+  slotFloat: {fileID: 0}
+  slotEMP: {fileID: 0}
+  slotTremor: {fileID: 0}
+  slotInvisibility: {fileID: 0}
+  slotTelekinesis: {fileID: 0}
+  holdButton: 334
+  rightStickHAxis: RightStickHorizontal
+  rightStickVAxis: RightStickVertical
+  stickDeadzone: 0.25
+  slowMoScale: 0.2
+  highlightScale: 1.25
 --- !u!1 &7227216890792690846
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,7 +1029,7 @@ MonoBehaviour:
   chakraName: 
   chakraColor: {r: 1, g: 1, b: 1, a: 1}
   activationMode: 0
-  energyCostPerSecond: 10
+  energyCostPerSecond: 25
   energyCostPerUse: 20
   cooldown: 0
   isUnlocked: 1
@@ -1009,7 +1039,6 @@ MonoBehaviour:
   maxDescentSpeed: 1.5
   floatKey: 32
   floatKeyGamepad: 330
-  onlyConsumeWhileAscending: 1
   floatParticles: {fileID: 0}
   ascendParticles: {fileID: 0}
 --- !u!114 &8764994346946968984
@@ -1058,8 +1087,8 @@ MonoBehaviour:
   chakraName: 
   chakraColor: {r: 1, g: 1, b: 1, a: 1}
   activationMode: 0
-  energyCostPerSecond: 20
-  energyCostPerUse: 10
+  energyCostPerSecond: 10
+  energyCostPerUse: 5
   cooldown: 0
   isUnlocked: 1
   invisibleAlpha: 0.2
@@ -1316,12 +1345,12 @@ PrefabInstance:
     - target: {fileID: 1346200330565381636, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6909892
+      value: 0.6909893
       objectReference: {fileID: 0}
     - target: {fileID: 1346200330565381636, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7228651
+      value: -0.722865
       objectReference: {fileID: 0}
     - target: {fileID: 1679014447689167515, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
@@ -1381,7 +1410,7 @@ PrefabInstance:
     - target: {fileID: 3797331336251831850, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.38923475
+      value: 0.38923466
       objectReference: {fileID: 0}
     - target: {fileID: 4353512299956713153, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
@@ -1411,7 +1440,7 @@ PrefabInstance:
     - target: {fileID: 6501138947576040681, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.82352376
+      value: -0.8235238
       objectReference: {fileID: 0}
     - target: {fileID: 6634696072805530981, guid: 734135a660e65254aae2b0c124887a84,
         type: 3}

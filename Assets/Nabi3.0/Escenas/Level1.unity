@@ -114734,7 +114734,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 9073898862326248483}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9073898862326248484}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc2648fe882a82b44b0469a40658b123, type: 3}
@@ -115264,7 +115264,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 9073898862326248483}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9073898862326248484}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5773ce8c9e909694c961d291193b2694, type: 3}
@@ -115276,7 +115276,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 9073898862326248483}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9073898862326248484}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 39682904f93367d4d947f4f894d15009, type: 3}
@@ -115599,7 +115599,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 9073898862326248483}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9073898862326248484}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a850fa9a04e7bf14e86c992cf1008da2, type: 3}
@@ -115613,26 +115613,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 172039101618259743, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9480125
-      objectReference: {fileID: 0}
-    - target: {fileID: 172039101618259743, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.3182334
-      objectReference: {fileID: 0}
-    - target: {fileID: 640644508893550690, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.014237536
-      objectReference: {fileID: 0}
-    - target: {fileID: 640644508893550690, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.9998987
-      objectReference: {fileID: 0}
     - target: {fileID: 938897609110160637, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -115643,41 +115623,51 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0.722865
       objectReference: {fileID: 0}
-    - target: {fileID: 1000898694741240439, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.39977348
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000898694741240439, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+      propertyPath: slotEMP
+      value: 
+      objectReference: {fileID: 3097806099435384200}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.916614
-      objectReference: {fileID: 0}
-    - target: {fileID: 1268712825167695204, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+      propertyPath: panelRoot
+      value: 
+      objectReference: {fileID: 1593191152}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.988873
-      objectReference: {fileID: 0}
-    - target: {fileID: 1268712825167695204, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+      propertyPath: slotFloat
+      value: 
+      objectReference: {fileID: 3097806099435384201}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.1487624
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416837632141549377, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+      propertyPath: slotTremor
+      value: 
+      objectReference: {fileID: 3097806099435384199}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.8885252
-      objectReference: {fileID: 0}
-    - target: {fileID: 2416837632141549377, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+      propertyPath: parentPanel
+      value: 
+      objectReference: {fileID: 627151805}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.45882797
-      objectReference: {fileID: 0}
-    - target: {fileID: 3106319140946353363, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+      propertyPath: slotEchoSense
+      value: 
+      objectReference: {fileID: 3097806099435384202}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.92113864
-      objectReference: {fileID: 0}
+      propertyPath: slotRemoteHack
+      value: 
+      objectReference: {fileID: 3097806099435384203}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+        type: 3}
+      propertyPath: slotTelekinesis
+      value: 
+      objectReference: {fileID: 3097806099435384197}
+    - target: {fileID: 2730987605140381808, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
+        type: 3}
+      propertyPath: slotInvisibility
+      value: 
+      objectReference: {fileID: 3097806099435384198}
     - target: {fileID: 3106319140946353363, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
       propertyPath: m_LocalRotation.z
@@ -115692,41 +115682,6 @@ PrefabInstance:
         type: 3}
       propertyPath: energyCostPerSecond
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4050181273770889722, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.6546633
-      objectReference: {fileID: 0}
-    - target: {fileID: 4050181273770889722, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.7559206
-      objectReference: {fileID: 0}
-    - target: {fileID: 4166782624967110433, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.893912
-      objectReference: {fileID: 0}
-    - target: {fileID: 4166782624967110433, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.44824257
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880253393289205660, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.709159
-      objectReference: {fileID: 0}
-    - target: {fileID: 4880253393289205660, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.7050486
-      objectReference: {fileID: 0}
-    - target: {fileID: 5012971592248944144, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5672818
       objectReference: {fileID: 0}
     - target: {fileID: 5012971592248944144, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
@@ -115747,16 +115702,6 @@ PrefabInstance:
         type: 3}
       propertyPath: energyCostPerSecond
       value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8858169222725107839, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.98649347
-      objectReference: {fileID: 0}
-    - target: {fileID: 8858169222725107839, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.16380095
       objectReference: {fileID: 0}
     - target: {fileID: 8940058197377347431, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
         type: 3}
@@ -115811,53 +115756,14 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7063659274252483093, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9206032865642793899}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cab3d27a8e8d7ed40805ec4e1b46d943, type: 3}
---- !u!1 &9073898862326248484 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7063659274252483093, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
-    type: 3}
-  m_PrefabInstance: {fileID: 9073898862326248483}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &9206032865642793898 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8940058197377347431, guid: cab3d27a8e8d7ed40805ec4e1b46d943,
     type: 3}
   m_PrefabInstance: {fileID: 9073898862326248483}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &9206032865642793899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9073898862326248484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6b2d8a2453ad9084aaef6c933eb3d0fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chakraSystem: {fileID: 7309174055472681396}
-  characterController: {fileID: 6097305740801339308}
-  parentPanel: {fileID: 627151805}
-  panelRoot: {fileID: 1593191152}
-  slotRemoteHack: {fileID: 3097806099435384203}
-  slotEchoSense: {fileID: 3097806099435384202}
-  slotFloat: {fileID: 3097806099435384201}
-  slotEMP: {fileID: 3097806099435384200}
-  slotTremor: {fileID: 3097806099435384199}
-  slotInvisibility: {fileID: 3097806099435384198}
-  slotTelekinesis: {fileID: 3097806099435384197}
-  holdButton: 334
-  rightStickHAxis: RightStickHorizontal
-  rightStickVAxis: RightStickVertical
-  stickDeadzone: 0.25
-  slowMoScale: 0.2
-  highlightScale: 1.25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
