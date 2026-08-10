@@ -128,14 +128,14 @@ namespace NABHI.Chakras.Abilities
             rb.gravityScale = 0f;
 
             // Si está cayendo, cancelar la velocidad de caída primero
-            if (rb.velocity.y < 0)
+            if (rb.linearVelocity.y < 0)
             {
-                rb.velocity = new Vector2(rb.velocity.x, 0f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             }
 
             // Aplicar velocidad de ascenso directamente (más responsivo que AddForce)
-            float targetVelocityY = Mathf.MoveTowards(rb.velocity.y, maxUpwardSpeed, floatForce * Time.deltaTime);
-            rb.velocity = new Vector2(rb.velocity.x, targetVelocityY);
+            float targetVelocityY = Mathf.MoveTowards(rb.linearVelocity.y, maxUpwardSpeed, floatForce * Time.deltaTime);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, targetVelocityY);
         }
 
         private void ApplyDescentPhysics()
@@ -146,9 +146,9 @@ namespace NABHI.Chakras.Abilities
             rb.gravityScale = floatGravityScale;
 
             // Limitar velocidad de descenso (caida suave)
-            if (rb.velocity.y < -maxDescentSpeed)
+            if (rb.linearVelocity.y < -maxDescentSpeed)
             {
-                rb.velocity = new Vector2(rb.velocity.x, -maxDescentSpeed);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxDescentSpeed);
             }
         }
 

@@ -176,7 +176,7 @@ namespace NABHI.Character
         public bool IsWallSliding => isWallSliding;
         public int FacingDirection => facingDirection;
         public int WallDirection => wallDirection;
-        public Vector2 Velocity => rb.velocity;
+        public Vector2 Velocity => rb.linearVelocity;
         public int AirJumpsRemaining => airJumpsRemaining;
         public int MaxAirJumps => maxAirJumps;
 
@@ -425,7 +425,7 @@ namespace NABHI.Character
             );
 
             // Aplicar velocidad
-            rb.velocity = new Vector2(currentSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(currentSpeed, rb.linearVelocity.y);
 
             // Actualizar dirección
             if (moveInput.x > 0.1f)
@@ -525,7 +525,7 @@ namespace NABHI.Character
             bool isPushingTowardsWall = Mathf.Sign(moveInput.x) == Mathf.Sign(wallDirection) && Mathf.Abs(moveInput.x) > 0.1f;
 
             // Usar tolerancia en velocidad Y para evitar flickering (0.1f en lugar de 0)
-            if (wallSlideEnabled && isTouchingWall && !isGrounded && rb.velocity.y <= 0.1f && isPushingTowardsWall)
+            if (wallSlideEnabled && isTouchingWall && !isGrounded && rb.linearVelocity.y <= 0.1f && isPushingTowardsWall)
             {
                 isWallSliding = true;
             }
@@ -544,7 +544,7 @@ namespace NABHI.Character
             }
 
             // Resetear velocidad vertical
-            rb.velocity = new Vector2(rb.velocity.x, 0);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
 
             // Aplicar fuerza de salto
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
@@ -566,7 +566,7 @@ namespace NABHI.Character
 
             // Saltar en dirección opuesta a la pared (diagonal)
             Vector2 jumpDir = new Vector2(-wallDirection * wallJumpForce.x, wallJumpForce.y);
-            rb.velocity = jumpDir;
+            rb.linearVelocity = jumpDir;
 
             // Activar lock de control horizontal para que el impulso no se sobreescriba
             wallJumpControlLockCounter = wallJumpControlLockTime;
@@ -593,12 +593,12 @@ namespace NABHI.Character
             }
 
             // Gravedad variable para mejor feel de salto
-            if (rb.velocity.y < 0)
+            if (rb.linearVelocity.y < 0)
             {
                 // Cayendo - gravedad aumentada
                 rb.gravityScale = 2.5f * fallGravityMultiplier;
             }
-            else if (rb.velocity.y > 0 && !jumpHeld)
+            else if (rb.linearVelocity.y > 0 && !jumpHeld)
             {
                 // Saltando pero soltó botón - cortar salto
                 rb.gravityScale = 2.5f * jumpCutMultiplier;
@@ -618,9 +618,9 @@ namespace NABHI.Character
                 return;
             }
 
-            if (rb.velocity.y < -maxFallSpeed)
+            if (rb.linearVelocity.y < -maxFallSpeed)
             {
-                rb.velocity = new Vector2(rb.velocity.x, -maxFallSpeed);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, -maxFallSpeed);
             }
         }
 
@@ -669,7 +669,7 @@ namespace NABHI.Character
             else
             {
                 // Aplicar velocidad de dash
-                rb.velocity = dashDirection * dashSpeed;
+                rb.linearVelocity = dashDirection * dashSpeed;
             }
         }
 
@@ -679,7 +679,7 @@ namespace NABHI.Character
             rb.gravityScale = 2.5f;
 
             // Reducir velocidad después del dash
-            rb.velocity = rb.velocity * 0.5f;
+            rb.linearVelocity = rb.linearVelocity * 0.5f;
 
             OnDashEnd();
         }
@@ -712,7 +712,7 @@ namespace NABHI.Character
             float verticalVelocity = -wallSlideSpeed;
 
             // Aplicar velocidades directamente
-            rb.velocity = new Vector2(horizontalVelocity, verticalVelocity);
+            rb.linearVelocity = new Vector2(horizontalVelocity, verticalVelocity);
 
             // Desactivar gravedad durante wall slide (ya controlamos la caída manualmente)
             rb.gravityScale = 0f;
@@ -801,7 +801,7 @@ namespace NABHI.Character
         /// </summary>
         public void ApplyKnockback(Vector2 force)
         {
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.AddForce(force, ForceMode2D.Impulse);
         }
 
@@ -810,7 +810,7 @@ namespace NABHI.Character
         /// </summary>
         public void SetVelocity(Vector2 velocity)
         {
-            rb.velocity = velocity;
+            rb.linearVelocity = velocity;
         }
 
         #endregion

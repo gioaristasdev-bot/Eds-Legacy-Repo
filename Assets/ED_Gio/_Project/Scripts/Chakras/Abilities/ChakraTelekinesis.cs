@@ -141,7 +141,7 @@ namespace NABHI.Chakras.Abilities
             if (heldObject.Rigidbody != null)
             {
                 // Usar fisica suave
-                heldObject.Rigidbody.velocity = direction * followSpeed;
+                heldObject.Rigidbody.linearVelocity = direction * followSpeed;
             }
             else
             {
@@ -235,7 +235,7 @@ namespace NABHI.Chakras.Abilities
             // Lanzar
             if (heldObject.Rigidbody != null)
             {
-                heldObject.Rigidbody.velocity = throwDirection * throwForce;
+                heldObject.Rigidbody.linearVelocity = throwDirection * throwForce;
             }
 
             heldObject.OnThrown(throwDirection * throwForce);
@@ -311,7 +311,7 @@ namespace NABHI.Chakras.Abilities
             if (rb != null)
             {
                 rb.gravityScale = 0;
-                rb.drag = 5f;
+                rb.linearDamping = 5f;
             }
 
             if (spriteRenderer != null)
@@ -325,7 +325,7 @@ namespace NABHI.Chakras.Abilities
             if (rb != null)
             {
                 rb.gravityScale = 1;
-                rb.drag = 0;
+                rb.linearDamping = 0;
             }
 
             if (spriteRenderer != null)
@@ -360,7 +360,7 @@ namespace NABHI.Chakras.Abilities
             if (!canBeThrownAtEnemies) return;
 
             // Si esta en movimiento rapido, aplicar dano
-            if (rb != null && rb.velocity.magnitude > 5f)
+            if (rb != null && rb.linearVelocity.magnitude > 5f)
             {
                 var damageable = collision.gameObject.GetComponent<Character.IDamageable>();
                 if (damageable != null)

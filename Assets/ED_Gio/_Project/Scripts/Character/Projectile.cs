@@ -119,7 +119,7 @@ namespace NABHI.Weapons
             float projectileSpeed = customSpeed ?? speed;
 
             // Aplicar velocidad
-            rb.velocity = this.direction * projectileSpeed;
+            rb.linearVelocity = this.direction * projectileSpeed;
 
             // Rotar proyectil para que apunte en la dirección correcta
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

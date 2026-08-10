@@ -333,8 +333,8 @@ namespace NABHI.Chakras.Abilities
             // Ralentizar Rigidbody
             if (rb != null)
             {
-                originalVelocity = rb.velocity;
-                rb.velocity *= slowFactor;
+                originalVelocity = rb.linearVelocity;
+                rb.linearVelocity *= slowFactor;
                 rb.gravityScale *= slowFactor;
             }
 

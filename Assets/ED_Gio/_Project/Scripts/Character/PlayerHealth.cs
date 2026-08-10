@@ -208,12 +208,12 @@ namespace NABHI.Character
 
             // Aplicar knockback SOLO horizontal (mantiene movimiento vertical)
             // Esto evita que el personaje "salte" al recibir daño
-            float currentVelocityY = rb.velocity.y; // Guardar velocidad vertical actual
+            float currentVelocityY = rb.linearVelocity.y; // Guardar velocidad vertical actual
 
             // Establecer velocidad directamente (más confiable que AddForce)
             // Knockback horizontal + velocidad vertical actual
             Vector2 knockbackVelocity = new Vector2(knockbackDirection * knockbackForce.x, currentVelocityY);
-            rb.velocity = knockbackVelocity;
+            rb.linearVelocity = knockbackVelocity;
 
             Debug.Log($"[PlayerHealth] Knockback aplicado: dirección = {knockbackDirection}, velocidad = {knockbackVelocity}");
         }
@@ -237,7 +237,7 @@ namespace NABHI.Character
             knockbackTimer = knockbackDuration;
 
             Vector2 knockback = direction.normalized * knockbackForce.magnitude;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.AddForce(knockback, ForceMode2D.Impulse);
         }
 

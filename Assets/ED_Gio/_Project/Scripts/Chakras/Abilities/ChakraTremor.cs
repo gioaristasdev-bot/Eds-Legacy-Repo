@@ -216,7 +216,7 @@ namespace NABHI.Chakras.Abilities
             Rigidbody2D rb = GetComponentInParent<Rigidbody2D>();
             if (rb != null)
             {
-                rb.velocity = new Vector2(0, rb.velocity.y); // Solo detener movimiento horizontal
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Solo detener movimiento horizontal
             }
         }
 
