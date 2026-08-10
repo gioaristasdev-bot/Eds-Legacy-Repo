@@ -41,3 +41,18 @@ Thumbs.db
 *.psb
 **/SourceFiles/*.zip
 **/SourceFiles/
+
+# Paquetes exportados: pesados y no son fuente del proyecto (Fase 1 migracion Unity 6)
+*.unitypackage
+*.unitypackage.meta
+
+# Excepcion: los paquetes URP_Extract_Me de Synty vienen con los assets de vendor
+# y siguen versionados a proposito (23K-2.6M cada uno).
+!Assets/PolygonNature/Shaders/LWRP.unitypackage
+!Assets/PolygonNature/Shaders/LWRP.unitypackage.meta
+!Assets/PolygonNature/URP_Extract_Me.unitypackage
+!Assets/PolygonNature/URP_Extract_Me.unitypackage.meta
+!Assets/PolygonSciFiCity/URP_ExtractMe.unitypackage
+!Assets/PolygonSciFiCity/URP_ExtractMe.unitypackage.meta
+!Assets/PolygonSciFiSpace/URP_ExtractMe.unitypackage
+!Assets/PolygonSciFiSpace/URP_ExtractMe.unitypackage.meta
