@@ -154,14 +154,42 @@ migración — pero conviene decidirlo ahora, porque cambia la estrategia:
 - Si el shake se va a resolver de otra forma → **quitar Cinemachine del manifest** y borrar esas
   dependencias. Una dependencia pesada menos que migrar.
 
-### 3.5 🟡 Otros
+### 3.5 🔴 Hay **tres** pipelines URP, no uno
 
-- **URP Renderers duplicados**: hay `URP-Balanced`, `URP-HighFidelity`, `URP-Performant` en
-  `Assets/Settings/` que **no son los activos** (el activo es el de Quibli). Limpiar reduce
-  superficie de migración.
-- **`Assets/ED_Gio.unitypackage`** versionado dentro de `Assets/` — 
-  Unity lo trata como asset. Sacarlo del repo.
-- **Escenas residuales**: `Anumaciones.unity`, `Level1_Proyectiles_TEMP.unity` no están en build.
+*(Corregido durante la ejecución de Fase 1 — la suposición inicial era falsa.)*
+
+`QualitySettings.asset` asigna un URP Asset distinto a cada nivel de calidad:
+
+| Nivel | URP Asset | ¿Quibli? |
+|---|---|---|
+| 0 · Performant | `URP-Performant.asset` | ❌ no |
+| 1 · Balanced | `URP-Balanced.asset` | ❌ no |
+| 2 · High Fidelity ← **por defecto** (`m_CurrentQuality: 2`) | `Nabhi-URP-Config.asset` | ✅ sí |
+
+**Implicación para la migración:** hay que validar **3 pipelines**, no uno. Y una implicación de
+diseño que existe ya hoy: si el jugador baja la calidad a Balanced o Performant, **pierde todo el
+post-proceso de Quibli** (color grading, stylized detail, SSAO). El juego se ve sustancialmente
+distinto entre niveles de calidad. Los materiales sí siguen renderizando, porque el shader va por
+material, pero el look se rompe.
+
+Además, `Nabhi-URP-Config` expone **4 renderers** y las escenas eligen entre ellos:
+
+| Índice | Renderer | Contenido | Usado por |
+|---|---|---|---|
+| 0 | `Nabhi-Renderer-0-Default` | QuibliPostProcess (ColorGrading + StylizedDetail) | Level1, MainMenu, VideoIntro (`-1` = default) |
+| 1 | `Nabhi-Renderer-1-Unused` | — | nadie |
+| 2 | `Nabhi-Renderer-2-Unused` | — | nadie |
+| 3 | `Nabhi-Renderer-3-SSAO` | QuibliPostProcess **+ ScreenSpaceAmbientOcclusion** (Intensity 1.4) | **Nivel-REINA, Créditos, Level2** |
+
+⚠️ Los índices 1 y 2 no se pueden borrar aunque estén vacíos: las escenas guardan
+`m_RendererIndex: 3` como número, así que quitar entradas intermedias desplazaría el índice 3 y
+Nivel-REINA / Créditos / Level2 pasarían a renderizar con el renderer equivocado.
+
+### 3.6 🟡 Otros
+
+- **`Assets/ED_Gio.unitypackage`** (43 MB) versionado dentro de `Assets/`.
+- **Escenas residuales**: `Anumaciones.unity`, `Level1_Proyectiles_TEMP.unity`, sin referencias.
+- **`Chakras.rar`** y varios `.anim` sueltos dentro de `Assets/ED_Gio/_Project/Scripts/`.
 
 ---
 
@@ -178,17 +206,50 @@ migración — pero conviene decidirlo ahora, porque cambia la estrategia:
 | 0.5 | Rama `migracion/unity6` desde `merge-fase-2` + tag de respaldo | — |
 | 0.6 | Congelar merges de feature durante la migración | equipo |
 
-### Fase 1 — Higiene previa (aún en 2022.3, todo verificable)
+### Fase 1 — Higiene previa (aún en 2022.3) — ✅ **COMPLETADA** (2026-08-10)
 
-Trabajo de bajo riesgo que reduce ruido después. **Se hace y se valida en la versión actual.**
+Rama `migracion/unity6`. Validada compilando con Unity 2022.3.62f2 en batch mode:
+**0 `error CS`, 0 `Compilation failed`**, y Unity no modificó ningún asset durante el import.
 
-- 1.1 Mover el URP Config activo fuera de `Assets/Quibli/` → `Assets/Settings/` y reapuntar
-  `GraphicsSettings`.
-- 1.2 Sustituir los 9 `FindObjectOfType` por `FindFirstObjectByType`.
-- 1.3 Borrar escenas y renderers no usados; sacar `ED_Gio.unitypackage` del repo.
-- 1.4 (Opcional, alto valor) Introducir `.asmdef` para el código propio. Acelera mucho la
-  iteración de las fases 2-4.
-- ✅ **Checkpoint: el juego compila y corre igual en 2022.3.62f2.** Commit.
+- ✅ **1.1** URP Config y sus 4 renderers movidos de `Assets/Quibli/` a `Assets/Settings/`,
+  renombrados `Nabhi-*` con `m_Name` sincronizado. **GUIDs preservados**, así que ni
+  `GraphicsSettings` ni `QualitySettings` necesitaron reapuntarse. Orden de
+  `m_RendererDataList` intacto (ver §3.5).
+- ✅ **1.2** 9 `FindObjectOfType` → `FindFirstObjectByType` en 8 archivos. `FindFirstObjectByType`
+  existe desde 2022.2, así que el cambio es válido en la versión actual.
+- ✅ **1.3** Eliminadas `Anumaciones.unity` y `Level1_Proyectiles_TEMP.unity` (0 referencias
+  verificadas) y el par huérfano `URP-HighFidelity` + su renderer. `ED_Gio.unitypackage` (43 MB)
+  fuera del repo; `.gitignore` ignora `*.unitypackage` **salvo** los `URP_Extract_Me` de Synty,
+  que vienen con los assets de vendor.
+  ⚠️ `URP-Balanced` y `URP-Performant` **no** se borraron: los usan niveles de calidad (§3.5).
+- ✅ **1.4** 4 assembly definitions creadas. `DamageDealer.cs` movido de `Assets/ED_Gio/` a
+  `Scripts/Character/` para que entre en `Nabhi.Core` (GUID preservado, sus 7 referencias en
+  escenas y prefabs intactas).
+
+#### Grafo de assemblies
+
+El análisis de dependencias cruzadas dio un **DAG limpio, sin ciclos** (los aparentes ciclos
+`ED_Gio ↔ Nabi3.0` y `Nabi3.0 ↔ _Project` resultaron ser falsos positivos: `transform.Rotate()`
+y menciones en comentarios, no código real).
+
+```
+Nabhi.Core          Assets/ED_Gio/_Project/Scripts    → UnityEngine.UI, Cinemachine
+  ▲   ▲
+  │   └── Nabhi.Game     Assets/Nabi3.0/Scripts       → Nabhi.Core, UnityEngine.UI, Unity.TextMeshPro
+  │              ▲
+  └──────────────┴─ Nabhi.Content  Assets/_Project    → Nabhi.Core, Nabhi.Game
+
+Nabhi.Core.Editor   Assets/ED_Gio/_Project/Editor     → Nabhi.Core   [Editor only]
+```
+
+Comprobación clave antes de crear las asmdefs: **nuestro código no usa ningún namespace de
+terceros** (solo `UnityEngine.*`, `System.*`, `TMPro`, `Cinemachine` y `NABHI.*`). Importa porque
+los scripts de Quibli, Hovl y Sprite Shaders Ultimate viven en `Assembly-CSharp`, y **un assembly
+con asmdef no puede referenciar `Assembly-CSharp`**. Si hubiéramos dependido de ellos, el split
+habría roto la compilación.
+
+Siguen en `Assembly-CSharp` (correcto, es código de terceros): VolumetricLines, 2D Animation
+Starter Pack y todos los assets de vendor.
 
 ### Fase 2 — Salto de versión
 
