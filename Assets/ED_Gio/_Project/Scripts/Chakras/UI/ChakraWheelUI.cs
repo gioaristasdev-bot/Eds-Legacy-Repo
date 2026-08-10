@@ -52,7 +52,7 @@ namespace NABHI.Chakras.UI
         private void Awake()
         {
             if (chakraSystem == null)
-                chakraSystem = FindObjectOfType<ChakraSystem>();
+                chakraSystem = FindFirstObjectByType<ChakraSystem>();
 
             if (canvas == null)
                 canvas = GetComponentInParent<Canvas>();

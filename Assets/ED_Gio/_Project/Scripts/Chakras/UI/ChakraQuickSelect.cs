@@ -67,9 +67,9 @@ namespace NABHI.Chakras.UI
         private void Start()
         {
             if (chakraSystem == null)
-                chakraSystem = FindObjectOfType<ChakraSystem>();
+                chakraSystem = FindFirstObjectByType<ChakraSystem>();
             if (characterController == null)
-                characterController = FindObjectOfType<CharacterController2D>();
+                characterController = FindFirstObjectByType<CharacterController2D>();
 
             if (parentPanel != null)
                 parentPanel.SetActive(false);

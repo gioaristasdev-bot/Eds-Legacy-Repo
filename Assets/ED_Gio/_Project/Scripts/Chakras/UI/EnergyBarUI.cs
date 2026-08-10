@@ -30,7 +30,7 @@ namespace NABHI.Chakras.UI
         private void Start()
         {
             if (energySystem == null)
-                energySystem = FindObjectOfType<EnergySystem>();
+                energySystem = FindFirstObjectByType<EnergySystem>();
 
             if (energySystem != null)
             {

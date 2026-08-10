@@ -39,7 +39,7 @@ namespace NABHI.Chakras
 
             if (chakraSystem == null)
                 chakraSystem = other.GetComponentInParent<ChakraSystem>()
-                            ?? FindObjectOfType<ChakraSystem>();
+                            ?? FindFirstObjectByType<ChakraSystem>();
 
             if (chakraSystem == null)
             {

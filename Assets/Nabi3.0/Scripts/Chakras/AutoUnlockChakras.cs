@@ -5,7 +5,7 @@ public class AutoUnlockChakras : MonoBehaviour
 {
     void Start()
     {
-        ChakraDebugController debug = FindObjectOfType<ChakraDebugController>();
+        ChakraDebugController debug = FindFirstObjectByType<ChakraDebugController>();
 
         if (debug != null)
         {

@@ -63,7 +63,7 @@ public class ChakraMenuUI : MonoBehaviour
 
         if (characterController == null)
         {
-            characterController = FindObjectOfType<CharacterController2D>();
+            characterController = FindFirstObjectByType<CharacterController2D>();
             if (characterController == null)
                 Debug.LogWarning("[ChakraMenuUI] No se encontro CharacterController2D en la escena.");
         }

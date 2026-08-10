@@ -21,7 +21,7 @@ public class HealthBarUI : MonoBehaviour
         if (playerHealth == null)
         {
             Debug.LogWarning("[HealthBarUI] PlayerHealth no asignado. Buscando en escena...");
-            playerHealth = FindObjectOfType<PlayerHealth>();
+            playerHealth = FindFirstObjectByType<PlayerHealth>();
         }
 
         if (playerHealth == null)

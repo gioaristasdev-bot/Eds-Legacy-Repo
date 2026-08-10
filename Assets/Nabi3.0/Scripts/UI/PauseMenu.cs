@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Awake()
     {
-        characterController = FindObjectOfType<CharacterController2D>();
+        characterController = FindFirstObjectByType<CharacterController2D>();
     }
 
     void Update()
