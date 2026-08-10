@@ -251,7 +251,84 @@ habría roto la compilación.
 Siguen en `Assembly-CSharp` (correcto, es código de terceros): VolumetricLines, 2D Animation
 Starter Pack y todos los assets de vendor.
 
-### Fase 2 — Salto de versión
+### Fase 2 — Salto de versión — ✅ **HECHA** (2026-08-10/11) · commit `0cfcda97`
+
+Versión destino real: **Unity 6000.5.7f1** (no el LTS que recomendaba §1; se decidió ir a la
+última). URP 17.5.0 · ugui 2.5.0 · Input System 1.20.0 · PSD Importer 14.0.3 · 2D Animation 15.1.0.
+
+**El proyecto compila y corre.** Cuatro problemas aparecieron y se resolvieron; los tres primeros
+tenían causas que no se deducían del mensaje de error.
+
+#### 2.a Compatibility Mode ya no existe (invalida la opción B de §3.1)
+
+Fuentes de internet dicen que Quibli funciona en Unity 6 activando Compatibility Mode. **Es cierto
+hasta 6000.3 e incorrecto a partir de 6000.4.** En URP 17.5:
+
+```csharp
+[Obsolete("These settings are not used. #from(6000.4)", false)]
+public class RenderGraphSettings : IRenderPipelineGraphicsSettings {
+    [Obsolete("This property is not used. #from(6000.4)", false)]
+    public bool enableRenderCompatibilityMode => false;   // hardcoded, sin setter
+}
+```
+
+Y de todas formas no habría servido: Compatibility Mode elige una **ruta en runtime**, y el error
+era `CS0115` — la API no existe en el ensamblado. Ninguna casilla arregla eso.
+
+Se portó **solo Stylized Detail** (el único efecto con `active: 1`) a Render Graph en
+`Assets/Settings/Rendering/StylizedDetailFeature.cs`, usando `AddUnsafePass`. `ColorGrading` no se
+portó porque estaba en `active: 0`. Detalle crítico del port: el código original usaba
+`cmd.GetTemporaryRT(nameID, …)`, que **auto-vincula** el RT a la propiedad global con ese nombre;
+Render Graph no lo hace, así que `_BlurTex1` y `_BlurTex2` se vinculan a mano o la composición lee
+basura.
+
+#### 2.b Rig 2D destruido: PSD Importer dejó de arrastrar 2D Animation
+
+Síntoma: las partes del personaje flotando sueltas.
+
+- PSD Importer **8.1.0** declaraba `com.unity.2d.animation` como dependencia. La **14.0.3 ya no**
+  (solo `2d.common`, `2d.sprite`, `2d.tilemap`). Al actualizar, 2D Animation **desapareció**.
+- El asmdef del importer define `ENABLE_2D_ANIMATION` solo si ese paquete está presente.
+- `m_CharacterData`, `m_SharedRigCharacterData` y `m_SpriteCategoryList` viven tras ese `#if`.
+- Sin el paquete, el importer **reserializó los 5 `.psb.meta` sin esos campos**. Esqueleto, layout
+  de partes y categorías: borrados en Ed, Ed90, Acorazado, Guardian y Cyborg.
+
+Solución: reinstalar `com.unity.2d.animation` **primero**, restaurar los `.meta` desde git
+**después**. El orden importa: con el paquete ausente, Unity los vuelve a vaciar en cada import.
+
+> ⚠️ Esto convierte los `.psb` ausentes del repo (§3.2) en un riesgo mayor del previsto: aquí el
+> rig se salvó **porque estaba versionado en el `.meta`**. Sigue pendiente meter los `.psb` con LFS.
+
+#### 2.c TextMeshPro: shaders obsoletos, no fuentes perdidas
+
+Síntoma: textos como cuadrados. **El diagnóstico inicial (glifos ausentes) era incorrecto.**
+
+Lo que fallaba eran los **14 shaders de TMP** y los `.cginc` en `Assets/TextMesh Pro/Shaders/`,
+que seguían siendo los de TMP 3.0.7. `Window > TextMeshPro > Import TMP Essentials` los reemplaza
+y lo arregla. El importer hace backup de tu `TMP Settings.asset` y lo restaura tras importar
+(`PreparePackageImport` / `ImportCallback`), así que no se pierde configuración.
+
+La ventana del importer saltaba porque `TMP Settings.asset` no tenía campo `assetVersion` y
+ugui 2.5.0 espera `"2"`.
+
+**No importar "TMP Examples and Extras"**: reintroduce scripts que no compilan (`CS0029`, `uvs2`
+pasó de `Vector2[]` a `Vector4[]`). Esa carpeta se eliminó (131 guids, cero referencias).
+
+#### 2.d Pendiente real: cobertura de caracteres
+
+`future-earth SDF` cubre **Unicode 32–126** — sin acentos — en modo Static y sin fallback ni en la
+fuente ni en `TMP Settings`. Los mensajes de Level1 están en portugués
+(`"Agora você tem uma arma"`). Verificar si la `ê` se ve; si no, regenerar el atlas con rango
+`20-FF` en el Font Asset Creator. Los `.ttf` originales están en `Assets/Nabi3.0/Fuentes/`.
+
+| Fuente | Glifos | Acentos |
+|---|---|---|
+| `future-earth SDF` (20 usos en Level1) | 95 | ❌ |
+| `N-Gage SDF` | 69 | ❌ |
+| `Aldrich-Regular SDF` | 97 | ❌ |
+| `LiberationSans SDF` | 250 | ✅ |
+
+### Fase 2 (plan original) — Salto de versión
 
 - 2.1 Backup completo + verificar que la rama está limpia.
 - 2.2 Abrir el proyecto con Unity 6 LTS. **Dejar que termine el reimport completo** (con ~840
