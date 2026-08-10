@@ -145,7 +145,7 @@ namespace NABHI.Enemies
         {
             if (!IsGrounded())
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 return;
             }
 
@@ -158,7 +158,7 @@ namespace NABHI.Enemies
             else if (distFromOrigin < -patrolDistance) movingRight = true;
 
             float moveX = movingRight ? patrolSpeed : -patrolSpeed;
-            rb.velocity = new Vector2(moveX, rb.velocity.y);
+            rb.linearVelocity = new Vector2(moveX, rb.linearVelocity.y);
             FlipSprite(moveX);
         }
 
@@ -174,7 +174,7 @@ namespace NABHI.Enemies
         protected override void OnAttack()
         {
             // Quieto durante toda la ráfaga — sin movimiento
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
 
             // Solo voltear para mirar al jugador
             if (playerTarget != null)
@@ -216,7 +216,7 @@ namespace NABHI.Enemies
 
         protected override void OnCooldown()
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
 
             cooldownTimer -= Time.deltaTime;
             if (cooldownTimer <= 0)
@@ -305,7 +305,7 @@ namespace NABHI.Enemies
         protected override void OnDeath()
         {
             base.OnDeath();
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             animator?.SetBool(AnimParam.IsDead, true);
         }
 

@@ -85,7 +85,7 @@ namespace NABHI.Testing
         {
             // Movimiento de patrulla simple
             Vector2 movement = Vector2.right * patrolDirection * moveSpeed;
-            rb.velocity = new Vector2(movement.x, rb.velocity.y);
+            rb.linearVelocity = new Vector2(movement.x, rb.linearVelocity.y);
 
             // Cambiar direccion al llegar al limite
             float distanceFromStart = transform.position.x - startPosition.x;
@@ -152,7 +152,7 @@ namespace NABHI.Testing
             stunTimer = duration;
 
             // Detener movimiento
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             // Cambiar color
             if (spriteRenderer != null)
@@ -212,7 +212,7 @@ namespace NABHI.Testing
             }
 
             // Desactivar fisicas
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Static;
 
             // Opcional: destruir despues de un tiempo

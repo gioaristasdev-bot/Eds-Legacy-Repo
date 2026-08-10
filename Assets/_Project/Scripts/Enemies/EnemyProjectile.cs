@@ -99,7 +99,7 @@ namespace NABHI.Enemies
         {
             this.direction = direction.normalized;
             float projectileSpeed = customSpeed ?? speed;
-            rb.velocity = this.direction * projectileSpeed;
+            rb.linearVelocity = this.direction * projectileSpeed;
 
             // Rotar sprite para apuntar en la dirección
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

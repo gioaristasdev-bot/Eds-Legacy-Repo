@@ -52,7 +52,7 @@ public class AreaMessageTrigger2D : MonoBehaviour
 
         if (playerRb != null)
         {
-            playerRb.velocity = Vector2.zero;
+            playerRb.linearVelocity = Vector2.zero;
         }
     }
 

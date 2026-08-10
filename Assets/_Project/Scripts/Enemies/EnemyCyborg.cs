@@ -112,7 +112,7 @@ private void CheckContactDamage()
         {
             if (!IsGrounded())
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 return;
             }
 
@@ -125,7 +125,7 @@ private void CheckContactDamage()
             else if (distFromOrigin < -patrolDistance) movingRight = true;
 
             float moveX = movingRight ? patrolSpeed : -patrolSpeed;
-            rb.velocity = new Vector2(moveX, rb.velocity.y);
+            rb.linearVelocity = new Vector2(moveX, rb.linearVelocity.y);
             FlipSprite(moveX);
         }
 
@@ -135,14 +135,14 @@ private void CheckContactDamage()
 
             if (DistanceToPlayer() <= attackRange)
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 ChangeState(EnemyState.Attack);
                 return;
             }
 
             if (!IsGrounded())
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 return;
             }
 
@@ -152,17 +152,17 @@ private void CheckContactDamage()
 
             if (!IsGroundAhead(chaseDir))
             {
-                rb.velocity = new Vector2(0, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
                 return;
             }
 
-            rb.velocity = new Vector2(chaseDir * chaseSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(chaseDir * chaseSpeed, rb.linearVelocity.y);
         }
 
         protected override void OnAttack()
         {
             // Quieto durante toda la ráfaga — sin persecución
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
 
             // Solo voltear para mirar al jugador, sin moverse
             if (playerTarget != null)
@@ -212,7 +212,7 @@ private void CheckContactDamage()
 
         protected override void OnCooldown()
         {
-            rb.velocity = new Vector2(0, rb.velocity.y);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
 
             cooldownTimer -= Time.deltaTime;
             if (cooldownTimer <= 0)
@@ -290,7 +290,7 @@ private void CheckContactDamage()
         protected override void OnDeath()
         {
             base.OnDeath();
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             animator?.SetBool(AnimParam.IsDead, true);
         }
 

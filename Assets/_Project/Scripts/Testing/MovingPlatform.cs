@@ -85,7 +85,7 @@ namespace NABHI.Testing
                     break;
             }
 
-            rb.velocity = targetVelocity;
+            rb.linearVelocity = targetVelocity;
 
             // Detectar si esta siendo ralentizado por GravityPulse
             DetectSlowEffect();
@@ -146,7 +146,7 @@ namespace NABHI.Testing
         private void DetectSlowEffect()
         {
             // Comparar velocidad actual con la esperada
-            float currentMag = rb.velocity.magnitude;
+            float currentMag = rb.linearVelocity.magnitude;
             float expectedMag = moveSpeed;
 
             // Si la velocidad es significativamente menor, esta siendo ralentizado

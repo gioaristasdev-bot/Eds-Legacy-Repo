@@ -108,7 +108,7 @@ namespace NABHI.Testing
         private void Patrol()
         {
             Vector2 movement = Vector2.right * patrolDirection * moveSpeed;
-            rb.velocity = new Vector2(movement.x, rb.velocity.y);
+            rb.linearVelocity = new Vector2(movement.x, rb.linearVelocity.y);
 
             float distanceFromStart = transform.position.x - startPosition.x;
             if (Mathf.Abs(distanceFromStart) >= patrolDistance)
@@ -179,7 +179,7 @@ namespace NABHI.Testing
             isStunned = true;
             stunTimer = duration;
 
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             if (spriteRenderer != null)
             {
@@ -217,7 +217,7 @@ namespace NABHI.Testing
             isStunned = true; // EMP tambien causa stun
             empTimer = duration;
 
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             // Cambiar visual a "apagado"
             if (spriteRenderer != null)
@@ -307,7 +307,7 @@ namespace NABHI.Testing
                 electricAuraEffect.SetActive(false);
             }
 
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             rb.bodyType = RigidbodyType2D.Static;
 
             Destroy(gameObject, 2f);

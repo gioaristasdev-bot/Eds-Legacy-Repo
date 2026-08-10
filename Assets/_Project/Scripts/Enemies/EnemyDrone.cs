@@ -90,7 +90,7 @@ namespace NABHI.Enemies
             if (isDisabledByEMP)
             {
                 empTimer -= Time.deltaTime;
-                rb.velocity = Vector2.zero;
+                rb.linearVelocity = Vector2.zero;
                 if (empTimer <= 0f)
                     EndEMPEffect();
                 return;
@@ -136,8 +136,8 @@ namespace NABHI.Enemies
             Vector2 targetPos = patrolCenter + new Vector2(xOffset, yOffset);
             Vector2 moveDir   = targetPos - (Vector2)transform.position;
 
-            rb.velocity = moveDir.normalized * patrolSpeed;
-            FlipSprite(rb.velocity.x);
+            rb.linearVelocity = moveDir.normalized * patrolSpeed;
+            FlipSprite(rb.linearVelocity.x);
         }
 
         protected override void OnChase()
@@ -145,7 +145,7 @@ namespace NABHI.Enemies
             if (playerTarget == null) return;
 
             Vector2 dir = DirectionToPlayer();
-            rb.velocity = dir * chaseSpeed;
+            rb.linearVelocity = dir * chaseSpeed;
             FlipSprite(dir.x);
         }
 
@@ -159,7 +159,7 @@ namespace NABHI.Enemies
         protected override void OnRetreat()
         {
             // Volar en la dirección opuesta al jugador
-            rb.velocity = retreatDirection * retreatSpeed;
+            rb.linearVelocity = retreatDirection * retreatSpeed;
 
             retreatTimer -= Time.deltaTime;
             if (retreatTimer <= 0)
@@ -214,7 +214,7 @@ namespace NABHI.Enemies
         protected override void OnDeath()
         {
             base.OnDeath();
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             /* ANIMACIÓN (descomentar cuando el artista entregue sprites):
             animator?.SetBool(AnimParam.IsDead, true);
@@ -232,7 +232,7 @@ namespace NABHI.Enemies
 
             isDisabledByEMP = true;
             empTimer        = duration;
-            rb.velocity     = Vector2.zero;
+            rb.linearVelocity     = Vector2.zero;
 
             if (spriteRenderer != null)
                 spriteRenderer.color = empDisabledColor;

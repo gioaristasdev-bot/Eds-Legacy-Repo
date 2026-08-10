@@ -17,7 +17,7 @@ public class PlayerMovement2_5D : MonoBehaviour
     {
         float h = Input.GetAxisRaw("Horizontal");
 
-        rb.velocity = new Vector3(h * speed, rb.velocity.y, 0f);
+        rb.linearVelocity = new Vector3(h * speed, rb.linearVelocity.y, 0f);
 
         facing.UpdateFacing(h);
     }

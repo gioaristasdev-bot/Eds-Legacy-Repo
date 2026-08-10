@@ -162,7 +162,7 @@ namespace NABHI.Enemies
             Vector2 targetPos = hoverCenter + new Vector2(xOffset, yOffset);
             Vector2 moveDir   = targetPos - (Vector2)transform.position;
 
-            rb.velocity = moveDir.normalized * patrolSpeed;
+            rb.linearVelocity = moveDir.normalized * patrolSpeed;
             // Derivada del seno (coseno) para detectar dirección sin oscilación en cruce de cero
             FlipSprite(Mathf.Cos(t * patrolSpeed * 0.4f));
         }
@@ -182,7 +182,7 @@ namespace NABHI.Enemies
 
             Vector2 dir    = DirectionToPlayer();
             float   yHover = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
-            rb.velocity    = new Vector2(dir.x * chaseSpeed, dir.y * chaseSpeed + yHover);
+            rb.linearVelocity    = new Vector2(dir.x * chaseSpeed, dir.y * chaseSpeed + yHover);
             FlipSprite(dir.x);
         }
 
@@ -197,7 +197,7 @@ namespace NABHI.Enemies
 
             // Hover suave en posición mientras dispara
             float yHover = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude * 0.5f;
-            rb.velocity  = new Vector2(0, yHover);
+            rb.linearVelocity  = new Vector2(0, yHover);
 
             FlipSprite(playerTarget.position.x - transform.position.x);
 
@@ -239,7 +239,7 @@ namespace NABHI.Enemies
         {
             // Hover suave durante el cooldown (no persigue)
             float yHover = Mathf.Sin(Time.time * hoverFrequency) * hoverAmplitude;
-            rb.velocity  = new Vector2(0, yHover);
+            rb.linearVelocity  = new Vector2(0, yHover);
 
             cooldownTimer -= Time.deltaTime;
             if (cooldownTimer <= 0)
@@ -321,7 +321,7 @@ namespace NABHI.Enemies
         {
             base.OnDeath();
             rb.gravityScale = 1f; // Cae al morir
-            rb.velocity     = Vector2.zero;
+            rb.linearVelocity     = Vector2.zero;
             animator?.SetBool(AnimParam.IsDead, true);
         }
 

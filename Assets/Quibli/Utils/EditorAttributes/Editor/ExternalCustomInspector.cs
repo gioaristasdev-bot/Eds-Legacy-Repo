@@ -112,7 +112,9 @@ namespace ExternalPropertyAttributes.Editor
 
 				if (!_foldouts.ContainsKey(group.Key))
 				{
-					_foldouts[group.Key] = new SavedBool($"{target.GetInstanceID()}.{group.Key}", false);
+					// Parche migracion Unity 6: GetInstanceID() es obsoleto como error (CS0619).
+					// Se pierde si se actualiza Quibli desde el Asset Store.
+					_foldouts[group.Key] = new SavedBool($"{target.GetEntityId()}.{group.Key}", false);
 				}
 
 				_foldouts[group.Key].Value = EditorGUILayout.Foldout(_foldouts[group.Key].Value, group.Key, true);

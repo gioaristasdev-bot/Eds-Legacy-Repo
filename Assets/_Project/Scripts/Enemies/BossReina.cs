@@ -342,7 +342,7 @@ namespace NABHI.Enemies
             if (posX < arenaMinX || posX > arenaMaxX)
             {
                 rb.position = new Vector2(Mathf.Clamp(posX, arenaMinX, arenaMaxX), rb.position.y);
-                rb.velocity = new Vector2(0f, rb.velocity.y);
+                rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             }
 
             if (currentState != BossState.Idle    &&
@@ -362,7 +362,7 @@ namespace NABHI.Enemies
                     velX = 0f;
             }
 
-            rb.velocity = new Vector2(velX, velY);
+            rb.linearVelocity = new Vector2(velX, velY);
         }
 
         // ════════════════════════════════════════════════════════════════════
@@ -410,7 +410,7 @@ namespace NABHI.Enemies
                 if (stopAttackLoop) break;
 
                 currentState = BossState.Cooldown;
-                rb.velocity  = Vector2.zero;
+                rb.linearVelocity  = Vector2.zero;
                 yield return new WaitForSeconds(cooldownDuration);
                 if (stopAttackLoop) break;
                 currentState = BossState.Idle;
@@ -421,7 +421,7 @@ namespace NABHI.Enemies
                 if (stopAttackLoop) break;
 
                 currentState = BossState.Cooldown;
-                rb.velocity  = Vector2.zero;
+                rb.linearVelocity  = Vector2.zero;
                 yield return new WaitForSeconds(cooldownDuration);
                 if (stopAttackLoop) break;
                 currentState = BossState.Idle;
@@ -432,7 +432,7 @@ namespace NABHI.Enemies
         {
             attack3Triggered = true;
             currentState     = BossState.FinalIdle;
-            rb.velocity      = Vector2.zero;
+            rb.linearVelocity      = Vector2.zero;
         }
 
         // ════════════════════════════════════════════════════════════════════
@@ -472,13 +472,13 @@ namespace NABHI.Enemies
         private IEnumerator Attack1Routine(Vector2 attackPos)
         {
             currentState = BossState.Attack1;
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             // 1. Moverse a la posición X fija del ataque (sin animación todavía)
             yield return StartCoroutine(MoveToX(attackPos.x, slamPositionSpeed));
 
             // 2. Telegrafeo
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(slamTelegraphPause);
 
             // 3. Trigger de animación aquí: el boss ya está en posición, empieza la animación del slam
@@ -495,7 +495,7 @@ namespace NABHI.Enemies
             yield return StartCoroutine(DescendToY(slamGroundY, slamDescentSpeed, lockedX));
 
             // 5. Impacto
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             ApplyImpact((Vector2)transform.position + slamImpactOffset, slamDamageRadius, slamDamage, slamVFXPrefab, slamHitbox);
             yield return new WaitForSeconds(0.4f);
 
@@ -512,13 +512,13 @@ namespace NABHI.Enemies
         {
             currentState = BossState.Attack2;
             animator?.SetTrigger(AnimParam.Attack2);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             // 1. Moverse a la posición X fija del ataque
             yield return StartCoroutine(MoveToX(attackPos.x, grabMoveSpeed));
 
             // 2. Telegrafeo
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             yield return new WaitForSeconds(grabTelegraphPause);
 
             // 3. Descenso al suelo — activa daño corporal
@@ -527,7 +527,7 @@ namespace NABHI.Enemies
             yield return StartCoroutine(DescendToY(slamGroundY, grabDescentSpeed, lockedX));
 
             // 4. Impacto
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
             ApplyImpact((Vector2)transform.position + grabImpactOffset, grabDamageRadius, grabDamage, grabVFXPrefab, grabHitbox);
             yield return new WaitForSeconds(0.5f);
 
@@ -544,7 +544,7 @@ namespace NABHI.Enemies
         {
             currentState = BossState.Attack3;
             animator?.SetTrigger(AnimParam.Attack3);
-            rb.velocity = Vector2.zero;
+            rb.linearVelocity = Vector2.zero;
 
             yield return new WaitForSeconds(lightningTelegraphPause);
 
