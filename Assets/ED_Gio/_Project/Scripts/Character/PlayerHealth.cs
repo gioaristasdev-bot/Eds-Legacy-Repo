@@ -306,12 +306,16 @@ namespace NABHI.Character
             // Evento de muerte
             OnDeath?.Invoke();
 
+            // Animación de muerte (el estado Death no tiene salida: se queda
+            // en el último frame hasta Revive() o recarga de escena)
+            if (hybridAnimationController != null)
+                hybridAnimationController.PlayDeathAnimation();
+
             // Desactivar control del personaje
             if (controller != null)
                 controller.enabled = false;
 
             // Aquí puedes agregar:
-            // - Animación de muerte
             // - Pantalla de Game Over
             // - Respawn en checkpoint
             // - Etc.
@@ -328,6 +332,10 @@ namespace NABHI.Character
             isInKnockback = false;
 
             SetSpritesVisible(true);
+
+            // Sacar al Animator del estado Death, que es terminal
+            if (hybridAnimationController != null)
+                hybridAnimationController.ResetDeathAnimation();
 
             if (controller != null)
                 controller.enabled = true;

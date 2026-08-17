@@ -22,6 +22,20 @@ public class HybridAnimationController : MonoBehaviour
     [Header("Flip Settings")]
     [SerializeField] private bool autoFlipSprite = true;
 
+    [Header("Cadencia de la caminata")]
+    [Tooltip("Velocidad horizontal (u/s) a la que el ciclo de andar se reproduce a velocidad 1. " +
+             "Debe coincidir con el moveSpeed del CharacterController2D.")]
+    [SerializeField] private float walkSpeedReference = 8f;
+
+    [Tooltip("Velocidad horizontal (u/s) del sprint, a la que el blend tree usa el ciclo de " +
+             "correr al 100%. Debe coincidir con moveSpeed * runSpeedMultiplier.")]
+    [SerializeField] private float sprintSpeedReference = 12f;
+
+    [Tooltip("Límites del multiplicador de velocidad de la animación de andar. Ahora que el " +
+             "sprint tiene su propio clip, el techo no necesita estirar el ciclo de andar.")]
+    [SerializeField] private float minWalkPlaybackSpeed = 0.5f;
+    [SerializeField] private float maxWalkPlaybackSpeed = 1.15f;
+
     // --- Hashes de parámetros (performance) ---
     private static readonly int IsMovingHash       = Animator.StringToHash("isMoving");
     private static readonly int IsGroundedHash     = Animator.StringToHash("isGrounded");
@@ -36,15 +50,22 @@ public class HybridAnimationController : MonoBehaviour
     private static readonly int JumpCountHash      = Animator.StringToHash("JumpCount");
     private static readonly int HitHash            = Animator.StringToHash("Hit");
     private static readonly int GroundPoundHash    = Animator.StringToHash("GroundPound");
+    private static readonly int DeathHash          = Animator.StringToHash("Death");
+    private static readonly int MoveSpeedHash      = Animator.StringToHash("moveSpeed");
+    private static readonly int LocomotionBlendHash = Animator.StringToHash("locomotionBlend");
+
+    // Amortiguación de la mezcla andar->correr, en segundos.
+    private const float LocomotionBlendDamp = 0.12f;
+
+    // Capa de override del tren superior: mantiene los brazos en pose de disparo
+    // mientras las piernas siguen con el ciclo de carrera. Peso 0 = balanceo normal.
+    private const string UpperBodyLayerName  = "Upper Body Shoot";
+    private const float  UpperBodyFadeSpeed  = 6f;   // unidades de peso por segundo
+    private int   upperBodyLayer  = -1;
+    private float upperBodyWeight = 0f;
 
     // --- Estado interno ---
     private bool isFacingRight = true;
-    private Vector3 riggedBaseScale;
-    private CharacterState characterState;
-
-    // Bloqueo para animaciones de chakra
-    private bool isPlayingChakraAnimation = false;
-    private float chakraAnimationEndTime  = 0f;
 
     // Estado de animaciones especiales (set desde chakras)
     private bool isLevitating = false;
@@ -57,9 +78,6 @@ public class HybridAnimationController : MonoBehaviour
     {
         if (controller == null)
             controller = GetComponent<CharacterController2D>();
-
-        if (characterState == null)
-            characterState = GetComponent<CharacterState>();
 
         if (weaponStateManager == null)
             weaponStateManager = GetComponent<WeaponStateManager>();
@@ -87,6 +105,22 @@ public class HybridAnimationController : MonoBehaviour
         }
 
         riggedVisual.SetActive(true);
+
+        if (riggedAnimator != null)
+        {
+            for (int i = 0; i < riggedAnimator.layerCount; i++)
+            {
+                if (riggedAnimator.GetLayerName(i) != UpperBodyLayerName) continue;
+                upperBodyLayer = i;
+                break;
+            }
+
+            if (upperBodyLayer < 0)
+                Debug.LogWarning($"[HybridAnimationController] No se encontró la capa '{UpperBodyLayerName}' " +
+                                 "en el Animator Controller. Los brazos seguirán balanceándose al disparar en carrera.");
+            else
+                riggedAnimator.SetLayerWeight(upperBodyLayer, 0f);
+        }
     }
 
     void Update()
@@ -94,6 +128,16 @@ public class HybridAnimationController : MonoBehaviour
         if (controller == null || riggedAnimator == null) return;
 
         UpdateAnimatorParameters();
+    }
+
+    // El flip se aplica en LateUpdate, NO en Update: los clips del rig tienen curvas
+    // de transform de raíz, así que el Animator reescribe el TRS completo del objeto
+    // que lo contiene (incluida la rotación, que vuelve a identidad) en su fase de
+    // evaluación, posterior a Update. Escribiendo aquí, después de esa fase, la
+    // rotación del flip sobrevive hasta el render.
+    void LateUpdate()
+    {
+        if (controller == null || riggedVisual == null) return;
 
         if (autoFlipSprite)
             HandleFlip();
@@ -132,6 +176,36 @@ public class HybridAnimationController : MonoBehaviour
         riggedAnimator.SetBool(IsLevitatingHash,  isLevitating);
         riggedAnimator.SetBool(IsHackingHash,     isHacking);
         riggedAnimator.SetInteger(JumpCountHash,  jumpCount);
+
+        float speedX = Mathf.Abs(velocity.x);
+
+        // Mezcla andar -> correr. Los estados ED_Walk/ED_Walk 0 son blend trees 1D
+        // sobre este parámetro: 0 = ciclo de andar, 1 = ciclo de correr.
+        // Se amortigua para que el cambio de ciclo no salte de golpe.
+        float blend = sprintSpeedReference > walkSpeedReference
+            ? Mathf.InverseLerp(walkSpeedReference, sprintSpeedReference, speedX)
+            : 0f;
+        riggedAnimator.SetFloat(LocomotionBlendHash, blend, LocomotionBlendDamp, Time.deltaTime);
+
+        // Cadencia dentro del ciclo, proporcional a la velocidad real, para que los
+        // pasos no patinen a velocidades intermedias. Los estados lo usan como
+        // Speed Multiplier en el Animator Controller.
+        float playbackSpeed = walkSpeedReference > 0.01f
+            ? speedX / walkSpeedReference
+            : 1f;
+        riggedAnimator.SetFloat(MoveSpeedHash,
+            Mathf.Clamp(playbackSpeed, minWalkPlaybackSpeed, maxWalkPlaybackSpeed));
+
+        // Disparando en movimiento: la capa de override congela los brazos en la pose
+        // de disparo y las piernas siguen corriendo en la capa base. Quieto, el estado
+        // ED_Shoot ya cubre el cuerpo entero, así que la capa se queda a 0.
+        if (upperBodyLayer >= 0)
+        {
+            float targetWeight = (isShooting && isMoving) ? 1f : 0f;
+            upperBodyWeight = Mathf.MoveTowards(upperBodyWeight, targetWeight,
+                                                UpperBodyFadeSpeed * Time.deltaTime);
+            riggedAnimator.SetLayerWeight(upperBodyLayer, upperBodyWeight);
+        }
     }
 
     #endregion
@@ -141,12 +215,14 @@ public class HybridAnimationController : MonoBehaviour
 
     private void HandleFlip()
     {
-        bool shouldFaceRight = controller.FacingDirection > 0;
-        if (shouldFaceRight == isFacingRight) return;
+        isFacingRight = controller.FacingDirection > 0;
 
-        isFacingRight = shouldFaceRight;
-
-        riggedVisual.transform.localRotation = Quaternion.Euler(0f, isFacingRight ? 0f : 180f, 0f);
+        // Se compara contra el transform real y no contra un flag cacheado: si algo
+        // externo resetea la rotación (cambio de estado, respawn, swap de visual), el
+        // flip se vuelve a aplicar solo en lugar de quedarse desincronizado para siempre.
+        Quaternion target = Quaternion.Euler(0f, isFacingRight ? 0f : 180f, 0f);
+        if (riggedVisual.transform.localRotation != target)
+            riggedVisual.transform.localRotation = target;
     }
 
     #endregion
@@ -186,6 +262,35 @@ public class HybridAnimationController : MonoBehaviour
     }
 
     /// <summary>
+    /// Activa el trigger "Death". El estado Death no tiene salida: Ed se queda
+    /// en el último frame hasta que se recarga la escena o se hace Revive().
+    /// </summary>
+    public void PlayDeathAnimation()
+    {
+        if (riggedAnimator == null || riggedAnimator.runtimeAnimatorController == null)
+        {
+            Debug.LogWarning("[HybridAnimationController] No se pudo activar 'Death'. Animator no asignado.");
+            return;
+        }
+        riggedAnimator.SetTrigger(DeathHash);
+    }
+
+    /// <summary>
+    /// Saca a Ed del estado Death y lo devuelve al idle correspondiente.
+    /// Necesario porque Death es un estado terminal (sin transiciones de salida).
+    /// </summary>
+    public void ResetDeathAnimation()
+    {
+        if (riggedAnimator == null || riggedAnimator.runtimeAnimatorController == null)
+            return;
+
+        riggedAnimator.ResetTrigger(DeathHash);
+
+        bool isArmed = weaponStateManager != null && weaponStateManager.IsWeaponEquipped;
+        riggedAnimator.Play(isArmed ? "ED_Idle" : "ED_Idle 0", 0, 0f);
+    }
+
+    /// <summary>
     /// Activa el trigger "GroundPound" para la animación de Tremor (ChakraTremor).
     /// </summary>
     public void PlayGroundPoundAnimation()
@@ -201,9 +306,8 @@ public class HybridAnimationController : MonoBehaviour
             yield break;
         }
 
-        isPlayingChakraAnimation = true;
-        chakraAnimationEndTime = Time.time + 1.0f;
-
+        // Un frame de margen para que los bools de movimiento del Update ya estén
+        // asentados antes de disparar el trigger.
         yield return null;
 
         riggedAnimator.ResetTrigger(GroundPoundHash);

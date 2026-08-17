@@ -163,8 +163,10 @@ namespace NABHI.Weapons
         private void LateUpdate()
         {
             if (weaponGameObject == null) return;
-            // Fuente única de verdad para la visibilidad: solo visible después del pickup y mientras dispara
-            weaponGameObject.SetActive(hasPickedUpWeapon && IsShooting);
+            // Fuente única de verdad para la visibilidad: visible mientras el arma esté
+            // equipada. Debe coincidir con el parámetro isArmed del Animator, porque las
+            // animaciones armadas de Ed sujetan el arma con la mano.
+            weaponGameObject.SetActive(IsWeaponEquipped);
         }
 
         #endregion

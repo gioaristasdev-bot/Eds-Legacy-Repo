@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: UpperBody_Shoot
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: ChestArmorPart1
+    m_Weight: 0
+  - m_Path: ChestArmorPart2
+    m_Weight: 0
+  - m_Path: ChestArmorPart3
+    m_Weight: 0
+  - m_Path: Face
+    m_Weight: 0
+  - m_Path: Hair/Baird
+    m_Weight: 0
+  - m_Path: IK L arm
+    m_Weight: 0
+  - m_Path: IK L leg
+    m_Weight: 0
+  - m_Path: IK L leg/New LimbSolver2D (1)_Target
+    m_Weight: 0
+  - m_Path: IK R arm
+    m_Weight: 0
+  - m_Path: IK R arm/IK R arm_Target
+    m_Weight: 0
+  - m_Path: IK R leg
+    m_Weight: 0
+  - m_Path: IK R leg/IK R leg_Target
+    m_Weight: 0
+  - m_Path: LeftFeetPart1
+    m_Weight: 0
+  - m_Path: LeftFeetPart2
+    m_Weight: 0
+  - m_Path: LeftHand
+    m_Weight: 0
+  - m_Path: LeftLowerArm
+    m_Weight: 0
+  - m_Path: LeftLowerLeg
+    m_Weight: 0
+  - m_Path: LeftShoulder
+    m_Weight: 0
+  - m_Path: LeftShoulderArmor
+    m_Weight: 0
+  - m_Path: LeftUpperLeg
+    m_Weight: 0
+  - m_Path: Neck
+    m_Weight: 0
+  - m_Path: NewRightHand
+    m_Weight: 0
+  - m_Path: NewRightLowerArm
+    m_Weight: 0
+  - m_Path: NewRightUpperArm
+    m_Weight: 0
+  - m_Path: NewRightUpperArm_1
+    m_Weight: 0
+  - m_Path: RightFeetPart1
+    m_Weight: 0
+  - m_Path: RightFeetPart2
+    m_Weight: 0
+  - m_Path: RightLowerLeg
+    m_Weight: 0
+  - m_Path: RightShoulder
+    m_Weight: 0
+  - m_Path: RightShoulderArmor
+    m_Weight: 0
+  - m_Path: RightShoulderArmor (1)
+    m_Weight: 0
+  - m_Path: RightShoulderArmor/Sprite Mask
+    m_Weight: 0
+  - m_Path: RightUpperLeg
+    m_Weight: 0
+  - m_Path: TorsoLower
+    m_Weight: 0
+  - m_Path: TorsoUpper
+    m_Weight: 0
+  - m_Path: WeaponPivot
+    m_Weight: 0
+  - m_Path: WeaponPivot/EdsGun
+    m_Weight: 1
+  - m_Path: WeaponPivot/EdsGun/FirePoint
+    m_Weight: 0
+  - m_Path: WeaponPivot/EdsGun/FirePoint
+    m_Weight: 0
+  - m_Path: WeaponPivot/EdsGun/Muzzle
+    m_Weight: 0
+  - m_Path: WeaponPivot/Left Hand Grip Target
+    m_Weight: 1
+  - m_Path: WeaponPivot/Right Hand Grip Anchor
+    m_Weight: 1
+  - m_Path: Weist
+    m_Weight: 0
+  - m_Path: Weist/Lombar
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/bone_21
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/bone_21/bone_24
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/bone_21/bone_24/bone_23
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/bone_21/bone_24/bone_23/bone_22
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck/Head
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck/Head/HeadAim
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder L
+    m_Weight: 1
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder L/Arm L
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder L/Arm L/Effector
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder L/Arm L/Hand L
+    m_Weight: 1
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder R
+    m_Weight: 1
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder R/Arm R
+    m_Weight: 1
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder R/Arm R/Effector
+    m_Weight: 0
+  - m_Path: Weist/Lombar/Dorsal/Neck/Shoulder R/Arm R/Hand R
+    m_Weight: 1
+  - m_Path: Weist/Upper leg L
+    m_Weight: 0
+  - m_Path: Weist/Upper leg L/Lower leg L
+    m_Weight: 0
+  - m_Path: Weist/Upper leg L/Lower leg L/Effector
+    m_Weight: 0
+  - m_Path: Weist/Upper leg L/Lower leg L/Feet L
+    m_Weight: 0
+  - m_Path: Weist/Upper leg L/Lower leg L/Feet L/Toes L
+    m_Weight: 0
+  - m_Path: Weist/Upper leg R
+    m_Weight: 0
+  - m_Path: Weist/Upper leg R/Lower leg R
+    m_Weight: 0
+  - m_Path: Weist/Upper leg R/Lower leg R/Effector
+    m_Weight: 0
+  - m_Path: Weist/Upper leg R/Lower leg R/Feet R
+    m_Weight: 0
+  - m_Path: Weist/Upper leg R/Lower leg R/Feet R/Toes R
+    m_Weight: 0
