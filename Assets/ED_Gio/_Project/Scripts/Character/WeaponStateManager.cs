@@ -40,6 +40,16 @@ namespace NABHI.Weapons
         [Tooltip("Boton de disparo en mando (X = JoystickButton2)")]
         [SerializeField] private KeyCode fireKeyGamepad = KeyCode.JoystickButton2;
 
+        [Header("Input - Equipar / Guardar")]
+        [Tooltip("Eje del mando para equipar y guardar. Arriba en la cruceta.")]
+        [SerializeField] private string equipToggleAxis = "DPadVertical";
+
+        [Tooltip("Valor del eje a partir del cual se considera pulsado.")]
+        [SerializeField] private float equipToggleThreshold = 0.5f;
+
+        [Tooltip("Tecla equivalente en teclado, para probar sin mando.")]
+        [SerializeField] private KeyCode equipToggleKey = KeyCode.Q;
+
         #endregion
 
         #region ESTADO
@@ -50,6 +60,10 @@ namespace NABHI.Weapons
 
         // true una vez que el jugador recoge el arma del mundo — impide holster automático
         private bool hasPickedUpWeapon = false;
+
+        // Flanco del input de equipar, para que un mantenido no alterne cada frame
+        private bool equipTogglePrevio = false;
+        private bool ejeToggleDisponible = true;
 
         #endregion
 
@@ -94,19 +108,21 @@ namespace NABHI.Weapons
 
         private void Update()
         {
-            // Si el jugador ya recogió el arma, siempre está equipada — no holstear
+            // Con el arma ya recogida, equipar y guardar pasa a ser decisión del jugador:
+            // se alterna con arriba en la cruceta. Sin pickup sigue mandando el modo automático.
             if (hasPickedUpWeapon)
             {
-                isWeaponEquipped = true;
-
                 if (playerHealth != null && !playerHealth.CanReceiveInput())
                 {
                     IsShooting = false;
                     return;
                 }
 
+                ProcesarToggleArma();
+
+                // Solo se dispara con el arma en la mano.
                 bool shootInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
-                IsShooting = shootInput;
+                IsShooting = isWeaponEquipped && shootInput;
                 return;
             }
 
@@ -172,6 +188,37 @@ namespace NABHI.Weapons
         #endregion
 
         #region MÉTODOS PÚBLICOS
+
+        /// <summary>
+        /// Alterna equipar/guardar con un flanco de subida: arriba en la cruceta o la
+        /// tecla equivalente. Mantener pulsado no alterna en bucle.
+        /// </summary>
+        private void ProcesarToggleArma()
+        {
+            float eje = 0f;
+
+            if (ejeToggleDisponible && !string.IsNullOrEmpty(equipToggleAxis))
+            {
+                try
+                {
+                    eje = Input.GetAxisRaw(equipToggleAxis);
+                }
+                catch (System.ArgumentException)
+                {
+                    // El eje no está definido en el Input Manager: seguimos con teclado.
+                    ejeToggleDisponible = false;
+                    Debug.LogWarning($"[WeaponStateManager] El eje '{equipToggleAxis}' no existe en el " +
+                                     "Input Manager. Se usará solo la tecla de teclado.", this);
+                }
+            }
+
+            bool pulsado = eje > equipToggleThreshold || Input.GetKey(equipToggleKey);
+
+            if (pulsado && !equipTogglePrevio)
+                ToggleWeapon();
+
+            equipTogglePrevio = pulsado;
+        }
 
         /// <summary>
         /// Llamar cuando el jugador recoge el arma del mundo.

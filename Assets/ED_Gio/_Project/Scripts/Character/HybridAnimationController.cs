@@ -31,10 +31,13 @@ public class HybridAnimationController : MonoBehaviour
              "correr al 100%. Debe coincidir con moveSpeed * runSpeedMultiplier.")]
     [SerializeField] private float sprintSpeedReference = 12f;
 
-    [Tooltip("Límites del multiplicador de velocidad de la animación de andar. Ahora que el " +
-             "sprint tiene su propio clip, el techo no necesita estirar el ciclo de andar.")]
+    [Tooltip("Límites del multiplicador de velocidad de la animación. El techo es 1: por " +
+             "encima de walkSpeedReference quien debe tomar el relevo es el clip de correr " +
+             "vía locomotionBlend, no el ciclo de andar reproducido más rápido. Subirlo de 1 " +
+             "hace que la velocidad horizontal, que oscila por física alrededor del valor de " +
+             "referencia, acelere el ciclo de forma irregular.")]
     [SerializeField] private float minWalkPlaybackSpeed = 0.5f;
-    [SerializeField] private float maxWalkPlaybackSpeed = 1.15f;
+    [SerializeField] private float maxWalkPlaybackSpeed = 1f;
 
     // --- Hashes de parámetros (performance) ---
     private static readonly int IsMovingHash       = Animator.StringToHash("isMoving");
@@ -63,6 +66,12 @@ public class HybridAnimationController : MonoBehaviour
     private const float  UpperBodyFadeSpeed  = 6f;   // unidades de peso por segundo
     private int   upperBodyLayer  = -1;
     private float upperBodyWeight = 0f;
+
+    // === DIAGNOSTICO TEMPORAL — quitar cuando se cierre el bug del salto a Idle ===
+    [Header("Diagnostico (temporal)")]
+    [SerializeField] private bool logCambiosDeEstado = true;
+    private int   diagEstadoPrevio = 0;
+    private float diagMaxMoveSpeed = 0f;
 
     // --- Estado interno ---
     private bool isFacingRight = true;
@@ -128,6 +137,33 @@ public class HybridAnimationController : MonoBehaviour
         if (controller == null || riggedAnimator == null) return;
 
         UpdateAnimatorParameters();
+
+        if (logCambiosDeEstado)
+            DiagnosticarEstado();
+    }
+
+    // Registra cada cambio de estado del Animator junto al contexto que lo provoco.
+    // Sirve para localizar el salto a Idle mientras se camina.
+    private void DiagnosticarEstado()
+    {
+        AnimatorStateInfo info = riggedAnimator.GetCurrentAnimatorStateInfo(0);
+        float ms    = riggedAnimator.GetFloat(MoveSpeedHash);
+        float blend = riggedAnimator.GetFloat(LocomotionBlendHash);
+
+        if (ms > diagMaxMoveSpeed)
+        {
+            diagMaxMoveSpeed = ms;
+            if (ms > 1.001f)
+                Debug.LogError($"[DIAG] moveSpeed SUPERO 1: {ms:F3}  (max permitido {maxWalkPlaybackSpeed:F2}) " +
+                               $"velX={controller.Velocity.x:F2}");
+        }
+
+        if (info.fullPathHash == diagEstadoPrevio) return;
+        diagEstadoPrevio = info.fullPathHash;
+
+        Debug.Log($"[DIAG] estado -> hash={info.fullPathHash} | velX={controller.Velocity.x:F2} " +
+                  $"| isMoving={Mathf.Abs(controller.Velocity.x) > 0.1f} | grounded={controller.IsGrounded} " +
+                  $"| moveSpeed={ms:F3} | blend={blend:F3} | pesoCapa1={(upperBodyLayer >= 0 ? riggedAnimator.GetLayerWeight(upperBodyLayer) : -1f):F2}");
     }
 
     // El flip se aplica en LateUpdate, NO en Update: los clips del rig tienen curvas
@@ -196,12 +232,14 @@ public class HybridAnimationController : MonoBehaviour
         riggedAnimator.SetFloat(MoveSpeedHash,
             Mathf.Clamp(playbackSpeed, minWalkPlaybackSpeed, maxWalkPlaybackSpeed));
 
-        // Disparando en movimiento: la capa de override congela los brazos en la pose
-        // de disparo y las piernas siguen corriendo en la capa base. Quieto, el estado
-        // ED_Shoot ya cubre el cuerpo entero, así que la capa se queda a 0.
+        // La capa de override pone los brazos en pose de disparo mientras las piernas
+        // siguen con su animación en la capa base. Se activa en los dos casos que el
+        // estado ED_Shoot no cubre: disparar en movimiento y disparar en el aire
+        // (saltando o cayendo). Quieto y en suelo, ED_Shoot ya anima el cuerpo entero.
         if (upperBodyLayer >= 0)
         {
-            float targetWeight = (isShooting && isMoving) ? 1f : 0f;
+            bool disparoParcial = isShooting && (isMoving || !isGrounded);
+            float targetWeight = disparoParcial ? 1f : 0f;
             upperBodyWeight = Mathf.MoveTowards(upperBodyWeight, targetWeight,
                                                 UpperBodyFadeSpeed * Time.deltaTime);
             riggedAnimator.SetLayerWeight(upperBodyLayer, upperBodyWeight);

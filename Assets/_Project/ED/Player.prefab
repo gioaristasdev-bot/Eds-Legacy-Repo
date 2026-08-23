@@ -515,6 +515,10 @@ MonoBehaviour:
   riggedVisual: {fileID: 7698594884720966257}
   riggedAnimator: {fileID: 2577114694658808888}
   autoFlipSprite: 1
+  walkSpeedReference: 8
+  sprintSpeedReference: 12
+  minWalkPlaybackSpeed: 0.5
+  maxWalkPlaybackSpeed: 1
 --- !u!114 &6687506217766357647
 MonoBehaviour:
   m_ObjectHideFlags: 0
