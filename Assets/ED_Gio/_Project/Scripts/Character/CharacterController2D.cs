@@ -39,6 +39,15 @@ namespace NABHI.Character
         [Tooltip("Velocidad de correr (multiplicador)")]
         [SerializeField] private float runSpeedMultiplier = 1.5f;
 
+        [Tooltip("Con mando, la velocidad sale de cuanto empujes el stick: caminar al moverlo " +
+                 "leve y correr a fondo. El teclado sigue siendo digital, con Shift para correr.")]
+        [SerializeField] private bool correrAnalogico = true;
+
+        [Tooltip("Empuje del stick que equivale a la velocidad de caminar. De ahi a 1 se " +
+                 "interpola hasta la velocidad de correr.")]
+        [Range(0.2f, 0.9f)]
+        [SerializeField] private float umbralCaminarStick = 0.6f;
+
         [Tooltip("Tiempo para alcanzar velocidad máxima (segundos)")]
         [SerializeField] private float accelerationTime = 0.1f;
 
@@ -385,6 +394,43 @@ namespace NABHI.Character
 
         #region MOVIMIENTO
 
+        /// <summary>
+        /// Magnitud de la velocidad objetivo, sin signo.
+        ///
+        /// Con mando la saca de cuanto se empuje el stick: hasta umbralCaminarStick
+        /// escala de 0 a la velocidad de caminar, y de ahi a fondo interpola hasta la
+        /// de correr. Con teclado no hay matiz posible (el eje solo vale 0 o 1), asi
+        /// que se mantiene el comportamiento de siempre con Shift para correr.
+        /// </summary>
+        private float VelocidadObjetivo()
+        {
+            float mag = Mathf.Abs(moveInput.x);
+            if (mag < 0.01f) return 0f;
+
+            float velCorrer = moveSpeed * runSpeedMultiplier;
+
+            if (!correrAnalogico || HayInputDeTeclado())
+                return sprintHeld ? velCorrer : moveSpeed;
+
+            if (sprintHeld) return velCorrer;
+
+            if (mag <= umbralCaminarStick)
+                return moveSpeed * (mag / umbralCaminarStick);
+
+            float t = (mag - umbralCaminarStick) / (1f - umbralCaminarStick);
+            return Mathf.Lerp(moveSpeed, velCorrer, t);
+        }
+
+        /// <summary>
+        /// El eje Horizontal mezcla teclado y mando, y el teclado siempre entrega 1.
+        /// Consultando las teclas directamente sabemos de cual de los dos viene.
+        /// </summary>
+        private bool HayInputDeTeclado()
+        {
+            return Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)
+                || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
+        }
+
         private void ApplyMovement()
         {
             // No aplicar movimiento durante knockback (permite que el empuje funcione)
@@ -400,9 +446,8 @@ namespace NABHI.Character
                 return;
             }
 
-            // Calcular velocidad objetivo con multiplicador de sprint
-            float currentMoveSpeed = sprintHeld ? moveSpeed * runSpeedMultiplier : moveSpeed;
-            float targetSpeed = moveInput.x * currentMoveSpeed;
+            // Velocidad objetivo. Con stick es analogica; con teclado, digital.
+            float targetSpeed = Mathf.Sign(moveInput.x) * VelocidadObjetivo();
 
             // Si está tocando pared y presionando hacia ella, no aplicar movimiento horizontal hacia la pared
             bool isPushingTowardsWall = isTouchingWall && Mathf.Sign(moveInput.x) == Mathf.Sign(wallDirection) && Mathf.Abs(moveInput.x) > 0.1f;
