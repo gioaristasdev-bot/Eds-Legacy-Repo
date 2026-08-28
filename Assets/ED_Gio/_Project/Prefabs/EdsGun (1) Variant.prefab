@@ -47,7 +47,7 @@ PrefabInstance:
     - target: {fileID: 2170410806476208292, guid: 24b77d5f8a337e4449319ed4534b2bb2,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3309473234601821950, guid: 24b77d5f8a337e4449319ed4534b2bb2,
         type: 3}
@@ -160,11 +160,17 @@ MonoBehaviour:
   projectilePrefab: {fileID: 1311559214229084, guid: 65a71350bf63cc74483ff8c70dbee28e,
     type: 3}
   firePoint: {fileID: 2663590251898450980}
+  fireTriggerAxis: FireTrigger
+  fireTriggerThreshold: 0.3
   fireRate: 5
   projectileSpeed: 20
   projectileDamage: 10
   piercingShots: 0
   recoilForce: 0.5
+  maxRecoilRiseSpeed: 8
+  recoilAimThreshold: -0.7
+  enableDownwardRecoil: 1
+  ignoreShooterCollision: 1
   useAmmo: 0
   currentAmmo: 30
   maxAmmo: 30

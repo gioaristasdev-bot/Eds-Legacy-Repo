@@ -18,8 +18,15 @@ namespace NABHI.Weapons
         [Tooltip("Punto desde donde salen las balas (Fire Point)")]
         [SerializeField] private Transform firePoint;
 
+        [Tooltip("Gatillo derecho (RT / R2). Debe coincidir con el del WeaponStateManager.")]
+        [SerializeField] private string fireTriggerAxis = "FireTrigger";
+
+        [Range(0.05f, 0.95f)]
+        [SerializeField] private float fireTriggerThreshold = 0.3f;
+
         [Tooltip("Referencia al AimController (asignado automáticamente)")]
         private AimController aimController;
+        private NABHI.Character.CharacterController2D characterController;
 
         [Tooltip("WeaponStateManager del Player (asignado automáticamente)")]
         private WeaponStateManager weaponStateManager;
@@ -43,8 +50,26 @@ namespace NABHI.Weapons
         [Tooltip("Los proyectiles atraviesan enemigos")]
         [SerializeField] private bool piercingShots = false;
 
-        [Tooltip("Retroceso del arma al disparar (screenshake, knockback)")]
-        [SerializeField] private float recoilForce = 0.5f;
+        [Tooltip("Empuje vertical, en unidades/s, que gana el personaje al disparar " +
+                 "hacia abajo estando en el aire.")]
+        [SerializeField] private float recoilForce = 7f;
+
+        [Tooltip("Techo de velocidad de ascenso por retroceso. Impide quedarse " +
+                 "flotando disparando al suelo. jumpForce vale 12, asi que por debajo " +
+                 "de eso el retroceso nunca supera a un salto normal.")]
+        [SerializeField] private float maxRecoilRiseSpeed = 8f;
+
+        [Tooltip("Cuanto hay que apuntar hacia abajo para que haya retroceso. " +
+                 "-1 es abajo del todo; -0.7 deja fuera las diagonales suaves.")]
+        [Range(-1f, 0f)]
+        [SerializeField] private float recoilAimThreshold = -0.7f;
+
+        [SerializeField] private bool enableDownwardRecoil = true;
+
+        [Tooltip("Desactiva la colision fisica entre el proyectil recien creado y los " +
+                 "colliders del propio jugador, para que la bala no rebote ni empuje " +
+                 "al dispararse pegada al cuerpo.")]
+        [SerializeField] private bool ignoreShooterCollision = true;
 
         #endregion
 
@@ -106,6 +131,7 @@ namespace NABHI.Weapons
         {
             // Obtener AimController del padre (Player)
             aimController = GetComponentInParent<AimController>();
+            characterController = GetComponentInParent<NABHI.Character.CharacterController2D>();
 
             if (aimController == null)
             {
@@ -134,10 +160,17 @@ namespace NABHI.Weapons
 
         #region INPUT
 
+        private bool IsTriggerHeld()
+        {
+            if (string.IsNullOrEmpty(fireTriggerAxis)) return false;
+            try { return Input.GetAxisRaw(fireTriggerAxis) >= fireTriggerThreshold; }
+            catch (System.ArgumentException) { return false; }
+        }
+
         private void HandleInput()
         {
             // Input de disparo (Mouse Left Click o botón de gamepad)
-            bool fireInput = Input.GetButton("Fire1") || Input.GetMouseButton(0);
+            bool fireInput = Input.GetButton("Fire1") || Input.GetMouseButton(0) || IsTriggerHeld();
 
             if (fireInput && CanFire())
             {
@@ -192,6 +225,8 @@ namespace NABHI.Weapons
 
             // Crear proyectil
             GameObject projectileObj = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+            IgnoreShooterCollision(projectileObj);
+
             Projectile projectile = projectileObj.GetComponent<Projectile>();
 
             if (projectile != null)
@@ -214,11 +249,80 @@ namespace NABHI.Weapons
             // Efectos visuales
             SpawnMuzzleFlash();
 
+            ApplyDownwardRecoil();
+
             // Registrar tiempo del disparo
             lastFireTime = Time.time;
 
             // Callback para eventos (sonido, screenshake, etc.)
             OnFire();
+        }
+
+        /// <summary>
+        /// Disparar hacia abajo en el aire empuja al personaje hacia arriba.
+        ///
+        /// No se usa ApplyKnockback del controller porque ese pone la velocidad a cero
+        /// antes del impulso (esta pensado para el knockback de dano) y aqui eso
+        /// cortaria en seco el movimiento horizontal en el aire.
+        ///
+        /// El techo evita quedarse flotando: con fireRate 5 se dispara 5 veces por
+        /// segundo, asi que sin limite cada disparo sumaria altura indefinidamente.
+        /// </summary>
+        /// <summary>
+        /// Anula la colision fisica entre el proyectil y el jugador que lo dispara.
+        ///
+        /// Projectile.HandleCollision ya ignora la capa Player a nivel logico (ni dana
+        /// ni se destruye), pero eso no evita la respuesta fisica: el proyectil lleva
+        /// un CircleCollider2D no-trigger y un Rigidbody2D, asi que el motor resuelve
+        /// el choque igualmente y la bala rebota o empuja. Se nota sobre todo al
+        /// disparar hacia abajo, cuando la boca del arma queda cerca del cuerpo.
+        ///
+        /// Se hace por pares de colliders y no en la matriz de capas porque el
+        /// proyectil vive en la capa Default, y desactivar Default contra Player
+        /// romperia la colision con cualquier otro objeto que este en Default.
+        /// </summary>
+        private void IgnoreShooterCollision(GameObject projectileObj)
+        {
+            if (!ignoreShooterCollision) return;
+            if (characterController == null || projectileObj == null) return;
+
+            Collider2D[] propios = characterController.GetComponentsInChildren<Collider2D>(true);
+            Collider2D[] bala = projectileObj.GetComponentsInChildren<Collider2D>(true);
+
+            for (int i = 0; i < bala.Length; i++)
+            {
+                if (bala[i] == null) continue;
+                for (int k = 0; k < propios.Length; k++)
+                {
+                    if (propios[k] == null) continue;
+                    Physics2D.IgnoreCollision(bala[i], propios[k], true);
+                }
+            }
+        }
+
+        private void ApplyDownwardRecoil()
+        {
+            if (!enableDownwardRecoil) return;
+            if (characterController == null || aimController == null) return;
+
+            // Solo en el aire: en tierra el suelo absorbe el retroceso.
+            if (characterController.IsGrounded) return;
+
+            Vector2 aim = aimController.AimDirection;
+            if (aim.y > recoilAimThreshold) return;
+
+            // El empuje va en direccion opuesta al disparo.
+            Vector2 push = -aim.normalized * recoilForce;
+
+            Vector2 v = characterController.Velocity;
+            float desired = v.y + push.y;
+            float capped  = Mathf.Min(desired, maxRecoilRiseSpeed);
+
+            // Nunca frenar a quien ya sube mas rapido que el techo (por ejemplo
+            // en pleno salto): el retroceso suma, no sustituye.
+            float finalY = Mathf.Max(capped, v.y);
+
+            characterController.SetVelocity(new Vector2(v.x + push.x, finalY));
         }
 
         private Vector2 GetFireDirection()

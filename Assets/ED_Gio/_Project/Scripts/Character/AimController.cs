@@ -6,6 +6,10 @@ namespace NABHI.Weapons
     /// Sistema de aim en 8 direcciones para Metroidvania shooter
     /// Maneja la dirección de disparo usando teclado/mouse o gamepad
     /// </summary>
+    // Orden -50: por delante de IKManager2D (que corre en -10), para que el IK
+    // de los brazos resuelva contra el arma ya rotada por el aim de este frame
+    // y no contra la del anterior.
+    [DefaultExecutionOrder(-50)]
     public class AimController : MonoBehaviour
     {
         #region ENUMS
@@ -56,6 +60,30 @@ namespace NABHI.Weapons
         [Header("8 Direcciones")]
         [Tooltip("Zona muerta para detectar input (evita drift del stick)")]
         [SerializeField] private float deadzone = 0.3f;
+
+        [Header("Arbitraje con la rueda de chakras")]
+        [Tooltip("Mientras se mantiene este boton, el stick derecho pertenece a la rueda " +
+                 "de chakras y el aim se congela en la ultima direccion. LB = JoystickButton4.")]
+        [SerializeField] private KeyCode wheelHoldButton = KeyCode.JoystickButton4;
+
+        [Tooltip("Desactivar solo si la rueda deja de usar el stick derecho.")]
+        [SerializeField] private bool freezeAimWhileWheelHeld = true;
+
+        [Header("Giro del cuerpo con el aim")]
+        [Tooltip("Si apuntas al lado contrario, el personaje se gira en vez de " +
+                 "retorcer los brazos hacia atras.")]
+        [SerializeField] private bool turnBodyWithAim = true;
+
+        [Tooltip("Cuanta componente horizontal necesita el aim para girar el cuerpo. " +
+                 "Evita que apuntar recto arriba haga girar al personaje.")]
+        [Range(0.05f, 0.9f)]
+        [SerializeField] private float aimTurnThreshold = 0.25f;
+
+        [Header("Apuntado hacia abajo")]
+        [Tooltip("El vertical hacia abajo puro solo se permite en el aire. En tierra " +
+                 "se desvia a la diagonal del lado que mira el personaje, porque " +
+                 "apuntar a los pies estando de pie obliga a los brazos a una pose rara.")]
+        [SerializeField] private bool restrictDownAimToAir = true;
 
         #endregion
 
@@ -127,6 +155,13 @@ namespace NABHI.Weapons
         private void Update()
         {
             UpdateAimDirection();
+        }
+
+        // El visual se aplica en LateUpdate, despues de que el Animator escriba.
+        // Los clips Attack y Hit Reaction animan la rotacion de WeaponPivot y
+        // pisarian el aim si se escribiera en Update.
+        private void LateUpdate()
+        {
             UpdateWeaponVisuals();
         }
 
@@ -134,8 +169,38 @@ namespace NABHI.Weapons
 
         #region AIM DIRECTION
 
+        /// <summary>
+        /// True mientras la rueda de chakras tiene tomado el stick derecho.
+        /// </summary>
+        public bool AimInputBlocked =>
+            freezeAimWhileWheelHeld && Input.GetKey(wheelHoldButton);
+
+        /// <summary>
+        /// Hacia que lado mira el CUERPO. Si se apunta claramente a un lado, manda el
+        /// aim; si no (aim vertical o sin input), manda la direccion de movimiento.
+        /// Es la unica fuente de verdad del flip: la usan tanto la rotacion del arma
+        /// como el volteo del rig, para que no puedan contradecirse.
+        /// No altera CharacterController2D.FacingDirection, que sigue rigiendo el
+        /// dash y los raycasts de pared.
+        /// </summary>
+        public int VisualFacing
+        {
+            get
+            {
+                if (turnBodyWithAim && Mathf.Abs(aimDirection.x) > aimTurnThreshold)
+                    return aimDirection.x > 0f ? 1 : -1;
+
+                return characterController != null ? characterController.FacingDirection : 1;
+            }
+        }
+
         private void UpdateAimDirection()
         {
+            // Con la rueda abierta el stick derecho no es nuestro: se conserva la
+            // ultima direccion en vez de recentrar el aim a la horizontal.
+            if (AimInputBlocked)
+                return;
+
             Vector2 rawInput = GetRawAimInput();
 
             // Auto-detectar modo de input
@@ -161,9 +226,9 @@ namespace NABHI.Weapons
             else if (rawInput.magnitude > deadzone)
             {
                 if (aimStyle == AimStyle.DirectionalAim)
-                    aimDirection = GetNearestEightDirection(rawInput);
+                    aimDirection = ApplyDownAimRestriction(GetNearestEightDirection(rawInput));
                 else
-                    aimDirection = rawInput.normalized;
+                    aimDirection = ApplyDownAimRestriction(rawInput.normalized);
 
                 lastAimDirection = aimDirection;
             }
@@ -253,6 +318,26 @@ namespace NABHI.Weapons
             }
         }
 
+        /// <summary>
+        /// Con los pies en el suelo, el abajo puro se convierte en la diagonal baja
+        /// del lado que mira el personaje. Se resuelve tras el snap, y no quitando la
+        /// direccion de la lista de candidatas, para que apuntar exactamente al suelo
+        /// no quede en empate entre las dos diagonales y parpadee entre ellas.
+        /// </summary>
+        private Vector2 ApplyDownAimRestriction(Vector2 dir)
+        {
+            if (!restrictDownAimToAir) return dir;
+            if (characterController == null) return dir;
+            if (!characterController.IsGrounded) return dir;
+
+            // Solo interviene si apunta claramente hacia abajo y casi sin horizontal.
+            if (dir.y >= -0.75f) return dir;
+            if (Mathf.Abs(dir.x) > 0.35f) return dir;
+
+            int facing = characterController.FacingDirection >= 0 ? 1 : -1;
+            return new Vector2(facing, -1f).normalized;
+        }
+
         private Vector2 GetNearestEightDirection(Vector2 input)
         {
             float minAngle = float.MaxValue;
@@ -301,12 +386,8 @@ namespace NABHI.Weapons
             if (weaponTransform == null)
                 return;
 
-            // Obtener la dirección que mira el personaje
-            int facingDirection = 1;
-            if (characterController != null)
-            {
-                facingDirection = characterController.FacingDirection;
-            }
+            // Lado visual: puede venir del aim, no solo del movimiento.
+            int facingDirection = VisualFacing;
 
             // Solo posicionar el arma si NO está dentro de un bone
             // Si está en un bone (ej: RightHand), el bone controla la posición

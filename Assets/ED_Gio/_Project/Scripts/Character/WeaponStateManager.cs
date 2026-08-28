@@ -37,8 +37,15 @@ namespace NABHI.Weapons
         [SerializeField] private PlayerHealth playerHealth;
 
         [Header("Input - Mando")]
-        [Tooltip("Boton de disparo en mando (X = JoystickButton2)")]
-        [SerializeField] private KeyCode fireKeyGamepad = KeyCode.JoystickButton2;
+        [Tooltip("Gatillo derecho (RT / R2). Eje analogico del Input Manager.")]
+        [SerializeField] private string fireTriggerAxis = "FireTrigger";
+
+        [Tooltip("A partir de que recorrido del gatillo se considera disparo.")]
+        [Range(0.05f, 0.95f)]
+        [SerializeField] private float fireTriggerThreshold = 0.3f;
+
+        [Tooltip("Boton extra de disparo en mando. None = solo gatillo.")]
+        [SerializeField] private KeyCode fireKeyGamepad = KeyCode.None;
 
         [Header("Input - Equipar / Guardar")]
         [Tooltip("Eje del mando para equipar y guardar. Arriba en la cruceta.")]
@@ -84,6 +91,23 @@ namespace NABHI.Weapons
         /// </summary>
         public bool IsShooting { get; private set; }
 
+        /// <summary>
+        /// Disparo mantenido: teclado/raton via Fire1, o gatillo derecho analogico.
+        /// El gatillo se lee como eje porque RT tiene recorrido, no es un boton.
+        /// </summary>
+        private bool IsFireHeld()
+        {
+            if (Input.GetButton("Fire1")) return true;
+            if (fireKeyGamepad != KeyCode.None && Input.GetKey(fireKeyGamepad)) return true;
+
+            if (!string.IsNullOrEmpty(fireTriggerAxis))
+            {
+                try { if (Input.GetAxisRaw(fireTriggerAxis) >= fireTriggerThreshold) return true; }
+                catch (System.ArgumentException) { /* eje no definido en el Input Manager */ }
+            }
+            return false;
+        }
+
         #endregion
 
         #region UNITY CALLBACKS
@@ -121,7 +145,7 @@ namespace NABHI.Weapons
                 ProcesarToggleArma();
 
                 // Solo se dispara con el arma en la mano.
-                bool shootInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
+                bool shootInput = IsFireHeld();
                 IsShooting = isWeaponEquipped && shootInput;
                 return;
             }
@@ -134,7 +158,7 @@ namespace NABHI.Weapons
             }
 
             // Detectar si está disparando (teclado/mouse o boton X del mando)
-            bool fireInput = Input.GetButton("Fire1") || Input.GetKey(fireKeyGamepad);
+            bool fireInput = IsFireHeld();
 
             if (fireInput)
             {

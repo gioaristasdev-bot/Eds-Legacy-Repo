@@ -19,6 +19,10 @@ public class HybridAnimationController : MonoBehaviour
     [SerializeField] private GameObject riggedVisual;
     [SerializeField] private Animator riggedAnimator;
 
+    [Tooltip("Opcional. Si esta, el flip sigue su VisualFacing en vez de la " +
+             "direccion de movimiento, para poder apuntar hacia atras.")]
+    [SerializeField] private AimController aimController;
+
     [Header("Flip Settings")]
     [SerializeField] private bool autoFlipSprite = true;
 
@@ -90,6 +94,9 @@ public class HybridAnimationController : MonoBehaviour
 
         if (weaponStateManager == null)
             weaponStateManager = GetComponent<WeaponStateManager>();
+
+        if (aimController == null)
+            aimController = GetComponent<AimController>();
 
         if (playerHealth == null)
             playerHealth = GetComponent<PlayerHealth>();
@@ -253,7 +260,10 @@ public class HybridAnimationController : MonoBehaviour
 
     private void HandleFlip()
     {
-        isFacingRight = controller.FacingDirection > 0;
+        // El lado visual lo decide AimController cuando se esta apuntando, para que
+        // apuntar hacia atras gire al personaje en vez de retorcerle los brazos.
+        int facing = aimController != null ? aimController.VisualFacing : controller.FacingDirection;
+        isFacingRight = facing > 0;
 
         // Se compara contra el transform real y no contra un flag cacheado: si algo
         // externo resetea la rotación (cambio de estado, respawn, swap de visual), el
