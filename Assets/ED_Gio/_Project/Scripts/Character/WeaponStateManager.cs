@@ -91,6 +91,8 @@ namespace NABHI.Weapons
         /// </summary>
         public bool IsShooting { get; private set; }
 
+        private bool avisoReferenciaAsset = false;
+
         /// <summary>
         /// Disparo mantenido: teclado/raton via Fire1, o gatillo derecho analogico.
         /// El gatillo se lee como eje porque RT tiene recorrido, no es un boton.
@@ -203,6 +205,24 @@ namespace NABHI.Weapons
         private void LateUpdate()
         {
             if (weaponGameObject == null) return;
+
+            // Un GameObject que vive en un prefab de disco no pertenece a ninguna
+            // escena. Si la referencia apunta a un asset en vez de al arma de la
+            // escena, SetActive reescribe el fichero del prefab en cada equipar y
+            // desequipar: el asset aparece modificado en git sin que nadie lo haya
+            // tocado, y la visibilidad real del arma no cambia. Se avisa una sola vez
+            // y se ignora, en vez de seguir escribiendo en disco.
+            if (!weaponGameObject.scene.IsValid())
+            {
+                if (!avisoReferenciaAsset)
+                {
+                    avisoReferenciaAsset = true;
+                    Debug.LogError("[WeaponStateManager] weaponGameObject apunta a un prefab de disco " +
+                                   $"('{weaponGameObject.name}'), no al arma de la escena. Se ignora para no " +
+                                   "modificar el asset. Asigna el EdsGun que cuelga de WeaponPivot en el Player.");
+                }
+                return;
+            }
             // Fuente única de verdad para la visibilidad: visible mientras el arma esté
             // equipada. Debe coincidir con el parámetro isArmed del Animator, porque las
             // animaciones armadas de Ed sujetan el arma con la mano.

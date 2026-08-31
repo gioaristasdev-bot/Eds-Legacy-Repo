@@ -10153,6 +10153,7 @@ MonoBehaviour:
   turnBodyWithAim: 1
   aimTurnThreshold: 0.25
   restrictDownAimToAir: 1
+  onlyAimWhenArmed: 1
 --- !u!114 &2827530086560032327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10176,6 +10177,7 @@ MonoBehaviour:
   sprintSpeedReference: 12
   minWalkPlaybackSpeed: 0.5
   maxWalkPlaybackSpeed: 1
+  reverseCycleWhenRetreating: 1
   logCambiosDeEstado: 1
 --- !u!114 &6687506217766357647
 MonoBehaviour:
@@ -10191,8 +10193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   equipMode: 0
   timeToHolster: 2
-  weaponGameObject: {fileID: 3007777273511486900, guid: e0cac79ae84e1014ebac20df3a3c9091,
-    type: 3}
+  weaponGameObject: {fileID: 6905311981914046833}
   weaponController: {fileID: 0}
   playerHealth: {fileID: 6008504212968553290}
   fireTriggerAxis: FireTrigger
@@ -11487,6 +11488,12 @@ Transform:
 --- !u!4 &6207259855151955417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5300056733647542048, guid: 734135a660e65254aae2b0c124887a84,
+    type: 3}
+  m_PrefabInstance: {fileID: 2281363997001607929}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6905311981914046833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4647029676720073608, guid: 734135a660e65254aae2b0c124887a84,
     type: 3}
   m_PrefabInstance: {fileID: 2281363997001607929}
   m_PrefabAsset: {fileID: 0}
