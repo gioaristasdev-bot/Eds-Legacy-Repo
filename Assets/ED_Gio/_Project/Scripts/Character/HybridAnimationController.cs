@@ -43,6 +43,11 @@ public class HybridAnimationController : MonoBehaviour
     [SerializeField] private float minWalkPlaybackSpeed = 0.5f;
     [SerializeField] private float maxWalkPlaybackSpeed = 1f;
 
+    [Tooltip("Al desplazarse en sentido contrario al lado que mira el personaje, el " +
+             "ciclo de piernas se reproduce al reves y camina hacia atras de verdad. " +
+             "Sin esto, apuntar a un lado y avanzar al otro produce el efecto moonwalk.")]
+    [SerializeField] private bool reverseCycleWhenRetreating = true;
+
     // --- Hashes de parámetros (performance) ---
     private static readonly int IsMovingHash       = Animator.StringToHash("isMoving");
     private static readonly int IsGroundedHash     = Animator.StringToHash("isGrounded");
@@ -236,7 +241,15 @@ public class HybridAnimationController : MonoBehaviour
         float playbackSpeed = walkSpeedReference > 0.01f
             ? speedX / walkSpeedReference
             : 1f;
+        // Un multiplicador negativo hace que Unity reproduzca el estado hacia atras.
+        // Se usa cuando la velocidad va contra el lado que mira el personaje, que es
+        // lo que ocurre al avanzar en una direccion mientras se apunta a la contraria.
+        // Solo afecta a ED_Walk y ED_Walk 0, los unicos estados con Speed Multiplier.
+        int ladoVisual = aimController != null ? aimController.VisualFacing : controller.FacingDirection;
+        bool retrocediendo = reverseCycleWhenRetreating && isMoving && (velocity.x * ladoVisual) < 0f;
+
         riggedAnimator.SetFloat(MoveSpeedHash,
+            (retrocediendo ? -1f : 1f) *
             Mathf.Clamp(playbackSpeed, minWalkPlaybackSpeed, maxWalkPlaybackSpeed));
 
         // La capa de override pone los brazos en pose de disparo mientras las piernas

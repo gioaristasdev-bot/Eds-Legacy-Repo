@@ -85,11 +85,18 @@ namespace NABHI.Weapons
                  "apuntar a los pies estando de pie obliga a los brazos a una pose rara.")]
         [SerializeField] private bool restrictDownAimToAir = true;
 
+        [Header("Solo con arma")]
+        [Tooltip("Sin arma equipada no se rota el pivote. Los brazos van por IK a los " +
+                 "grip targets, que cuelgan de WeaponPivot: rotarlo sin arma retuerce " +
+                 "los brazos alrededor de un arma que no esta.")]
+        [SerializeField] private bool onlyAimWhenArmed = true;
+
         #endregion
 
         #region REFERENCIAS
 
         private NABHI.Character.CharacterController2D characterController;
+        private WeaponStateManager weaponStateManager;
         private Vector2 aimDirection = Vector2.right;
         private Vector2 lastAimDirection = Vector2.right;
 
@@ -135,6 +142,7 @@ namespace NABHI.Weapons
         private void Awake()
         {
             characterController = GetComponent<NABHI.Character.CharacterController2D>();
+            weaponStateManager = GetComponent<WeaponStateManager>();
 
             if (characterController == null)
             {
@@ -381,10 +389,29 @@ namespace NABHI.Weapons
 
         #region WEAPON VISUALS
 
+        /// <summary>
+        /// Hay arma equipada. Sin WeaponStateManager se asume que si, para no cambiar
+        /// el comportamiento en montajes que no lo tengan.
+        /// </summary>
+        private bool IsArmed()
+        {
+            return weaponStateManager == null || weaponStateManager.IsWeaponEquipped;
+        }
+
         private void UpdateWeaponVisuals()
         {
             if (weaponTransform == null)
                 return;
+
+            if (onlyAimWhenArmed && !IsArmed())
+            {
+                // Se devuelve el pivote a reposo: casi ningun clip anima su rotacion,
+                // asi que si se dejara como estaba se quedaria congelada en el ultimo
+                // angulo apuntado antes de guardar el arma.
+                if (weaponTransform.localRotation != Quaternion.identity)
+                    weaponTransform.localRotation = Quaternion.identity;
+                return;
+            }
 
             // Lado visual: puede venir del aim, no solo del movimiento.
             int facingDirection = VisualFacing;
